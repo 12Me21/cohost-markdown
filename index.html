@@ -1,0 +1,37 @@
+<!doctype html><meta charset=utf-8>
+<meta name=viewport content="width=device-width, height=device-height, initial-scale=1" id=$viewport>
+
+<script>
+	if (CSS.supports('-webkit-touch-callout', 'none')) // iOS safari
+		document.querySelector('meta[name=viewport]').content += ", user-scalable=no"
+</script>
+
+<script type=module>
+	import process from './build/parse.js'
+	
+	let lock = false
+	$in.addEventListener('input', e=>{
+		if (!$auto.checked)
+			return
+		//textarea_resize(textarea)
+		if (lock)
+			return
+		lock = true
+		window.setTimeout(()=>{
+			lock = false
+			run()
+		})
+	}, {passive: true})
+	
+	
+	function run() {
+		$out.innerHTML = process($in.value)
+	}
+	$go.onclick = run
+	run()
+</script>
+
+<textarea id=$in></textarea><br>
+<button id=$go>render</button> <label>auto:<input type=checkbox checked id=$auto></label>
+<hr>
+<div id=$out></div>
