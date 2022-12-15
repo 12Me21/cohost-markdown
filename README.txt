@@ -20,7 +20,6 @@ the exact npm packages that cohost uses for markdown parsing are:
 
 missing parts:
 - an extra processing step to render the custom components (<CustomEmoji>, <IframelyEmbed>, <Mention>) (very simple, just havent gotten around to it yet)
-- stylesheet for markdown content (i have this, just need to clean it up)
 - options different output formats (DOM etc.)
 
 eventually i'll turn the HTML AST into a DOM tree right after RemarkRehype (and do all the rest of the processing during that step),

@@ -6,32 +6,48 @@
 		document.querySelector('meta[name=viewport]').content += ", user-scalable=no"
 </script>
 
+<script src=textarea.js></script>
+
+<link rel=stylesheet href=prose.css disabled id=$style>
+
 <script type=module>
 	import process from './build/parse.js'
 	
-	let lock = false
-	$in.addEventListener('input', e=>{
-		if (!$auto.checked)
-			return
-		//textarea_resize(textarea)
-		if (lock)
-			return
-		lock = true
-		window.setTimeout(()=>{
-			lock = false
-			run()
-		})
-	}, {passive: true})
-	
-	
-	function run() {
+	window.run = ()=>{
 		$out.innerHTML = process($in.value)
 	}
+	
 	$go.onclick = run
 	run()
 </script>
 
-<textarea id=$in></textarea><br>
+<style>
+	textarea {
+		box-sizing: border-box;
+		width: 100%;
+		resize: vertical;
+	}
+	.post {
+		border: solid;
+	}
+</style>
+
+<textarea-container class='limit'>
+	<textarea id=$in></textarea>
+</textarea-container>
+<hr>
 <button id=$go>render</button> <label>auto:<input type=checkbox checked id=$auto></label>
 <hr>
+<div class='post' id=$host></div>
 <div id=$out></div>
+<script>
+	setup_textarea($in, ()=>{
+		if ($auto.checked && window.run)
+			run()
+	})
+	window.$out = $out
+	let sh = $host.attachShadow({mode:'open'})
+	let st = $style.cloneNode(true)
+	st.disabled = false
+	sh.append(st, $out)
+</script>
