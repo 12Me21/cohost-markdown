@@ -52,7 +52,7 @@ export default function emote({hasCohostPlus}){
 					tagName: 'CustomEmoji',
 					properties: {
 						name,
-						url: emote.url,
+						url: `https://cohost.org/static/${emote.url}`,
 					},
 				})
 			else {

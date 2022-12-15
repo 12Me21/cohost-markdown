@@ -17,7 +17,7 @@ export default {
 		nodeResolve(),
 		commonjs(),
 		terser({
-			ecma: 3*673,
+			ecma: 0X7e3,
 			parse: {},
 			compress: {},
 			mangle: {},
