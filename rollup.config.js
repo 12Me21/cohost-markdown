@@ -8,12 +8,14 @@ import terser from '@rollup/plugin-terser'
 export default {
 	input: 'parse.js',
 	output: {
-		dir: 'rollup',
+		dir: 'build',
 		plugins: [
 		],
 	},
 	plugins: [
-		nodeResolve(),
+		nodeResolve({
+			browser: true,
+		}),
 		commonjs(),
 		terser({
 			ecma: 0X7e3,
