@@ -17,9 +17,9 @@ import CohostMentions from './cohost-mentions.js'
 import CohostEmbeds from './cohost-embeds.js'
 import CohostEmotes from './cohost-emotes.js'
 
-
-
 import deepmerge from 'deepmerge'
+
+
 
 const HTML_ALLOW = deepmerge(defaultSchema, {
 	tagNames: ['video', 'audio', 'aside'],
@@ -78,7 +78,7 @@ function check(input) {
 	return {text, disableGfm}
 }
 
-function process(input, settings) {
+export default function process(input, settings) {
 	const {text, disableGfm} = check(input)
 	
 	settings = {
@@ -90,11 +90,3 @@ function process(input, settings) {
 	
 	return p.processSync(text).value
 }
-
-console.log(process(
-	[
-		"- hello!\n  - hi",
-		"## section 2\n:yeah:",
-		"<div style=rotate:5deg>aaaaaa",
-	],
-))

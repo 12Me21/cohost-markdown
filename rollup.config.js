@@ -1,10 +1,9 @@
 import {nodeResolve} from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 
+// temp hack to fix bug in terser
 global.__defineGetter__('__filename', ()=>new URL(import.meta.url))
 import terser from '@rollup/plugin-terser'
-
-let f = new URL('.', import.meta.url)
 
 export default {
 	input: 'parse.js',
@@ -26,7 +25,7 @@ export default {
 				comments: false,
 				max_line_len: 70,
 				quote_style: 3,
-				preamble: `${f}\nwhile(1)break ${f.protocol.slice(0,-1)}`,
+				preamble: "12",
 			},
 		}),
 	],
