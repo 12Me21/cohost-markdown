@@ -32,9 +32,12 @@ export default function CohostMentions() {
 					nodes.push({type:'text', value:text.slice(last, start)})
 					nodes.push({
 						type: 'element',
-						tagName: 'Mention',
+						//tagName: 'Mention',
+						tagName: 'a',
 						properties: {
 							handle,
+							class: 'mention',
+							href: `https://cohost.org/${handle}`
 						},
 						children: [{type: 'text', value: `@${handle}`}],
 					})
