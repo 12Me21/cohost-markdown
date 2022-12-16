@@ -12,13 +12,16 @@ export default function plugin() {
 					if ('element'==parent.type)
 						parent.tagName = 'div'
 					// replace node with embed
+					let href = elem.properties?.href
 					parent.children.splice(index, 1, {
 						type: 'element',
-						tagName: 'IframelyEmbed',
+						//tagName: 'IframelyEmbed',
+						tagName: 'div',
 						properties: {
-							url: elem.properties?.href,
+							url: href,
+							class: 'embed',
 						},
-						children: [],
+						children: [{type:'text', value:href}],
 					})
 				}
 		})

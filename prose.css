@@ -58,6 +58,15 @@
 	text-decoration: underline;
 }
 
+.embed {
+	background: #DDDDD8;
+	border: 2px solid #666;
+	color: blue;
+	display: grid;
+	place-items: center;
+	padding: 0.5rem;
+}
+
 .read-more {
 	text-decoration: none;
 	color: var(--color-foreground);
