@@ -8,10 +8,11 @@ export const Remark = {parse, gfm, rehype}
 import raw from 'rehype-raw'
 import sanitize, {defaultSchema} from 'rehype-sanitize'
 import externalLinks from 'rehype-external-links'
-export const Rehype = {raw, sanitize, externalLinks, defaultSchema}
+import stringify from 'rehype-stringify'
+export const Rehype = {raw, sanitize, externalLinks, defaultSchema, stringify}
 
 export {default as deepmerge} from 'deepmerge'
 
-import {visit as unistVisit} from 'unist-util-visit'
+export {visit as unistVisit} from 'unist-util-visit'
 
 export {default as styleToObject} from 'style-to-object'

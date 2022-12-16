@@ -2,7 +2,7 @@ import {unistVisit} from './libs.js'
 
 export default function CohostFootnotes() {
 	return tree=>{
-		unistVisit.visit(tree, 'element', (elem, index, parent)=>{
+		unistVisit(tree, 'element', (elem, index, parent)=>{
 			if ('a'==elem.tagName && elem.properties?.id?.includes('fnref')) {
 				parent.children.splice(index, 1, ...elem.children)
 				return ['skip', index]

@@ -1,4 +1,6 @@
-import {Unified, Remark, Rehype, deepmerge} from './build/libs.js'
+import {Unified, Remark, Rehype, deepmerge} from './libs.js'
+
+window.Rehype = Rehype
 
 import cohostImageTitles from './cohost-image-titles.js'
 import cohostFootnotes from './cohost-footnotes.js'

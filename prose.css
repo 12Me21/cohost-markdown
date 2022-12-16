@@ -27,6 +27,8 @@
 	--color-foreground: var(--color-cherry);
 	
 	--emote-size: 1em;
+	
+	--media-margin: 2em;
 }
 /* rgb(37,99,23) #ebad25*/
 /* 🟥 */
@@ -45,6 +47,7 @@
 	margin: 0;
 	object-fit: contain;
 	vertical-align: middle;
+	--image-border: none;
 }
 
 .read-more {
@@ -164,7 +167,7 @@ a paragraph
 :host > div > img:not([style]),
 p > img:not([style]) {
 	max-height: var(--embed-height);
-	margin: 1em 0;
+	--media-margin: 1em;
 	border: var(--image-border);
 }
 
@@ -361,7 +364,7 @@ tbody td {
 }
 /* media */
 img, video, figure {
-	margin: 2em 0;
+	margin: var(--media-margin) 0;
 }
 
 /* list item */

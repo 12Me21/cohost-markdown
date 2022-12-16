@@ -1,4 +1,4 @@
-import {unistVisit} from 'unist-util-visit'
+import {unistVisit} from './libs.js'
 
 // this regex is an optimied version of the one that cohost uses
 // (which they got from twitter's ‘twitter-text’ library)

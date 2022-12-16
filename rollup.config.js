@@ -8,7 +8,7 @@ global.__defineGetter__('__filename', ()=>fileURLToPath(import.meta.url))
 import terser from '@rollup/plugin-terser'
 
 export default {
-	input: 'llibs.js',
+	input: 'import-libs.js',
 	output: {
 		file: 'libs.js',
 		plugins: [
