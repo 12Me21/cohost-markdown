@@ -1,4 +1,4 @@
-import {visit, SKIP} from 'unist-util-visit'
+import {unistVisit} from 'unist-util-visit'
 
 // this regex is an optimied version of the one that cohost uses
 // (which they got from twitter's ‘twitter-text’ library)
@@ -14,7 +14,7 @@ const MENTION_REGEX = /(^|[^\w@\\/])([@＠])([a-zA-Z0-9-]{3,})(?![@＠]|[\xC0-\x
 
 export default function CohostMentions() {
 	return tree=>{
-		visit(tree, 'text', (node, index, parent)=>{
+		unistVisit(tree, 'text', (node, index, parent)=>{
 			const text = node.value
 			const list = []
 			
@@ -43,7 +43,7 @@ export default function CohostMentions() {
 						nodes.push({type:'text', value: text.slice(last)})
 				})
 				parent.children.splice(index, 1, ...nodes)
-				return [SKIP, index+nodes.length]
+				return ['skip', index+nodes.length]
 			}
 		})
 	}

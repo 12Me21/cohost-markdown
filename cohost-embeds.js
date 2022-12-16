@@ -1,8 +1,8 @@
-import {visit, SKIP} from 'unist-util-visit'
+import {unistVisit} from './libs.js'
 
-export default function CohostEmbeds() {
+export default function plugin() {
 	return tree=>{
-		visit(tree, {type: 'element', tagName: 'a'}, (elem, index, parent) =>{
+		unistVisit(tree, {type: 'element', tagName: 'a'}, (elem, index, parent) =>{
 			const ch = elem.children
 			// if element has no siblings, and 1 child which is a text-node
 			if (parent.children.length==1 && ch.length==1 && ch[0].type=='text')
@@ -20,7 +20,6 @@ export default function CohostEmbeds() {
 						},
 						children: [],
 					})
-					return true
 				}
 		})
 	}

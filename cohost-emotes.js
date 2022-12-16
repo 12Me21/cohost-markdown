@@ -1,27 +1,28 @@
-import {visit, SKIP} from 'unist-util-visit'
+import {unistVisit} from './libs.js'
 
 const EMOTES = {
-	'chunks':      {url:'f59b84127fa7b6c48b6c.png',cohost_plus:false},
-	'eggbug':      {url:'41454e429d62b5cb7963.png',cohost_plus:false},
-	'sixty':       {url:'9a6014af31fb1ca65a1f.png',cohost_plus:false},
-	'unyeah':      {url:'5cf84d596a2c422967de.png',cohost_plus:false},
-	'yeah':        {url:'014b0a8cc35206ef151d.png',cohost_plus:false},
-	'host-aww':    {url:'9bb403f3822c6457baf6.png',cohost_plus:true},
-	'host-cry':    {url:'530f8cf75eac87716702.png',cohost_plus:true},
-	'host-evil':   {url:'cb9a5640d7ef7b361a1a.png',cohost_plus:true},
-	'host-frown':  {url:'99c7fbf98de865cc9726.png',cohost_plus:true},
-	'host-joy':    {url:'53635f5fe850274b1a7d.png',cohost_plus:true},
-	'host-love':   {url:'c45b6d8f9de20f725b98.png',cohost_plus:true},
-	'host-nervous':{url:'e5d55348f39c65a20148.png',cohost_plus:true},
-	'host-plead':  {url:'fa883e2377fea8945237.png',cohost_plus:true},
-	'host-shock':  {url:'bfa6d6316fd95ae76803.png',cohost_plus:true},
-	'host-stare':  {url:'a09d966cd188c9ebaa4c.png',cohost_plus:true},
+	'chunks':      {url:'chunks',cohost_plus:false},
+	'eggbug':      {url:'eggbug',cohost_plus:false},
+	'sixty':       {url:'sixty',cohost_plus:false},
+	'unyeah':      {url:'unyeah',cohost_plus:false},
+	'yeah':        {url:'yeah',cohost_plus:false},
+	
+	'host-aww':    {url:'host-aww',cohost_plus:true},
+	'host-cry':    {url:'host-cry',cohost_plus:true},
+	'host-evil':   {url:'host-evil',cohost_plus:true},
+	'host-frown':  {url:'host-frown',cohost_plus:true},
+	'host-joy':    {url:'host-joy',cohost_plus:true},
+	'host-love':   {url:'host-love',cohost_plus:true},
+	'host-nervous':{url:'host-nervous',cohost_plus:true},
+	'host-plead':  {url:'host-plead',cohost_plus:true},
+	'host-shock':  {url:'host-shock',cohost_plus:true},
+	'host-stare':  {url:'host-stare',cohost_plus:true},
 }
 
 // oh i bet this is a library ?
 const custom = function(pattern, func) {
 	return tree=>{
-		visit(tree, 'text', (node, index, parent)=>{
+		unistVisit(tree, 'text', (node, index, parent)=>{
 			const match = node.value.match(pattern)
 			if (match) {
 				const split = node.value.split(pattern)
@@ -49,10 +50,13 @@ export default function emote({hasCohostPlus}){
 			if (emote && !(emote.cohost_plus && !hasCohostPlus))
 				nodes.push({
 					type: 'element',
-					tagName: 'CustomEmoji',
+					//tagName: 'CustomEmoji',
+					tagName: 'img',
 					properties: {
 						name,
-						url: `https://cohost.org/static/${emote.url}`,
+						class: 'emote',
+						//url: `emotes/${emote.url}.webp`,
+						src: `emotes/${emote.url}.webp`,
 					},
 				})
 			else {
@@ -61,6 +65,6 @@ export default function emote({hasCohostPlus}){
 			}
 		})
 		parent.children.splice(index, 1, ...nodes)
-		return [SKIP, index+nodes.length]
+		return ['skip', index+nodes.length]
 	})
 }

@@ -1,5 +1,7 @@
 {
 	"type": "module",
+	"name": "cohost-markdown",
+	"description": "12",
 	"dependencies": {
 		"deepmerge": "^4.2.2",
 		"rehype-external-links": "^2.0.1",

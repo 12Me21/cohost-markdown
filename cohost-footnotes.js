@@ -1,15 +1,15 @@
-import {visit, SKIP} from 'unist-util-visit'
+import {unistVisit} from './libs.js'
 
 export default function CohostFootnotes() {
 	return tree=>{
-		visit(tree, 'element', (elem, index, parent)=>{
+		unistVisit.visit(tree, 'element', (elem, index, parent)=>{
 			if ('a'==elem.tagName && elem.properties?.id?.includes('fnref')) {
 				parent.children.splice(index, 1, ...elem.children)
-				return [SKIP, index]
+				return ['skip', index]
 			}
 			if ('a'==elem.tagName && elem.properties?.href?.includes('fnref')) {
 				parent.children.splice(index, 1)
-				return [SKIP, index]
+				return ['skip', index]
 			}
 			if ('h2'==elem.tagName && elem.properties?.id?.includes('footnote-label')) {
 				const elem = {

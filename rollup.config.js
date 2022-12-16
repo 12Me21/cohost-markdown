@@ -1,14 +1,16 @@
 import {nodeResolve} from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 
-// temp hack to fix bug in terser
-global.__defineGetter__('__filename', ()=>new URL(import.meta.url))
+// temp hack to make terser work
+import {fileURLToPath} from 'url' // cant use URL().pathname on windowsss
+global.__defineGetter__('__filename', ()=>fileURLToPath(import.meta.url))
+
 import terser from '@rollup/plugin-terser'
 
 export default {
-	input: 'parse.js',
+	input: 'llibs.js',
 	output: {
-		dir: 'build',
+		file: 'libs.js',
 		plugins: [
 		],
 	},

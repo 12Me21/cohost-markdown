@@ -25,6 +25,8 @@
 	--color-white:     rgb(255,255,255);
 	
 	--color-foreground: var(--color-cherry);
+	
+	--emote-size: 1em;
 }
 /* rgb(37,99,23) #ebad25*/
 /* 🟥 */
@@ -34,6 +36,15 @@
 	border: 0 solid currentColor;
 	
 	scrollbar-color: initial; /* this is inherited for some reason? */
+}
+
+.emote {
+	display: inline-block;
+	width: var(--emote-size);
+	height: var(--emote-size);
+	margin: 0;
+	object-fit: contain;
+	vertical-align: middle;
 }
 
 .read-more {

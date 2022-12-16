@@ -1,27 +1,16 @@
-import {unified} from 'unified'
+import {Unified, Remark, Rehype, deepmerge} from './build/libs.js'
 
-import RemarkParse from 'remark-parse'
-import RemarkGfm from 'remark-gfm'
-import RemarkRehype from 'remark-rehype'
-
-import RehypeRaw from 'rehype-raw'
-import RehypeSanitize, {defaultSchema} from 'rehype-sanitize'
-import RehypeExternalLinks from 'rehype-external-links'
-
-import RehypeStringify from 'rehype-stringify'
-
-import CohostImageTitles from './cohost-image-titles.js'
-import CohostFootnotes from './cohost-footnotes.js'
-import CohostFilterCss from './cohost-filter-css.js'
+import cohostImageTitles from './cohost-image-titles.js'
+import cohostFootnotes from './cohost-footnotes.js'
+import cohostFilterCss from './cohost-filter-css.js'
+// todo: these will have render funcs too
 import CohostMentions from './cohost-mentions.js'
 import CohostEmbeds from './cohost-embeds.js'
 import CohostEmotes from './cohost-emotes.js'
 
-import deepmerge from 'deepmerge'
-
 
 
-const HTML_ALLOW = deepmerge(defaultSchema, {
+const HTML_ALLOW = deepmerge(Rehype.defaultSchema, {
 	tagNames: ['video', 'audio', 'aside'],
 	attributes: {
 		'*': ['style'],
@@ -40,19 +29,19 @@ function start({
 		{target:'_blank', rel:['nofollow', 'noopener', 'noreferrer']} :
 		{target:'_self', rel:['nofollow']}
 	
-	return unified()
+	return Unified()
 	// MDAST
-		.use(RemarkParse)
-		.use(disableGfm ? null : RemarkGfm, {singleTilde: false})
+		.use(Remark.parse)
+		.use(disableGfm ? null : Remark.gfm, {singleTilde: false})
 	// HAST + raw
-		.use(RemarkRehype, {allowDangerousHtml: !disableHtml})
-		.use(CohostImageTitles)
-		.use(CohostFootnotes)
+		.use(Remark.rehype, {allowDangerousHtml: !disableHtml})
+		.use(cohostImageTitles)
+		.use(cohostFootnotes)
 	// HAST
-		.use(disableHtml ? null : RehypeRaw)
-		.use(RehypeSanitize, HTML_ALLOW)
-		.use(CohostFilterCss, {date})
-		.use(RehypeExternalLinks, links)
+		.use(disableHtml ? null : Rehype.raw)
+		.use(Rehype.sanitize, HTML_ALLOW)
+		.use(cohostFilterCss, {date})
+		.use(Rehype.externalLinks, links)
 		.use(CohostMentions)
 		.use(disableEmbeds ? null : CohostEmbeds)
 		.use(CohostEmotes, {hasCohostPlus})
@@ -86,7 +75,7 @@ export default function process(input, settings) {
 		disableGfm,
 	}
 	let p = start(settings)
-		.use(RehypeStringify)
+		.use(Rehype.stringify)
 	
 	return p.processSync(text).value
 }

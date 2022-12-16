@@ -1,5 +1,4 @@
-import {visit, SKIP} from 'unist-util-visit'
-import StyleToObject from 'style-to-object'
+import {styleToObject, unistVisit} from './libs.js'
 
 const FIXED_CUTOFF = +new Date("2022-06-29T18:00Z")
 const VAR_CUTOFF = +new Date("2022-11-14T06:00Z")
@@ -7,7 +6,7 @@ const VAR_CUTOFF = +new Date("2022-11-14T06:00Z")
 export default function filterCss({date}) {
 	date = +date
 	return tree=>{
-		visit(tree, "element", (elem, index, parent) => {
+		unistVisit(tree, "element", (elem, index, parent) => {
 			if ('string'!=typeof elem.properties?.style)
 				return
 			try {
