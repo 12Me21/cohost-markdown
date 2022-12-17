@@ -1,4 +1,4 @@
-import process from './rollup/parse.js'
+import process from './parse.js'
 
 console.log(process(
 	[

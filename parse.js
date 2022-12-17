@@ -1,6 +1,6 @@
 import {Unified, Remark, Rehype, deepmerge} from './libs.js'
 
-window.Rehype = Rehype
+globalThis.Rehype = Rehype
 
 import cohostImageTitles from './cohost-image-titles.js'
 import cohostFootnotes from './cohost-footnotes.js'
@@ -42,7 +42,7 @@ function start({
 	// HAST
 		.use(disableHtml ? null : Rehype.raw)
 		.use(Rehype.sanitize, HTML_ALLOW)
-		.use(cohostFilterCss, {date})
+		//.use(cohostFilterCss, {date})
 		.use(Rehype.externalLinks, links)
 		.use(CohostMentions)
 		.use(disableEmbeds ? null : CohostEmbeds)

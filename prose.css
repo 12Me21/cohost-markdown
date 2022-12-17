@@ -49,7 +49,7 @@
 	vertical-align: middle;
 	--image-border: none;
 }
-
+/* what if we make <q style=color:red>text</q> generate like <span style=color:red><span>"text"</span></span> */
 .mention {
 	font-weight: bold;
 	text-decoration: none;

@@ -11,7 +11,11 @@ export const voidElements = {
 	menuitem:1,meta:1,nextid:1,param:1,source:1,track:1,wbr:1,
 }
 
-export function raw(tree) {
+export default function(options) {
+	return raw
+}
+
+function raw(tree) {
 	const parser = new Parser({scriptingEnabled: false})
 	
 	const context = {

@@ -17,6 +17,7 @@
 	
 	window.run = ()=>{
 		$out.innerHTML = process($in.value)
+		$out2.innerHTML = $in.value
 	}
 	
 	$go.onclick = run
@@ -43,6 +44,7 @@
 <hr>
 <div class='post' id=$host></div>
 <div id=$out></div>
+<div id=$out2></div>
 <script>
 	setup_textarea($in, ()=>{
 		if ($auto.checked && window.run)

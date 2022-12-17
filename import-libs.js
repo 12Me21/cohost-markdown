@@ -5,7 +5,7 @@ import gfm from 'remark-gfm'
 import rehype from 'remark-rehype'
 export const Remark = {parse, gfm, rehype}
 
-import raw from 'rehype-raw'
+import raw from './hast-raw.js'
 import sanitize, {defaultSchema} from 'rehype-sanitize'
 import externalLinks from 'rehype-external-links'
 import stringify from 'rehype-stringify'
