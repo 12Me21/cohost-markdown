@@ -4,7 +4,6 @@ import commonjs from '@rollup/plugin-commonjs'
 // temp hack to make terser work
 import {fileURLToPath} from 'url' // cant use URL().pathname on windowsss
 global.__defineGetter__('__filename', ()=>fileURLToPath(import.meta.url))
-
 import terser from '@rollup/plugin-terser'
 
 export default {
@@ -21,9 +20,13 @@ export default {
 		commonjs(),
 		terser({
 			ecma: 0X7e3,
-			parse: {},
-			compress: {},
-			mangle: {},
+			parse: {
+			},
+			compress: {
+			},
+			mangle: {
+				//nth_identifier
+			},
 			format: {
 				semicolons: false,
 				comments: false,

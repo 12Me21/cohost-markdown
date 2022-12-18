@@ -1,16 +1,17 @@
 {
 	"type": "module",
 	"name": "cohost-markdown",
-	"description": "12",
+	"description": 12,
 	"dependencies": {
-		"comma-separated-tokens": "^2.0.3",
-		"html-void-elements": "^2.0.1",
-		"property-information": "^6.2.0",
-		"remark-gfm": "^3.0.1",
-		"remark-parse": "^10.0.1",
-		"remark-rehype": "^10.1.0",
-		"space-separated-tokens": "^2.0.2",
 		"unified": "^10.1.2",
-		"unist-util-visit": "^4.1.1"
+		"remark-parse": "^10.0.1",
+		"remark-gfm": "^3.0.1",
+		"remark-rehype": "^10.1.0",
+		"unist-util-visit": "^4.1.1",
+		
+		"property-information": "^6.2.0",
+		"html-void-elements": "^2.0.1",
+		"comma-separated-tokens": "^2.0.3",
+		"space-separated-tokens": "^2.0.2"
 	}
 }
