@@ -6,8 +6,6 @@
 		document.querySelector('meta[name=viewport]').content += ", user-scalable=no"
 </script>
 
-<script type=module src='./libs.js'></script>
-
 <script src=textarea.js></script>
 
 <link rel=stylesheet href=prose.css disabled id=$style>
@@ -16,8 +14,7 @@
 	import process from './parse.js'
 	
 	window.run = ()=>{
-		$out.innerHTML = process($in.value)
-		$out2.innerHTML = $in.value
+		$out.replaceChildren(process($in.value))
 	}
 	
 	$go.onclick = run

@@ -43,7 +43,7 @@ export default function deepmerge(target, source) {
 		return clone(source)
 }
 
-import sanitize, {defaultSchema} from 'rehype-sanitize'
+/*import sanitize, {defaultSchema} from 'rehype-sanitize'
 
 import dm2 from 'deepmerge'
 
@@ -67,3 +67,4 @@ let a = deepmerge(defaultSchema, {
 
 //console.log(JSON.stringify(a, null, 1))
 console.log(JSON.stringify(defaultSchema, null, 1))
+*/

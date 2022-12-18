@@ -3,22 +3,11 @@
 	"name": "cohost-markdown",
 	"description": "12",
 	"dependencies": {
-		"deepmerge": "^4.2.2",
-		"rehype-external-links": "^2.0.1",
-		"rehype-raw": "^6.1.1",
-		"rehype-sanitize": "^5.0.1",
-		"rehype-stringify": "^9.0.3",
+		"hast-util-to-parse5": "^7.0.0",
 		"remark-gfm": "^3.0.1",
 		"remark-parse": "^10.0.1",
 		"remark-rehype": "^10.1.0",
-		"style-to-object": "^0.4.0",
 		"unified": "^10.1.2",
 		"unist-util-visit": "^4.1.1"
-	},
-	"optionalDependencies": {
-		"@rollup/plugin-commonjs": "^23.0.4",
-		"@rollup/plugin-node-resolve": "^15.0.1",
-		"@rollup/plugin-terser": "^0.2.0",
-		"rollup": "^3.7.4"
 	}
 }

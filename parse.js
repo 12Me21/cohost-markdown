@@ -1,23 +1,26 @@
-import {Unified, Remark, Rehype, deepmerge} from './libs.js'
+import {Unified, Remark} from './libs.js'
 
-globalThis.Rehype = Rehype
+//globalThis.Rehype = Rehype
 
 import cohostImageTitles from './cohost-image-titles.js'
 import cohostFootnotes from './cohost-footnotes.js'
-import cohostFilterCss from './cohost-filter-css.js'
+//import cohostFilterCss from './cohost-filter-css.js'
 // todo: these will have render funcs too
 import CohostMentions from './cohost-mentions.js'
 import CohostEmbeds from './cohost-embeds.js'
 import CohostEmotes from './cohost-emotes.js'
 
+import deepmerge from './deepmerge.js'
+import hastRaw from './hast-raw.js'
+
 
 
-const HTML_ALLOW = deepmerge(Rehype.defaultSchema, {
+/*const HTML_ALLOW = deepmerge(Rehype.defaultSchema, {
 	tagNames: ['video', 'audio', 'aside'],
 	attributes: {
 		'*': ['style'],
 	},
-})
+})*/
 
 function start({
 	date = Infinity,
@@ -35,18 +38,18 @@ function start({
 	// MDAST
 		.use(Remark.parse)
 		.use(disableGfm ? null : Remark.gfm, {singleTilde: false})
-	// HAST + raw
+	// HAST
 		.use(Remark.rehype, {allowDangerousHtml: !disableHtml})
 		.use(cohostImageTitles)
 		.use(cohostFootnotes)
-	// HAST
-		.use(disableHtml ? null : Rehype.raw)
-		.use(Rehype.sanitize, HTML_ALLOW)
+	// DOM
+		.use(disableHtml ? null : hastRaw)
+		//.use(Rehype.sanitize, HTML_ALLOW)
 		//.use(cohostFilterCss, {date})
-		.use(Rehype.externalLinks, links)
-		.use(CohostMentions)
-		.use(disableEmbeds ? null : CohostEmbeds)
-		.use(CohostEmotes, {hasCohostPlus})
+		//.use(Rehype.externalLinks, links)
+		//.use(CohostMentions)
+		//.use(disableEmbeds ? null : CohostEmbeds)
+		//.use(CohostEmotes, {hasCohostPlus})
 }
 
 const DISABLE_GFM_LINES = 256
@@ -77,7 +80,7 @@ export default function process(input, settings) {
 		disableGfm,
 	}
 	let p = start(settings)
-		.use(Rehype.stringify)
+		//.use(Rehype.stringify)
 	
-	return p.processSync(text).value
+	return p.processSync(text).result
 }
