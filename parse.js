@@ -11,6 +11,8 @@ import emotes from './cohost-emotes.js'
 
 import deepmerge from './deepmerge.js'
 
+import externalLinks from './external-links.js'
+
 
 
 /*const HTML_ALLOW = deepmerge(Rehype.defaultSchema, {
@@ -33,16 +35,14 @@ function start(text, {
 	disableEmbeds = false,
 	disableGfm = false,
 }) {
-	const links = externalLinksInNewTab ? 
-		{target:'_blank', rel:['nofollow', 'noopener', 'noreferrer']} :
-	{target:'_self', rel:['nofollow']}
-	
 	let res1 = fromMarkdown(text, disableGfm ? {} : MD_EXT)
 	let res2 = toHast(res1, {allowDangerousHtml: !disableHtml})
-	let res3 = hastRaw(res2, {allowRaw: !disableHtml}, [
-		imageTitles, footnoteHack,
+	let res3 = hastRaw(res2, {allowRaw: !disableHtml, externalLinksInNewTab}, [
+		imageTitles, footnoteHack, // element pre-filters
 	], [
-		mentions, emotes,
+		mentions, emotes, // text filters
+	], [
+		externalLinks, // element post-filters
 	])
 	return res3
 }

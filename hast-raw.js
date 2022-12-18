@@ -6,7 +6,7 @@ const escape_text = text=>{
 	return text.replace(/&/g, "&amp;").replace(/</g, "&lt;")
 }
 
-export default function(tree, settings, before, doText) {
+export default function(tree, settings, elementPre, textPre, elementPost) {
 	let {allowRaw} = settings
 	let output = ""
 	let disabled = new Set() // disabled processors to prevent infinite loops
@@ -15,8 +15,8 @@ export default function(tree, settings, before, doText) {
 		if (list) nodes:for (let n of list) switch (n.type) {
 			
 			case 'element':
-			if (before)
-				for (let b of before) {
+			if (elementPre)
+				for (let b of elementPre) {
 					if (disabled.has(b))
 						continue
 					let res = b(n, settings)
@@ -42,8 +42,8 @@ export default function(tree, settings, before, doText) {
 			
 			case 'text':
 			let text = n.value
-			if (doText)
-				for (let b of doText) {
+			if (textPre)
+				for (let b of textPre) {
 					if (disabled.has(b))
 						continue
 					let res = b(text, settings)
