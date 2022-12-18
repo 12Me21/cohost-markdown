@@ -40,10 +40,13 @@ function start({
 		.use(disableGfm ? null : Remark.gfm, {singleTilde: false})
 	// HAST
 		.use(Remark.rehype, {allowDangerousHtml: !disableHtml})
+	// idea: we can eliminate the need for unist-util-visit
+	// if we do these (imageTitles and footnotes)
+	// both durint the hast -> dom conversion
 		.use(cohostImageTitles)
 		.use(cohostFootnotes)
 	// DOM
-		.use(disableHtml ? null : hastRaw)
+		.use(hastRaw, {allowRaw: !disableHtml})
 		//.use(Rehype.sanitize, HTML_ALLOW)
 		//.use(cohostFilterCss, {date})
 		//.use(Rehype.externalLinks, links)

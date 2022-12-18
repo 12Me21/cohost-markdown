@@ -12,4 +12,8 @@ export const Remark = {parse, gfm, rehype}
 
 export {visit as unistVisit} from 'unist-util-visit'
 
-export {toParse5} from 'hast-util-to-parse5'
+export {html as htmlAttributes, find as attributeInfo} from 'property-information'
+// these dependencies are silly, but they're not really worse than my own implementation would be, so, might as well use them
+export {htmlVoidElements} from 'html-void-elements'
+export {stringify as space} from 'space-separated-tokens'
+export {stringify as comma} from 'comma-separated-tokens'

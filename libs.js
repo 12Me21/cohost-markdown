@@ -112,7 +112,7 @@ function x(e){
 if('string'!=typeof e)throw new TypeError('Path must be a string. Received '+JSON.stringify(e))
 }const b={cwd:function(){return'/'}}
 function v(e){return null!==e&&'object'==typeof e&&e.href&&e.origin}
-function w(e){if('string'==typeof e)e=new URL(e)
+function C(e){if('string'==typeof e)e=new URL(e)
 else if(!v(e)){
 const n=new TypeError('The "path" argument must be of type string or an instance of URL. Received `'+e+'`')
 throw n.code='ERR_INVALID_ARG_TYPE',n}if('file:'!==e.protocol){
@@ -128,18 +128,18 @@ if(70===e||102===e){
 const e=new TypeError('File URL path must not include encoded / characters')
 throw e.code='ERR_INVALID_FILE_URL_PATH',e}}
 return decodeURIComponent(n)}(e)}
-const C=['history','path','basename','stem','extname','dirname']
-class S{constructor(e){let t
+const S=['history','path','basename','stem','extname','dirname']
+class w{constructor(e){let t
 t=e?'string'==typeof e||n(e)?{value:e}:v(e)?{path:e
 }:e:{},this.data={},this.messages=[],
 this.history=[],this.cwd=b.cwd(),this.value,
 this.stored,this.result,this.map
 let r,o=-1
-for(;++o<C.length;){const e=C[o]
+for(;++o<S.length;){const e=S[o]
 e in t&&void 0!==t[e]&&(this[e]='history'===e?[...t[e]]:t[e])}
-for(r in t)C.includes(r)||(this[r]=t[r])}get path(){
+for(r in t)S.includes(r)||(this[r]=t[r])}get path(){
 return this.history[this.history.length-1]}set path(e){
-v(e)&&(e=w(e)),F(e,'path'),this.path!==e&&this.history.push(e)}
+v(e)&&(e=C(e)),A(e,'path'),this.path!==e&&this.history.push(e)}
 get dirname(){
 return'string'==typeof this.path?k.dirname(this.path):void 0}
 set dirname(e){
@@ -147,32 +147,32 @@ E(this.basename,'dirname'),this.path=k.join(e||'',this.basename)}
 get basename(){
 return'string'==typeof this.path?k.basename(this.path):void 0}
 set basename(e){
-F(e,'basename'),A(e,'basename'),this.path=k.join(this.dirname||'',e)}
+A(e,'basename'),F(e,'basename'),this.path=k.join(this.dirname||'',e)}
 get extname(){
 return'string'==typeof this.path?k.extname(this.path):void 0}
-set extname(e){if(A(e,'extname'),E(this.dirname,'extname'),e){
+set extname(e){if(F(e,'extname'),E(this.dirname,'extname'),e){
 if(46!==e.charCodeAt(0))throw new Error('`extname` must start with `.`')
 if(e.includes('.',1))throw new Error('`extname` cannot contain multiple dots')
 }this.path=k.join(this.dirname,this.stem+(e||''))}get stem(){
 return'string'==typeof this.path?k.basename(this.path,this.extname):void 0
 }set stem(e){
-F(e,'stem'),A(e,'stem'),this.path=k.join(this.dirname||'',e+(this.extname||''))
+A(e,'stem'),F(e,'stem'),this.path=k.join(this.dirname||'',e+(this.extname||''))
 }toString(e){return(this.value||'').toString(e)}message(e,n,t){
 const r=new y(e,n,t)
 return this.path&&(r.name=this.path+':'+r.name,r.file=this.path),r.fatal=!1,this.messages.push(r),
 r}info(e,n,t){const r=this.message(e,n,t)
 return r.fatal=null,r}fail(e,n,t){const r=this.message(e,n,t)
-throw r.fatal=!0,r}}function A(e,n){
+throw r.fatal=!0,r}}function F(e,n){
 if(e&&e.includes(k.sep))throw new Error('`'+n+'` cannot be a path: did not expect `'+k.sep+'`')
-}function F(e,n){if(!e)throw new Error('`'+n+'` cannot be empty')}
+}function A(e,n){if(!e)throw new Error('`'+n+'` cannot be empty')}
 function E(e,n){
 if(!e)throw new Error('Setting `'+n+'` requires `path` to be set too')
 }const D=function t(){const r=p(),o=[]
 let i,l={},u=-1
 return c.data=function(e,n){
-if('string'==typeof e)return 2===arguments.length?(P('data',i),
-l[e]=n,c):L.call(l,e)&&l[e]||null
-if(e)return P('data',i),l=e,c
+if('string'==typeof e)return 2===arguments.length?(O('data',i),
+l[e]=n,c):T.call(l,e)&&l[e]||null
+if(e)return O('data',i),l=e,c
 return l},c.Parser=void 0,c.Compiler=void 0,c.freeze=function(){
 if(i)return c
 for(;++u<o.length;){const[e,...n]=o[u]
@@ -182,7 +182,7 @@ const t=e.call(c,...n)
 'function'==typeof t&&r.use(t)}
 return i=!0,u=Number.POSITIVE_INFINITY,c
 },c.attachers=o,c.use=function(e,...n){let t
-if(P('use',i),null==e);else if('function'==typeof e)p(e,...n)
+if(O('use',i),null==e);else if('function'==typeof e)p(e,...n)
 else{
 if('object'!=typeof e)throw new TypeError('Expected usable value, not `'+e+'`')
 Array.isArray(e)?a(e):u(e)}
@@ -203,10 +203,10 @@ break}
 t?(f(t[1])&&f(n)&&(n=s(!0,t[1],n)),t[1]=n):o.push([...arguments])}
 },c.parse=function(e){c.freeze()
 const n=R(e),t=c.Parser
-if(I('parse',t),T(t,'parse'))return new t(String(n),n).parse()
+if(P('parse',t),L(t,'parse'))return new t(String(n),n).parse()
 return t(String(n),n)},c.stringify=function(e,n){c.freeze()
 const t=R(n),r=c.Compiler
-if(O('stringify',r),z(e),T(r,'compile'))return new r(e,t).compile()
+if(I('stringify',r),z(e),L(r,'compile'))return new r(e,t).compile()
 return r(e,t)},c.run=function(e,n,t){
 z(e),c.freeze(),t||'function'!=typeof n||(t=n,n=void 0)
 if(!t)return new Promise(o)
@@ -214,30 +214,30 @@ function o(o,i){function l(n,r,l){r=r||e,n?i(n):o?o(r):t(null,r,l)}
 r.run(e,R(n),l)}o(null,t)},c.runSync=function(n,t){let r,o
 return c.run(n,t,i),M('runSync','run',o),r
 function i(n,t){e(n),r=t,o=!0}},c.process=function(e,t){
-if(c.freeze(),I('process',c.Parser),
-O('process',c.Compiler),!t)return new Promise(r)
+if(c.freeze(),P('process',c.Parser),
+I('process',c.Compiler),!t)return new Promise(r)
 function r(r,o){const i=R(e)
 function l(e,n){e||!n?o(e):r?r(n):t(null,n)}
 c.run(c.parse(i),i,((e,t,r)=>{if(!e&&t&&r){const i=c.stringify(t,r)
 null==i||('string'==typeof(o=i)||n(o)?r.value=i:r.result=i),l(e,r)
 }else l(e)
 var o}))}r(null,t)},c.processSync=function(n){let t
-c.freeze(),I('processSync',c.Parser),O('processSync',c.Compiler)
+c.freeze(),P('processSync',c.Parser),I('processSync',c.Compiler)
 const r=R(n)
 return c.process(r,o),M('processSync','process',t),r
 function o(n){t=!0,e(n)}},c
 function c(){const e=t()
 let n=-1
 for(;++n<o.length;)e.use(...o[n])
-return e.data(s(!0,{},l)),e}}().freeze(),L={}.hasOwnProperty
-function T(e,n){return'function'==typeof e&&e.prototype&&(function(e){
+return e.data(s(!0,{},l)),e}}().freeze(),T={}.hasOwnProperty
+function L(e,n){return'function'==typeof e&&e.prototype&&(function(e){
 let n
-for(n in e)if(L.call(e,n))return!0
-return!1}(e.prototype)||n in e.prototype)}function I(e,n){
+for(n in e)if(T.call(e,n))return!0
+return!1}(e.prototype)||n in e.prototype)}function P(e,n){
 if('function'!=typeof n)throw new TypeError('Cannot `'+e+'` without `Parser`')
-}function O(e,n){
+}function I(e,n){
 if('function'!=typeof n)throw new TypeError('Cannot `'+e+'` without `Compiler`')
-}function P(e,n){
+}function O(e,n){
 if(n)throw new Error('Cannot call `'+e+'` on a frozen processor.\nCreate a new processor first, by calling it: use `processor()` instead of `processor`.')
 }function z(e){
 if(!f(e)||'string'!=typeof e.type)throw new TypeError('Expected node, got `'+e+'`')
@@ -245,7 +245,7 @@ if(!f(e)||'string'!=typeof e.type)throw new TypeError('Expected node, got `'+e+'
 if(!t)throw new Error('`'+e+'` finished async. Use `'+n+'` instead')}
 function R(e){return function(e){
 return Boolean(e&&'object'==typeof e&&'message'in e&&'messages'in e)
-}(e)?e:new S(e)}function B(e,n){
+}(e)?e:new w(e)}function B(e,n){
 return e&&'object'==typeof e&&(e.value||(n?e.alt:'')||'children'in e&&_(e.children,n)||Array.isArray(e)&&_(e,n))||''
 }function _(e,n){for(var t=[],r=-1;++r<e.length;)t[r]=B(e[r],n)
 return t.join('')}function j(e,n,t,r){const o=e.length
@@ -253,21 +253,21 @@ let i,l=0
 if(n=n<0?-n>o?0:o+n:n>o?o:n,t=t>0?t:0,r.length<1e4)i=Array.from(r),i.unshift(n,t),
 [].splice.apply(e,i)
 else for(t&&[].splice.apply(e,[n,t]);l<r.length;)i=r.slice(l,l+1e4),i.unshift(n,0),
-[].splice.apply(e,i),l+=1e4,n+=1e4}function N(e,n){
-return e.length>0?(j(e,e.length,0,n),e):n}const H={}.hasOwnProperty
-function U(e){const n={}
+[].splice.apply(e,i),l+=1e4,n+=1e4}function H(e,n){
+return e.length>0?(j(e,e.length,0,n),e):n}const U={}.hasOwnProperty
+function N(e){const n={}
 let t=-1
 for(;++t<e.length;)V(n,e[t])
 return n}function V(e,n){let t
-for(t in n){const r=(H.call(e,t)?e[t]:void 0)||(e[t]={}),o=n[t]
+for(t in n){const r=(U.call(e,t)?e[t]:void 0)||(e[t]={}),o=n[t]
 let i
-for(i in o){H.call(r,i)||(r[i]=[])
+for(i in o){U.call(r,i)||(r[i]=[])
 const e=o[i]
 q(r[i],Array.isArray(e)?e:e?[e]:[])}}}function q(e,n){let t=-1
 const r=[]
 for(;++t<n.length;)('after'===n[t].add?e:r).push(n[t])
 j(e,0,0,r)}
-const W=re(/[A-Za-z]/),$=re(/\d/),Q=re(/[\dA-Fa-f]/),X=re(/[\dA-Za-z]/),Y=re(/[!-/:-@[-`{-~]/),K=re(/[#-'*+\--9=?A-Z^-~]/)
+const W=re(/[A-Za-z]/),Q=re(/\d/),$=re(/[\dA-Fa-f]/),Y=re(/[\dA-Za-z]/),K=re(/[!-/:-@[-`{-~]/),X=re(/[#-'*+\--9=?A-Z^-~]/)
 function Z(e){return null!==e&&(e<32||127===e)}function J(e){
 return null!==e&&(e<0||32===e)}function G(e){return null!==e&&e<-2}
 function ee(e){return-2===e||-1===e||32===e}
@@ -368,12 +368,12 @@ end:Object.assign({},e[s][1].start)},r={type:u>1?'strong':'emphasis',
 start:Object.assign({},i.start),end:Object.assign({},l.end)
 },e[t][1].end=Object.assign({},i.start),
 e[s][1].start=Object.assign({},l.end),c=[],
-e[t][1].end.offset-e[t][1].start.offset&&(c=N(c,[['enter',e[t][1],n],['exit',e[t][1],n]])),
-c=N(c,[['enter',r,n],['enter',i,n],['exit',i,n],['enter',o,n]]),
-c=N(c,ae(n.parser.constructs.insideSpan.null,e.slice(t+1,s),n)),
-c=N(c,[['exit',o,n],['enter',l,n],['exit',l,n],['exit',r,n]]),
+e[t][1].end.offset-e[t][1].start.offset&&(c=H(c,[['enter',e[t][1],n],['exit',e[t][1],n]])),
+c=H(c,[['enter',r,n],['enter',i,n],['exit',i,n],['enter',o,n]]),
+c=H(c,ae(n.parser.constructs.insideSpan.null,e.slice(t+1,s),n)),
+c=H(c,[['exit',o,n],['enter',l,n],['exit',l,n],['exit',r,n]]),
 e[s][1].end.offset-e[s][1].start.offset?(a=2,
-c=N(c,[['enter',e[s][1],n],['exit',e[s][1],n]])):a=0,
+c=H(c,[['enter',e[s][1],n],['exit',e[s][1],n]])):a=0,
 j(e,t-1,s-t+3,c),s=t+c.length-a-2
 break}s=-1
 for(;++s<e.length;)'attentionSequence'===e[s][1].type&&(e[s][1].type='data')
@@ -383,19 +383,19 @@ name:'autolink',tokenize:function(e,n,t){let r=1
 return function(n){
 return e.enter('autolink'),e.enter('autolinkMarker'),e.consume(n),
 e.exit('autolinkMarker'),e.enter('autolinkProtocol'),o}
-function o(n){return W(n)?(e.consume(n),i):K(n)?c(n):t(n)}
-function i(e){return 43===e||45===e||46===e||X(e)?l(e):c(e)}
+function o(n){return W(n)?(e.consume(n),i):X(n)?c(n):t(n)}
+function i(e){return 43===e||45===e||46===e||Y(e)?l(e):c(e)}
 function l(n){
-return 58===n?(e.consume(n),u):(43===n||45===n||46===n||X(n))&&r++<32?(e.consume(n),
+return 58===n?(e.consume(n),u):(43===n||45===n||46===n||Y(n))&&r++<32?(e.consume(n),
 l):c(n)}function u(n){
 return 62===n?(e.exit('autolinkProtocol'),p(n)):null===n||32===n||60===n||Z(n)?t(n):(e.consume(n),
 u)}function c(n){
-return 64===n?(e.consume(n),r=0,a):K(n)?(e.consume(n),c):t(n)}
-function a(e){return X(e)?s(e):t(e)}function s(n){
+return 64===n?(e.consume(n),r=0,a):X(n)?(e.consume(n),c):t(n)}
+function a(e){return Y(e)?s(e):t(e)}function s(n){
 return 46===n?(e.consume(n),r=0,
 a):62===n?(e.exit('autolinkProtocol').type='autolinkEmail',p(n)):f(n)}
 function f(n){
-return(45===n||X(n))&&r++<63?(e.consume(n),45===n?f:s):t(n)}
+return(45===n||Y(n))&&r++<63?(e.consume(n),45===n?f:s):t(n)}
 function p(t){
 return e.enter('autolinkMarker'),e.consume(t),e.exit('autolinkMarker'),
 e.exit('autolink'),n}}}
@@ -418,7 +418,7 @@ return function(n){
 return e.enter('characterEscape'),e.enter('escapeMarker'),e.consume(n),
 e.exit('escapeMarker'),r}
 function r(r){
-return Y(r)?(e.enter('characterEscapeValue'),e.consume(r),e.exit('characterEscapeValue'),
+return K(r)?(e.enter('characterEscapeValue'),e.consume(r),e.exit('characterEscapeValue'),
 e.exit('characterEscape'),n):t(r)}}}
 const me=document.createElement('i')
 function ye(e){const n='&'+e+';'
@@ -434,13 +434,13 @@ e.consume(n),e.exit('characterReferenceMarker'),u}
 function u(n){
 return 35===n?(e.enter('characterReferenceMarkerNumeric'),e.consume(n),
 e.exit('characterReferenceMarkerNumeric'),
-c):(e.enter('characterReferenceValue'),o=31,i=X,a(n))}function c(n){
+c):(e.enter('characterReferenceValue'),o=31,i=Y,a(n))}function c(n){
 return 88===n||120===n?(e.enter('characterReferenceMarkerHexadecimal'),
 e.consume(n),
 e.exit('characterReferenceMarkerHexadecimal'),e.enter('characterReferenceValue'),
-o=6,i=Q,a):(e.enter('characterReferenceValue'),o=7,i=$,a(n))}
+o=6,i=$,a):(e.enter('characterReferenceValue'),o=7,i=Q,a(n))}
 function a(u){let c
-return 59===u&&l?(c=e.exit('characterReferenceValue'),i!==X||ye(r.sliceSerialize(c))?(e.enter('characterReferenceMarker'),
+return 59===u&&l?(c=e.exit('characterReferenceValue'),i!==Y||ye(r.sliceSerialize(c))?(e.enter('characterReferenceMarker'),
 e.consume(u),
 e.exit('characterReferenceMarker'),e.exit('characterReference'),n):t(u)):i(u)&&l++<o?(e.consume(u),
 a):t(u)}}}
@@ -500,7 +500,7 @@ e.consume(n),e.exit('lineEnding'),o):oe(e,i,'linePrefix',5)(n)}
 function i(e){const i=r.events[r.events.length-1]
 return i&&'linePrefix'===i[1].type&&i[2].sliceSerialize(i[1],!0).length>=4?n(e):G(e)?o(e):t(e)
 }},partial:!0}
-const we={name:'codeText',tokenize:function(e,n,t){let r,o,i=0
+const Ce={name:'codeText',tokenize:function(e,n,t){let r,o,i=0
 return function(n){
 return e.enter('codeText'),e.enter('codeTextSequence'),l(n)}
 function l(n){
@@ -525,19 +525,19 @@ e.splice(t+2,n-t-2),r-=n-t-2,n=t+2),t=void 0)
 return e},previous:function(e){
 return 96!==e||'characterEscape'===this.events[this.events.length-1][1].type
 }}
-function Ce(e){const n={}
+function Se(e){const n={}
 let t,r,o,i,l,u,c,a=-1
 for(;++a<e.length;){for(;a in n;)a=n[a]
 if(t=e[a],a&&'chunkFlow'===t[1].type&&'listItemPrefix'===e[a-1][1].type&&(u=t[1]._tokenizer.events,
 o=0,
 o<u.length&&'lineEndingBlank'===u[o][1].type&&(o+=2),o<u.length&&'content'===u[o][1].type))for(;++o<u.length&&'content'!==u[o][1].type;)'chunkText'===u[o][1].type&&(u[o][1]._isInFirstContentOfListItem=!0,
 o++)
-if('enter'===t[0])t[1].contentType&&(Object.assign(n,Se(e,a)),a=n[a],c=!0)
+if('enter'===t[0])t[1].contentType&&(Object.assign(n,we(e,a)),a=n[a],c=!0)
 else if(t[1]._container){
 for(o=a,r=void 0;o--&&(i=e[o],'lineEnding'===i[1].type||'lineEndingBlank'===i[1].type);)'enter'===i[0]&&(r&&(e[r][1].type='lineEndingBlank'),
 i[1].type='lineEnding',r=o)
 r&&(t[1].end=Object.assign({},e[r][1].start),l=e.slice(r,a),l.unshift(t),j(e,r,a-r+1,l))
-}}return!c}function Se(e,n){const t=e[n][1],r=e[n][2]
+}}return!c}function we(e,n){const t=e[n][1],r=e[n][2]
 let o=n-1
 const i=[],l=t._tokenizer||r.parser[t.contentType](t.start),u=l.events,c=[],a={}
 let s,f,p=-1,h=t,d=0,g=0
@@ -555,17 +555,17 @@ for(l.events=[],h?(h._tokenizer=void 0,h.previous=void 0):m.pop(),p=m.length;p--
 const n=u.slice(m[p],m[p+1]),t=i.pop()
 c.unshift([t,t+n.length-1]),j(e,t,2,n)}
 for(p=-1;++p<c.length;)a[d+c[p][0]]=d+c[p][1],d+=c[p][1]-c[p][0]-1
-return a}const Ae={tokenize:function(e,n){let t
+return a}const Fe={tokenize:function(e,n){let t
 return function(n){
 return e.enter('content'),t=e.enter('chunkContent',{
 contentType:'content'}),r(n)}
 function r(n){
-return null===n?o(n):G(n)?e.check(Fe,i,o)(n):(e.consume(n),r)}
+return null===n?o(n):G(n)?e.check(Ae,i,o)(n):(e.consume(n),r)}
 function o(t){return e.exit('chunkContent'),e.exit('content'),n(t)}
 function i(n){
 return e.consume(n),e.exit('chunkContent'),t.next=e.enter('chunkContent',{
 contentType:'content',previous:t}),t=t.next,r}},resolve:function(e){
-return Ce(e),e}},Fe={tokenize:function(e,n,t){const r=this
+return Se(e),e}},Ae={tokenize:function(e,n,t){const r=this
 return function(n){
 return e.exit('chunkContent'),e.enter('lineEnding'),e.consume(n),
 e.exit('lineEnding'),oe(e,o,'linePrefix')}
@@ -608,7 +608,7 @@ e.exit('lineEnding'),a):(e.enter('chunkString',{contentType:'string'
 return null===n||91===n||93===n||G(n)||c++>999?(e.exit('chunkString'),
 a(n)):(e.consume(n),u=u||!ee(n),92===n?f:s)}function f(n){
 return 91===n||92===n||93===n?(e.consume(n),c++,s):s(n)}}
-function Le(e,n,t,r,o,i){let l
+function Te(e,n,t,r,o,i){let l
 return function(n){
 return e.enter(r),e.enter(o),e.consume(n),e.exit(o),l=40===n?41:n,u}
 function u(t){
@@ -620,28 +620,28 @@ e.exit('lineEnding'),oe(e,c,'linePrefix')):(e.enter('chunkString',{
 contentType:'string'}),a(n))}function a(n){
 return n===l||null===n||G(n)?(e.exit('chunkString'),
 c(n)):(e.consume(n),92===n?s:a)}function s(n){
-return n===l||92===n?(e.consume(n),a):a(n)}}function Te(e,n){let t
+return n===l||92===n?(e.consume(n),a):a(n)}}function Le(e,n){let t
 return function r(o){
 if(G(o))return e.enter('lineEnding'),e.consume(o),e.exit('lineEnding'),
 t=!0,r
 if(ee(o))return oe(e,r,t?'linePrefix':'lineSuffix')(o)
-return n(o)}}function Ie(e){
+return n(o)}}function Pe(e){
 return e.replace(/[\t\n\r ]+/g,' ').replace(/^ | $/g,'').toLowerCase().toUpperCase()
-}const Oe={name:'definition',tokenize:function(e,n,t){const r=this
+}const Ie={name:'definition',tokenize:function(e,n,t){const r=this
 let o
 return function(n){
 return e.enter('definition'),De.call(r,e,i,t,'definitionLabel','definitionLabelMarker','definitionLabelString')(n)
 }
 function i(n){
-return o=Ie(r.sliceSerialize(r.events[r.events.length-1][1]).slice(1,-1)),
+return o=Pe(r.sliceSerialize(r.events[r.events.length-1][1]).slice(1,-1)),
 58===n?(e.enter('definitionMarker'),
-e.consume(n),e.exit('definitionMarker'),Te(e,Ee(e,e.attempt(Pe,oe(e,l,'whitespace'),oe(e,l,'whitespace')),t,'definitionDestination','definitionDestinationLiteral','definitionDestinationLiteralMarker','definitionDestinationRaw','definitionDestinationString'))):t(n)
+e.consume(n),e.exit('definitionMarker'),Le(e,Ee(e,e.attempt(Oe,oe(e,l,'whitespace'),oe(e,l,'whitespace')),t,'definitionDestination','definitionDestinationLiteral','definitionDestinationLiteralMarker','definitionDestinationRaw','definitionDestinationString'))):t(n)
 }function l(i){
 return null===i||G(i)?(e.exit('definition'),r.parser.defined.includes(o)||r.parser.defined.push(o),
-n(i)):t(i)}}},Pe={tokenize:function(e,n,t){return function(n){
-return J(n)?Te(e,r)(n):t(n)}
+n(i)):t(i)}}},Oe={tokenize:function(e,n,t){return function(n){
+return J(n)?Le(e,r)(n):t(n)}
 function r(n){
-return 34===n||39===n||40===n?Le(e,oe(e,o,'whitespace'),t,'definitionTitle','definitionTitleMarker','definitionTitleString')(n):t(n)
+return 34===n||39===n||40===n?Te(e,oe(e,o,'whitespace'),t,'definitionTitle','definitionTitleMarker','definitionTitleString')(n):t(n)
 }function o(e){return null===e||G(e)?n(e):t(e)}},partial:!0}
 const ze={name:'hardBreakEscape',tokenize:function(e,n,t){
 return function(n){
@@ -687,46 +687,46 @@ return 45===i?(e.consume(i),o=2,f):91===i?(e.consume(i),o=5,l='CDATA[',
 u=0,p):W(i)?(e.consume(i),o=4,r.interrupt?n:z):t(i)}function f(o){
 return 45===o?(e.consume(o),r.interrupt?n:z):t(o)}function p(o){
 return o===l.charCodeAt(u++)?(e.consume(o),
-u===l.length?r.interrupt?n:F:p):t(o)}function h(n){
+u===l.length?r.interrupt?n:A:p):t(o)}function h(n){
 return W(n)?(e.consume(n),l=String.fromCharCode(n),d):t(n)}
 function d(u){
 return null===u||47===u||62===u||J(u)?47!==u&&i&&Be.includes(l.toLowerCase())?(o=1,
-r.interrupt?n(u):F(u)):Re.includes(l.toLowerCase())?(o=6,
-47===u?(e.consume(u),g):r.interrupt?n(u):F(u)):(o=7,
-r.interrupt&&!r.parser.lazy[r.now().line]?t(u):i?y(u):m(u)):45===u||X(u)?(e.consume(u),
+r.interrupt?n(u):A(u)):Re.includes(l.toLowerCase())?(o=6,
+47===u?(e.consume(u),g):r.interrupt?n(u):A(u)):(o=7,
+r.interrupt&&!r.parser.lazy[r.now().line]?t(u):i?y(u):m(u)):45===u||Y(u)?(e.consume(u),
 l+=String.fromCharCode(u),d):t(u)}function g(o){
-return 62===o?(e.consume(o),r.interrupt?n:F):t(o)}function m(n){
-return ee(n)?(e.consume(n),m):S(n)}function y(n){
-return 47===n?(e.consume(n),S):58===n||95===n||W(n)?(e.consume(n),
-k):ee(n)?(e.consume(n),y):S(n)}function k(n){
-return 45===n||46===n||58===n||95===n||X(n)?(e.consume(n),k):x(n)}
+return 62===o?(e.consume(o),r.interrupt?n:A):t(o)}function m(n){
+return ee(n)?(e.consume(n),m):w(n)}function y(n){
+return 47===n?(e.consume(n),w):58===n||95===n||W(n)?(e.consume(n),
+k):ee(n)?(e.consume(n),y):w(n)}function k(n){
+return 45===n||46===n||58===n||95===n||Y(n)?(e.consume(n),k):x(n)}
 function x(n){
 return 61===n?(e.consume(n),b):ee(n)?(e.consume(n),x):y(n)}
 function b(n){
 return null===n||60===n||61===n||62===n||96===n?t(n):34===n||39===n?(e.consume(n),
-c=n,v):ee(n)?(e.consume(n),b):(c=null,w(n))}function v(n){
-return null===n||G(n)?t(n):n===c?(e.consume(n),C):(e.consume(n),v)}
-function w(n){
+c=n,v):ee(n)?(e.consume(n),b):(c=null,C(n))}function v(n){
+return null===n||G(n)?t(n):n===c?(e.consume(n),S):(e.consume(n),v)}
+function C(n){
 return null===n||34===n||39===n||60===n||61===n||62===n||96===n||J(n)?x(n):(e.consume(n),
-w)}function C(e){return 47===e||62===e||ee(e)?y(e):t(e)}function S(n){
-return 62===n?(e.consume(n),A):t(n)}function A(n){
-return ee(n)?(e.consume(n),A):null===n||G(n)?F(n):t(n)}function F(n){
+C)}function S(e){return 47===e||62===e||ee(e)?y(e):t(e)}function w(n){
+return 62===n?(e.consume(n),F):t(n)}function F(n){
+return ee(n)?(e.consume(n),F):null===n||G(n)?A(n):t(n)}function A(n){
 return 45===n&&2===o?(e.consume(n),
-T):60===n&&1===o?(e.consume(n),I):62===n&&4===o?(e.consume(n),
+L):60===n&&1===o?(e.consume(n),P):62===n&&4===o?(e.consume(n),
 M):63===n&&3===o?(e.consume(n),
-z):93===n&&5===o?(e.consume(n),P):!G(n)||6!==o&&7!==o?null===n||G(n)?E(n):(e.consume(n),
-F):e.check(je,M,E)(n)}function E(n){return e.exit('htmlFlowData'),D(n)
-}function D(n){return null===n?R(n):G(n)?e.attempt({tokenize:L,
-partial:!0},D,R)(n):(e.enter('htmlFlowData'),F(n))}function L(e,n,t){
+z):93===n&&5===o?(e.consume(n),O):!G(n)||6!==o&&7!==o?null===n||G(n)?E(n):(e.consume(n),
+A):e.check(je,M,E)(n)}function E(n){return e.exit('htmlFlowData'),D(n)
+}function D(n){return null===n?R(n):G(n)?e.attempt({tokenize:T,
+partial:!0},D,R)(n):(e.enter('htmlFlowData'),A(n))}function T(e,n,t){
 return function(n){
 return e.enter('lineEnding'),e.consume(n),e.exit('lineEnding'),o}
 function o(e){return r.parser.lazy[r.now().line]?t(e):n(e)}}
-function T(n){return 45===n?(e.consume(n),z):F(n)}function I(n){
-return 47===n?(e.consume(n),l='',O):F(n)}function O(n){
+function L(n){return 45===n?(e.consume(n),z):A(n)}function P(n){
+return 47===n?(e.consume(n),l='',I):A(n)}function I(n){
 return 62===n&&Be.includes(l.toLowerCase())?(e.consume(n),
-M):W(n)&&l.length<8?(e.consume(n),l+=String.fromCharCode(n),O):F(n)}
-function P(n){return 93===n?(e.consume(n),z):F(n)}function z(n){
-return 62===n?(e.consume(n),M):45===n&&2===o?(e.consume(n),z):F(n)}
+M):W(n)&&l.length<8?(e.consume(n),l+=String.fromCharCode(n),I):A(n)}
+function O(n){return 93===n?(e.consume(n),z):A(n)}function z(n){
+return 62===n?(e.consume(n),M):45===n&&2===o?(e.consume(n),z):A(n)}
 function M(n){
 return null===n||G(n)?(e.exit('htmlFlowData'),R(n)):(e.consume(n),M)}
 function R(t){return e.exit('htmlFlow'),n(t)}},resolveTo:function(e){
@@ -738,66 +738,66 @@ return e},concrete:!0},je={tokenize:function(e,n,t){
 return function(r){
 return e.exit('htmlFlowData'),e.enter('lineEndingBlank'),e.consume(r),
 e.exit('lineEndingBlank'),e.attempt(he,n,t)}},partial:!0}
-const Ne={name:'htmlText',tokenize:function(e,n,t){const r=this
+const He={name:'htmlText',tokenize:function(e,n,t){const r=this
 let o,i,l,u
 return function(n){
 return e.enter('htmlText'),e.enter('htmlTextData'),e.consume(n),c}
 function c(n){
-return 33===n?(e.consume(n),a):47===n?(e.consume(n),w):63===n?(e.consume(n),
-b):W(n)?(e.consume(n),A):t(n)}function a(n){
+return 33===n?(e.consume(n),a):47===n?(e.consume(n),C):63===n?(e.consume(n),
+b):W(n)?(e.consume(n),F):t(n)}function a(n){
 return 45===n?(e.consume(n),s):91===n?(e.consume(n),
 i='CDATA[',l=0,g):W(n)?(e.consume(n),x):t(n)}function s(n){
 return 45===n?(e.consume(n),f):t(n)}function f(n){
 return null===n||62===n?t(n):45===n?(e.consume(n),p):h(n)}
 function p(e){return null===e||62===e?t(e):h(e)}function h(n){
 return null===n?t(n):45===n?(e.consume(n),
-d):G(n)?(u=h,P(n)):(e.consume(n),h)}function d(n){
+d):G(n)?(u=h,O(n)):(e.consume(n),h)}function d(n){
 return 45===n?(e.consume(n),M):h(n)}function g(n){
 return n===i.charCodeAt(l++)?(e.consume(n),l===i.length?m:g):t(n)}
 function m(n){
-return null===n?t(n):93===n?(e.consume(n),y):G(n)?(u=m,P(n)):(e.consume(n),
+return null===n?t(n):93===n?(e.consume(n),y):G(n)?(u=m,O(n)):(e.consume(n),
 m)}function y(n){return 93===n?(e.consume(n),k):m(n)}function k(n){
 return 62===n?M(n):93===n?(e.consume(n),k):m(n)}function x(n){
-return null===n||62===n?M(n):G(n)?(u=x,P(n)):(e.consume(n),x)}
+return null===n||62===n?M(n):G(n)?(u=x,O(n)):(e.consume(n),x)}
 function b(n){
-return null===n?t(n):63===n?(e.consume(n),v):G(n)?(u=b,P(n)):(e.consume(n),
-b)}function v(e){return 62===e?M(e):b(e)}function w(n){
-return W(n)?(e.consume(n),C):t(n)}function C(n){
-return 45===n||X(n)?(e.consume(n),C):S(n)}function S(n){
-return G(n)?(u=S,P(n)):ee(n)?(e.consume(n),S):M(n)}function A(n){
-return 45===n||X(n)?(e.consume(n),A):47===n||62===n||J(n)?F(n):t(n)}
-function F(n){
+return null===n?t(n):63===n?(e.consume(n),v):G(n)?(u=b,O(n)):(e.consume(n),
+b)}function v(e){return 62===e?M(e):b(e)}function C(n){
+return W(n)?(e.consume(n),S):t(n)}function S(n){
+return 45===n||Y(n)?(e.consume(n),S):w(n)}function w(n){
+return G(n)?(u=w,O(n)):ee(n)?(e.consume(n),w):M(n)}function F(n){
+return 45===n||Y(n)?(e.consume(n),F):47===n||62===n||J(n)?A(n):t(n)}
+function A(n){
 return 47===n?(e.consume(n),M):58===n||95===n||W(n)?(e.consume(n),
-E):G(n)?(u=F,P(n)):ee(n)?(e.consume(n),F):M(n)}function E(n){
-return 45===n||46===n||58===n||95===n||X(n)?(e.consume(n),E):D(n)}
+E):G(n)?(u=A,O(n)):ee(n)?(e.consume(n),A):M(n)}function E(n){
+return 45===n||46===n||58===n||95===n||Y(n)?(e.consume(n),E):D(n)}
 function D(n){
-return 61===n?(e.consume(n),L):G(n)?(u=D,P(n)):ee(n)?(e.consume(n),
-D):F(n)}function L(n){
+return 61===n?(e.consume(n),T):G(n)?(u=D,O(n)):ee(n)?(e.consume(n),
+D):A(n)}function T(n){
 return null===n||60===n||61===n||62===n||96===n?t(n):34===n||39===n?(e.consume(n),
 o=n,
-T):G(n)?(u=L,P(n)):ee(n)?(e.consume(n),L):(e.consume(n),o=void 0,O)}
-function T(n){
-return n===o?(e.consume(n),I):null===n?t(n):G(n)?(u=T,P(n)):(e.consume(n),
-T)}function I(e){return 62===e||47===e||J(e)?F(e):t(e)}function O(n){
-return null===n||34===n||39===n||60===n||61===n||96===n?t(n):62===n||J(n)?F(n):(e.consume(n),
-O)}function P(n){
+L):G(n)?(u=T,O(n)):ee(n)?(e.consume(n),T):(e.consume(n),o=void 0,I)}
+function L(n){
+return n===o?(e.consume(n),P):null===n?t(n):G(n)?(u=L,O(n)):(e.consume(n),
+L)}function P(e){return 62===e||47===e||J(e)?A(e):t(e)}function I(n){
+return null===n||34===n||39===n||60===n||61===n||96===n?t(n):62===n||J(n)?A(n):(e.consume(n),
+I)}function O(n){
 return e.exit('htmlTextData'),e.enter('lineEnding'),e.consume(n),
 e.exit('lineEnding'),
 oe(e,z,'linePrefix',r.parser.constructs.disable.null.includes('codeIndented')?void 0:4)
 }function z(n){return e.enter('htmlTextData'),u(n)}function M(r){
 return 62===r?(e.consume(r),
 e.exit('htmlTextData'),e.exit('htmlText'),n):t(r)}}}
-const He={name:'labelEnd',tokenize:function(e,n,t){const r=this
+const Ue={name:'labelEnd',tokenize:function(e,n,t){const r=this
 let o,i,l=r.events.length
 for(;l--;)if(('labelImage'===r.events[l][1].type||'labelLink'===r.events[l][1].type)&&!r.events[l][1]._balanced){
 o=r.events[l][1]
 break}return function(n){if(!o)return t(n)
-return o._inactive?c(n):(i=r.parser.defined.includes(Ie(r.sliceSerialize({
+return o._inactive?c(n):(i=r.parser.defined.includes(Pe(r.sliceSerialize({
 start:o.end,end:r.now()
 }))),e.enter('labelEnd'),e.enter('labelMarker'),e.consume(n),
 e.exit('labelMarker'),e.exit('labelEnd'),u)}
 function u(t){
-return 40===t?e.attempt(Ue,n,i?n:c)(t):91===t?e.attempt(Ve,n,i?e.attempt(qe,n,c):c)(t):i?n(t):c(t)
+return 40===t?e.attempt(Ne,n,i?n:c)(t):91===t?e.attempt(Ve,n,i?e.attempt(qe,n,c):c)(t):i?n(t):c(t)
 }function c(e){return o._balanced=!0,t(e)}},resolveTo:function(e,n){
 let t,r,o,i,l=e.length,u=0
 for(;l--;)if(t=e[l][1],r){
@@ -813,21 +813,21 @@ start:Object.assign({},e[r][1].start),
 end:Object.assign({},e[o][1].end)},s={type:'labelText',
 start:Object.assign({},e[r+u+2][1].end),
 end:Object.assign({},e[o-2][1].start)}
-return i=[['enter',c,n],['enter',a,n]],i=N(i,e.slice(r+1,r+u+3)),i=N(i,[['enter',s,n]]),
-i=N(i,ae(n.parser.constructs.insideSpan.null,e.slice(r+u+4,o-3),n)),
-i=N(i,[['exit',s,n],e[o-2],e[o-1],['exit',a,n]]),
-i=N(i,e.slice(o+1)),i=N(i,[['exit',c,n]]),j(e,r,e.length,i),e},
+return i=[['enter',c,n],['enter',a,n]],i=H(i,e.slice(r+1,r+u+3)),i=H(i,[['enter',s,n]]),
+i=H(i,ae(n.parser.constructs.insideSpan.null,e.slice(r+u+4,o-3),n)),
+i=H(i,[['exit',s,n],e[o-2],e[o-1],['exit',a,n]]),
+i=H(i,e.slice(o+1)),i=H(i,[['exit',c,n]]),j(e,r,e.length,i),e},
 resolveAll:function(e){let n,t=-1
 for(;++t<e.length;)n=e[t][1],'labelImage'!==n.type&&'labelLink'!==n.type&&'labelEnd'!==n.type||(e.splice(t+1,'labelImage'===n.type?4:2),
 n.type='data',t++)
-return e}},Ue={tokenize:function(e,n,t){return function(n){
+return e}},Ne={tokenize:function(e,n,t){return function(n){
 return e.enter('resource'),
 e.enter('resourceMarker'),e.consume(n),e.exit('resourceMarker'),
-Te(e,r)}
+Le(e,r)}
 function r(n){
 return 41===n?l(n):Ee(e,o,t,'resourceDestination','resourceDestinationLiteral','resourceDestinationLiteralMarker','resourceDestinationRaw','resourceDestinationString',32)(n)
-}function o(n){return J(n)?Te(e,i)(n):l(n)}function i(n){
-return 34===n||39===n||40===n?Le(e,Te(e,l),t,'resourceTitle','resourceTitleMarker','resourceTitleString')(n):l(n)
+}function o(n){return J(n)?Le(e,i)(n):l(n)}function i(n){
+return 34===n||39===n||40===n?Te(e,Le(e,l),t,'resourceTitle','resourceTitleMarker','resourceTitleString')(n):l(n)
 }function l(r){
 return 41===r?(e.enter('resourceMarker'),e.consume(r),e.exit('resourceMarker'),
 e.exit('resource'),n):t(r)}}},Ve={tokenize:function(e,n,t){
@@ -836,7 +836,7 @@ return function(n){
 return De.call(r,e,o,t,'reference','referenceMarker','referenceString')(n)
 }
 function o(e){
-return r.parser.defined.includes(Ie(r.sliceSerialize(r.events[r.events.length-1][1]).slice(1,-1)))?n(e):t(e)
+return r.parser.defined.includes(Pe(r.sliceSerialize(r.events[r.events.length-1][1]).slice(1,-1)))?n(e):t(e)
 }}},qe={tokenize:function(e,n,t){return function(n){
 return e.enter('reference'),
 e.enter('referenceMarker'),e.consume(n),e.exit('referenceMarker'),r}
@@ -851,41 +851,41 @@ function o(n){
 return 91===n?(e.enter('labelMarker'),e.consume(n),e.exit('labelMarker'),
 e.exit('labelImage'),i):t(n)}function i(e){
 return 94===e&&'_hiddenFootnoteSupport'in r.parser.constructs?t(e):n(e)
-}},resolveAll:He.resolveAll}
-const $e={name:'labelStartLink',tokenize:function(e,n,t){const r=this
+}},resolveAll:Ue.resolveAll}
+const Qe={name:'labelStartLink',tokenize:function(e,n,t){const r=this
 return function(n){
 return e.enter('labelLink'),e.enter('labelMarker'),e.consume(n),
 e.exit('labelMarker'),e.exit('labelLink'),o}
 function o(e){
 return 94===e&&'_hiddenFootnoteSupport'in r.parser.constructs?t(e):n(e)
-}},resolveAll:He.resolveAll}
-const Qe={name:'lineEnding',tokenize:function(e,n){return function(t){
+}},resolveAll:Ue.resolveAll}
+const $e={name:'lineEnding',tokenize:function(e,n){return function(t){
 return e.enter('lineEnding'),
 e.consume(t),e.exit('lineEnding'),oe(e,n,'linePrefix')}}}
-const Xe={name:'thematicBreak',tokenize:function(e,n,t){let r,o=0
+const Ye={name:'thematicBreak',tokenize:function(e,n,t){let r,o=0
 return function(n){return e.enter('thematicBreak'),r=n,i(n)}
 function i(u){
 return u===r?(e.enter('thematicBreakSequence'),l(u)):ee(u)?oe(e,i,'whitespace')(u):o<3||null!==u&&!G(u)?t(u):(e.exit('thematicBreak'),
 n(u))}function l(n){
 return n===r?(e.consume(n),o++,l):(e.exit('thematicBreakSequence'),
 i(n))}}}
-const Ye={name:'list',tokenize:function(e,n,t){
+const Ke={name:'list',tokenize:function(e,n,t){
 const r=this,o=r.events[r.events.length-1]
 let i=o&&'linePrefix'===o[1].type?o[2].sliceSerialize(o[1],!0).length:0,l=0
 return function(n){
 const o=r.containerState.type||(42===n||43===n||45===n?'listUnordered':'listOrdered')
-if('listUnordered'===o?!r.containerState.marker||n===r.containerState.marker:$(n)){
+if('listUnordered'===o?!r.containerState.marker||n===r.containerState.marker:Q(n)){
 if(r.containerState.type||(r.containerState.type=o,e.enter(o,{
 _container:!0
-})),'listUnordered'===o)return e.enter('listItemPrefix'),42===n||45===n?e.check(Xe,t,c)(n):c(n)
+})),'listUnordered'===o)return e.enter('listItemPrefix'),42===n||45===n?e.check(Ye,t,c)(n):c(n)
 if(!r.interrupt||49===n)return e.enter('listItemPrefix'),e.enter('listItemValue'),
 u(n)}return t(n)}
 function u(n){
-return $(n)&&++l<10?(e.consume(n),u):(!r.interrupt||l<2)&&(r.containerState.marker?n===r.containerState.marker:41===n||46===n)?(e.exit('listItemValue'),
+return Q(n)&&++l<10?(e.consume(n),u):(!r.interrupt||l<2)&&(r.containerState.marker?n===r.containerState.marker:41===n||46===n)?(e.exit('listItemValue'),
 c(n)):t(n)}function c(n){
 return e.enter('listItemMarker'),e.consume(n),e.exit('listItemMarker'),
 r.containerState.marker=r.containerState.marker||n,
-e.check(he,r.interrupt?t:a,e.attempt(Ke,f,s))}function a(e){
+e.check(he,r.interrupt?t:a,e.attempt(Xe,f,s))}function a(e){
 return r.containerState.initialBlankLine=!0,i++,f(e)}function s(n){
 return ee(n)?(e.enter('listItemPrefixWhitespace'),
 e.consume(n),e.exit('listItemPrefixWhitespace'),f):t(n)}function f(t){
@@ -900,8 +900,8 @@ r.containerState.initialBlankLine=void 0,
 l(t)):(r.containerState.furtherBlankLines=void 0,
 r.containerState.initialBlankLine=void 0,e.attempt(Ze,n,l)(t))}
 function l(o){
-return r.containerState._closeFlow=!0,r.interrupt=void 0,oe(e,e.attempt(Ye,n,t),'linePrefix',r.parser.constructs.disable.null.includes('codeIndented')?void 0:4)(o)
-}}},exit:function(e){e.exit(this.containerState.type)}},Ke={
+return r.containerState._closeFlow=!0,r.interrupt=void 0,oe(e,e.attempt(Ke,n,t),'linePrefix',r.parser.constructs.disable.null.includes('codeIndented')?void 0:4)(o)
+}}},exit:function(e){e.exit(this.containerState.type)}},Xe={
 tokenize:function(e,n,t){const r=this
 return oe(e,(function(e){const o=r.events[r.events.length-1]
 return!ee(e)&&o&&'listItemPrefixWhitespace'===o[1].type?n(e):t(e)
@@ -937,7 +937,7 @@ const n=this,t=e.attempt(he,(function(r){
 if(null===r)return void e.consume(r)
 return e.enter('lineEndingBlank'),e.consume(r),e.exit('lineEndingBlank'),n.currentConstruct=void 0,
 t
-}),e.attempt(this.parser.constructs.flowInitial,r,oe(e,e.attempt(this.parser.constructs.flow,r,e.attempt(Ae,r)),'linePrefix')))
+}),e.attempt(this.parser.constructs.flowInitial,r,oe(e,e.attempt(this.parser.constructs.flow,r,e.attempt(Fe,r)),'linePrefix')))
 return t
 function r(r){
 if(null!==r)return e.enter('lineEnding'),e.consume(r),e.exit('lineEnding'),
@@ -1011,7 +1011,7 @@ l=' '
 break
 default:l=String.fromCharCode(i)}o=-2===i,r.push(l)}return r.join('')
 }(f(e),n)},now:p,defineSkip:function(e){o[e.line]=e.column,k()},
-write:function(e){if(l=N(l,e),h(),null!==l[l.length-1])return[]
+write:function(e){if(l=H(l,e),h(),null!==l[l.length-1])return[]
 return y(n,0),a.events=ae(i,a.events,a),a.events}}
 let s=n.tokenize.call(a,c)
 return n.resolveAll&&i.push(n),a
@@ -1045,11 +1045,11 @@ e.resolveAll&&!i.includes(e)&&i.push(e),
 e.resolve&&j(a.events,n,a.events.length-n,e.resolve(a.events.slice(n),a)),
 e.resolveTo&&(a.events=e.resolveTo(a.events,a))}function k(){
 r.line in o&&r.column<2&&(r.column=o[r.line],r.offset+=o[r.line]-1)}}
-const cn={42:Ye,43:Ye,45:Ye,48:Ye,49:Ye,50:Ye,51:Ye,52:Ye,53:Ye,54:Ye,
-55:Ye,56:Ye,57:Ye,62:de},an={91:Oe},sn={[-2]:be,[-1]:be,32:be},fn={
-35:Me,42:Xe,45:[Je,Xe],60:_e,61:Je,95:Xe,96:xe,126:xe},pn={38:ke,92:ge
-},hn={[-5]:Qe,[-4]:Qe,[-3]:Qe,33:We,38:ke,42:se,60:[pe,Ne],91:$e,
-92:[ze,ge],93:He,95:se,96:we},dn={null:[se,en]}
+const cn={42:Ke,43:Ke,45:Ke,48:Ke,49:Ke,50:Ke,51:Ke,52:Ke,53:Ke,54:Ke,
+55:Ke,56:Ke,57:Ke,62:de},an={91:Ie},sn={[-2]:be,[-1]:be,32:be},fn={
+35:Me,42:Ye,45:[Je,Ye],60:_e,61:Je,95:Ye,96:xe,126:xe},pn={38:ke,92:ge
+},hn={[-5]:$e,[-4]:$e,[-3]:$e,33:We,38:ke,42:se,60:[pe,He],91:Qe,
+92:[ze,ge],93:Ue,95:se,96:Ce},dn={null:[se,en]}
 var gn=Object.freeze({__proto__:null,document:cn,contentInitial:an,
 flowInitial:sn,flow:fn,string:pn,text:hn,insideSpan:dn,
 attentionMarkers:{null:[42,95]},disable:{null:[]}})
@@ -1062,37 +1062,37 @@ function xn(e){return e.replace(kn,bn)}function bn(e,n,t){
 if(n)return n
 if(35===t.charCodeAt(0)){const e=t.charCodeAt(1),n=120===e||88===e
 return yn(t.slice(n?2:1),n?16:10)}return ye(t)||e}
-const vn={}.hasOwnProperty,wn=function(e,n,t){
-return'string'!=typeof n&&(t=n,n=void 0),function(e={}){const n=Cn({
+const vn={}.hasOwnProperty,Cn=function(e,n,t){
+return'string'!=typeof n&&(t=n,n=void 0),function(e={}){const n=Sn({
 transforms:[],
 canContainEols:['emphasis','fragment','heading','paragraph','strong'],
-enter:{autolink:c(ie),autolinkProtocol:L,autolinkEmail:L,
-atxHeading:c(ne),blockQuote:c(K),characterEscape:L,
-characterReference:L,codeFenced:c(Z),codeFencedFenceInfo:a,
+enter:{autolink:c(ie),autolinkProtocol:T,autolinkEmail:T,
+atxHeading:c(ne),blockQuote:c(X),characterEscape:T,
+characterReference:T,codeFenced:c(Z),codeFencedFenceInfo:a,
 codeFencedFenceMeta:a,codeIndented:c(Z,a),codeText:c(J,a),
-codeTextData:L,data:L,codeFlowValue:L,definition:c(G),
+codeTextData:T,data:T,codeFlowValue:T,definition:c(G),
 definitionDestinationString:a,definitionLabelString:a,
 definitionTitleString:a,emphasis:c(ee),hardBreakEscape:c(te),
-hardBreakTrailing:c(te),htmlFlow:c(re,a),htmlFlowData:L,
-htmlText:c(re,a),htmlTextData:L,image:c(oe),label:a,link:c(ie),
+hardBreakTrailing:c(te),htmlFlow:c(re,a),htmlFlowData:T,
+htmlText:c(re,a),htmlTextData:T,image:c(oe),label:a,link:c(ie),
 listItem:c(ue),listItemValue:m,listOrdered:c(le,g),
 listUnordered:c(le),paragraph:c(ce),reference:q,referenceString:a,
 resourceDestinationString:a,resourceTitleString:a,setextHeading:c(ne),
 strong:c(ae),thematicBreak:c(fe)},exit:{atxHeading:f(),
-atxHeadingSequence:A,autolink:f(),autolinkEmail:Y,autolinkProtocol:X,
-blockQuote:f(),characterEscapeValue:T,
-characterReferenceMarkerHexadecimal:$,
-characterReferenceMarkerNumeric:$,characterReferenceValue:Q,
+atxHeadingSequence:F,autolink:f(),autolinkEmail:K,autolinkProtocol:Y,
+blockQuote:f(),characterEscapeValue:L,
+characterReferenceMarkerHexadecimal:Q,
+characterReferenceMarkerNumeric:Q,characterReferenceValue:$,
 codeFenced:f(b),codeFencedFence:x,codeFencedFenceInfo:y,
-codeFencedFenceMeta:k,codeFlowValue:T,codeIndented:f(v),codeText:f(M),
-codeTextData:T,data:T,definition:f(),definitionDestinationString:S,
-definitionLabelString:w,definitionTitleString:C,emphasis:f(),
-hardBreakEscape:f(O),hardBreakTrailing:f(O),htmlFlow:f(P),
-htmlFlowData:T,htmlText:f(z),htmlTextData:T,image:f(_),label:N,
-labelText:j,lineEnding:I,link:f(R),listItem:f(),listOrdered:f(),
+codeFencedFenceMeta:k,codeFlowValue:L,codeIndented:f(v),codeText:f(M),
+codeTextData:L,data:L,definition:f(),definitionDestinationString:w,
+definitionLabelString:C,definitionTitleString:S,emphasis:f(),
+hardBreakEscape:f(I),hardBreakTrailing:f(I),htmlFlow:f(O),
+htmlFlowData:L,htmlText:f(z),htmlTextData:L,image:f(_),label:H,
+labelText:j,lineEnding:P,link:f(R),listItem:f(),listOrdered:f(),
 listUnordered:f(),paragraph:f(),referenceString:W,
-resourceDestinationString:H,resourceTitleString:U,resource:V,
-setextHeading:f(D),setextHeadingLineSequence:E,setextHeadingText:F,
+resourceDestinationString:U,resourceTitleString:N,resource:V,
+setextHeading:f(D),setextHeadingLineSequence:E,setextHeadingText:A,
 strong:f(),thematicBreak:f()}},e.mdastExtensions||[]),t={}
 return r
 function r(e){let t={type:'root',children:[]}
@@ -1103,7 +1103,7 @@ for(;++h<e.length;)if('listOrdered'===e[h][1].type||'listUnordered'===e[h][1].ty
 else{h=o(e,c.pop(),h)}for(h=-1;++h<e.length;){const t=n[e[h][0]]
 vn.call(t,e[h][1].type)&&t[e[h][1].type].call(Object.assign({
 sliceSerialize:e[h][2].sliceSerialize},f),e[h][1])}if(r.length>0){
-const e=r[r.length-1];(e[1]||An).call(f,void 0,e[0])}for(t.position={
+const e=r[r.length-1];(e[1]||Fn).call(f,void 0,e[0])}for(t.position={
 start:u(e.length>0?e[0][1].start:{line:1,column:1,offset:0}),
 end:u(e.length>0?e[e.length-2][1].end:{line:1,column:1,offset:0})
 },h=-1;++h<n.transforms.length;)t=n.transforms[h](t)||t
@@ -1137,7 +1137,7 @@ const t=this.stack.pop(),r=this.tokenStack.pop()
 if(!r)throw new Error('Cannot close `'+e.type+'` ('+h({start:e.start,
 end:e.end})+'): it’s not open')
 if(r[0].type!==e.type)if(n)n.call(this,e,r[0])
-else{(r[1]||An).call(this,e,r[0])}return t.position.end=u(e.end),t}
+else{(r[1]||Fn).call(this,e,r[0])}return t.position.end=u(e.end),t}
 function d(){return function(e,n){var{includeImageAlt:t=!0}=n||{}
 return B(e,t)}(this.stack.pop())}function g(){
 i('expectingFirstListItemValue',!0)}function m(e){
@@ -1152,30 +1152,30 @@ function b(){const e=this.resume()
 this.stack[this.stack.length-1].value=e.replace(/^(\r?\n|\r)|(\r?\n|\r)$/g,''),i('flowCodeInside')
 }function v(){const e=this.resume()
 this.stack[this.stack.length-1].value=e.replace(/(\r?\n|\r)$/g,'')}
-function w(e){const n=this.resume(),t=this.stack[this.stack.length-1]
-t.label=n,t.identifier=Ie(this.sliceSerialize(e)).toLowerCase()}
-function C(){const e=this.resume()
-this.stack[this.stack.length-1].title=e}function S(){
+function C(e){const n=this.resume(),t=this.stack[this.stack.length-1]
+t.label=n,t.identifier=Pe(this.sliceSerialize(e)).toLowerCase()}
+function S(){const e=this.resume()
+this.stack[this.stack.length-1].title=e}function w(){
 const e=this.resume()
-this.stack[this.stack.length-1].url=e}function A(e){
+this.stack[this.stack.length-1].url=e}function F(e){
 const n=this.stack[this.stack.length-1]
 if(!n.depth){const t=this.sliceSerialize(e).length
-n.depth=t}}function F(){i('setextHeadingSlurpLineEnding',!0)}
+n.depth=t}}function A(){i('setextHeadingSlurpLineEnding',!0)}
 function E(e){
 this.stack[this.stack.length-1].depth=61===this.sliceSerialize(e).charCodeAt(0)?1:2
-}function D(){i('setextHeadingSlurpLineEnding')}function L(e){
+}function D(){i('setextHeadingSlurpLineEnding')}function T(e){
 const n=this.stack[this.stack.length-1]
 let t=n.children[n.children.length-1]
 t&&'text'===t.type||(t=se(),t.position={start:u(e.start)
-},n.children.push(t)),this.stack.push(t)}function T(e){
+},n.children.push(t)),this.stack.push(t)}function L(e){
 const n=this.stack.pop()
-n.value+=this.sliceSerialize(e),n.position.end=u(e.end)}function I(e){
+n.value+=this.sliceSerialize(e),n.position.end=u(e.end)}function P(e){
 const t=this.stack[this.stack.length-1]
 if(l('atHardBreak')){
 return t.children[t.children.length-1].position.end=u(e.end),
 void i('atHardBreak')}
-!l('setextHeadingSlurpLineEnding')&&n.canContainEols.includes(t.type)&&(L.call(this,e),
-T.call(this,e))}function O(){i('atHardBreak',!0)}function P(){
+!l('setextHeadingSlurpLineEnding')&&n.canContainEols.includes(t.type)&&(T.call(this,e),
+L.call(this,e))}function I(){i('atHardBreak',!0)}function O(){
 const e=this.resume()
 this.stack[this.stack.length-1].value=e}function z(){
 const e=this.resume()
@@ -1192,26 +1192,26 @@ delete e.url,
 delete e.title):(delete e.identifier,delete e.label),i('referenceType')
 }function j(e){
 const n=this.stack[this.stack.length-2],t=this.sliceSerialize(e)
-n.label=xn(t),n.identifier=Ie(t).toLowerCase()}function N(){
+n.label=xn(t),n.identifier=Pe(t).toLowerCase()}function H(){
 const e=this.stack[this.stack.length-1],n=this.resume(),t=this.stack[this.stack.length-1]
 i('inReference',!0),'link'===t.type?t.children=e.children:t.alt=n}
-function H(){const e=this.resume()
-this.stack[this.stack.length-1].url=e}function U(){
+function U(){const e=this.resume()
+this.stack[this.stack.length-1].url=e}function N(){
 const e=this.resume()
 this.stack[this.stack.length-1].title=e}function V(){i('inReference')}
 function q(){i('referenceType','collapsed')}function W(e){
 const n=this.resume(),t=this.stack[this.stack.length-1]
-t.label=n,t.identifier=Ie(this.sliceSerialize(e)).toLowerCase(),i('referenceType','full')
-}function $(e){i('characterReferenceType',e.type)}function Q(e){
+t.label=n,t.identifier=Pe(this.sliceSerialize(e)).toLowerCase(),i('referenceType','full')
+}function Q(e){i('characterReferenceType',e.type)}function $(e){
 const n=this.sliceSerialize(e),t=l('characterReferenceType')
 let r
 t?(r=yn(n,'characterReferenceMarkerNumeric'===t?10:16),i('characterReferenceType')):r=ye(n)
 const o=this.stack.pop()
-o.value+=r,o.position.end=u(e.end)}function X(e){T.call(this,e)
+o.value+=r,o.position.end=u(e.end)}function Y(e){L.call(this,e)
 this.stack[this.stack.length-1].url=this.sliceSerialize(e)}
-function Y(e){T.call(this,e)
+function K(e){L.call(this,e)
 this.stack[this.stack.length-1].url='mailto:'+this.sliceSerialize(e)}
-function K(){return{type:'blockquote',children:[]}}function Z(){
+function X(){return{type:'blockquote',children:[]}}function Z(){
 return{type:'code',lang:null,meta:null,value:''}}function J(){return{
 type:'inlineCode',value:''}}function G(){return{type:'definition',
 identifier:'',label:null,title:null,url:''}}function ee(){return{
@@ -1225,9 +1225,9 @@ spread:e._spread,children:[]}}function ue(e){return{type:'listItem',
 spread:e._spread,checked:null,children:[]}}function ce(){return{
 type:'paragraph',children:[]}}function ae(){return{type:'strong',
 children:[]}}function se(){return{type:'text',value:''}}function fe(){
-return{type:'thematicBreak'}}}(t)(function(e){for(;!Ce(e););return e
+return{type:'thematicBreak'}}}(t)(function(e){for(;!Se(e););return e
 }(function(e={}){const n={defined:[],lazy:{},
-constructs:U([gn].concat(e.extensions||[])),content:t(ie),
+constructs:N([gn].concat(e.extensions||[])),content:t(ie),
 document:t(le),flow:t(Ge),string:t(nn),text:t(tn)}
 return n
 function t(e){return function(t){return un(n,e,t)}}
@@ -1248,17 +1248,17 @@ case 10:u.push(-4),n=1
 break
 default:e=!0,n=1}s=f+1}
 return l&&(e&&u.push(-5),t&&u.push(t),u.push(null)),u}}()(e,n,!0))))}
-function Cn(e,n){let t=-1
+function Sn(e,n){let t=-1
 for(;++t<n.length;){const r=n[t]
-Array.isArray(r)?Cn(e,r):Sn(e,r)}return e}function Sn(e,n){let t
+Array.isArray(r)?Sn(e,r):wn(e,r)}return e}function wn(e,n){let t
 for(t in n)if(vn.call(n,t)){
 const r='canContainEols'===t||'transforms'===t,o=(vn.call(e,t)?e[t]:void 0)||(e[t]=r?[]:{}),i=n[t]
-i&&(r?e[t]=[...o,...i]:Object.assign(o,i))}}function An(e,n){
+i&&(r?e[t]=[...o,...i]:Object.assign(o,i))}}function Fn(e,n){
 throw e?new Error('Cannot close `'+e.type+'` ('+h({start:e.start,
 end:e.end})+'): a different token (`'+n.type+'`, '+h({start:n.start,
 end:n.end
 })+') is open'):new Error('Cannot close document, a token (`'+n.type+'`, '+h({
-start:n.start,end:n.end})+') is still open')}const Fn={
+start:n.start,end:n.end})+') is still open')}const An={
 tokenize:function(e,n,t){return function(n){return e.consume(n),r}
 function r(n){return 87===n||119===n?(e.consume(n),o):t(n)}
 function o(n){return 87===n||119===n?(e.consume(n),i):t(n)}
@@ -1267,33 +1267,33 @@ return null===e||G(e)?t(e):n(e)}},partial:!0},En={
 tokenize:function(e,n,t){let r,o
 return i
 function i(n){
-return 38===n?e.check(Tn,u,l)(n):46===n||95===n?e.check(Ln,u,l)(n):null===n||Z(n)||ne(n)||45!==n&&te(n)?u(n):(e.consume(n),
+return 38===n?e.check(Ln,u,l)(n):46===n||95===n?e.check(Tn,u,l)(n):null===n||Z(n)||ne(n)||45!==n&&te(n)?u(n):(e.consume(n),
 i)}function l(n){
 return 46===n?(o=r,r=void 0,e.consume(n),i):(95===n&&(r=!0),e.consume(n),
 i)}function u(e){return o||r?t(e):n(e)}},partial:!0},Dn={
 tokenize:function(e,n){let t=0
 return r
 function r(l){
-return 38===l?e.check(Tn,n,o)(l):(40===l&&t++,41===l?e.check(Ln,i,o)(l):_n(l)?n(l):Bn(l)?e.check(Ln,n,o)(l):(e.consume(l),
+return 38===l?e.check(Ln,n,o)(l):(40===l&&t++,41===l?e.check(Tn,i,o)(l):_n(l)?n(l):Bn(l)?e.check(Tn,n,o)(l):(e.consume(l),
 r))}function o(n){return e.consume(n),r}function i(e){
-return t--,t<0?n(e):o(e)}},partial:!0},Ln={tokenize:function(e,n,t){
+return t--,t<0?n(e):o(e)}},partial:!0},Tn={tokenize:function(e,n,t){
 return function(n){return e.consume(n),r}
 function r(o){return Bn(o)?(e.consume(o),r):_n(o)?n(o):t(o)}},
-partial:!0},Tn={tokenize:function(e,n,t){return function(n){
+partial:!0},Ln={tokenize:function(e,n,t){return function(n){
 return e.consume(n),r}
 function r(n){
 return W(n)?(e.consume(n),r):59===n?(e.consume(n),o):t(n)}
-function o(e){return _n(e)?n(e):t(e)}},partial:!0},In={
+function o(e){return _n(e)?n(e):t(e)}},partial:!0},Pn={
 tokenize:function(e,n,t){const r=this
 return function(n){
-if(87!==n&&119!==n||!Nn(r.previous)||Vn(r.events))return t(n)
-return e.enter('literalAutolink'),e.enter('literalAutolinkWww'),e.check(Fn,e.attempt(En,e.attempt(Dn,o),t),t)(n)
+if(87!==n&&119!==n||!Hn(r.previous)||Vn(r.events))return t(n)
+return e.enter('literalAutolink'),e.enter('literalAutolinkWww'),e.check(An,e.attempt(En,e.attempt(Dn,o),t),t)(n)
 }
 function o(t){
 return e.exit('literalAutolinkWww'),e.exit('literalAutolink'),n(t)}},
-previous:Nn},On={tokenize:function(e,n,t){const r=this
+previous:Hn},In={tokenize:function(e,n,t){const r=this
 return function(n){
-if(72!==n&&104!==n||!Hn(r.previous)||Vn(r.events))return t(n)
+if(72!==n&&104!==n||!Un(r.previous)||Vn(r.events))return t(n)
 return e.enter('literalAutolink'),e.enter('literalAutolinkHttp'),e.consume(n),o
 }
 function o(n){return 84===n||116===n?(e.consume(n),i):t(n)}
@@ -1306,29 +1306,29 @@ return 47===n?(e.consume(n),f):t(n)}function f(n){
 return null===n||Z(n)||ne(n)||te(n)?t(n):e.attempt(En,e.attempt(Dn,p),t)(n)
 }function p(t){
 return e.exit('literalAutolinkHttp'),e.exit('literalAutolink'),n(t)}},
-previous:Hn},Pn={tokenize:function(e,n,t){const r=this
+previous:Un},On={tokenize:function(e,n,t){const r=this
 let o,i
 return function(n){
-if(!jn(n)||!Un(r.previous)||Vn(r.events))return t(n)
+if(!jn(n)||!Nn(r.previous)||Vn(r.events))return t(n)
 return e.enter('literalAutolink'),e.enter('literalAutolinkEmail'),l(n)
 }
 function l(n){
 return jn(n)?(e.consume(n),l):64===n?(e.consume(n),u):t(n)}
 function u(n){
-return 46===n?e.check(Ln,f,c)(n):45===n||95===n?e.check(Ln,t,a)(n):X(n)?(!i&&$(n)&&(i=!0),
+return 46===n?e.check(Tn,f,c)(n):45===n||95===n?e.check(Tn,t,a)(n):Y(n)?(!i&&Q(n)&&(i=!0),
 e.consume(n),u):f(n)}function c(n){return e.consume(n),o=!0,i=void 0,u
 }function a(n){return e.consume(n),s}function s(n){
-return 46===n?e.check(Ln,t,c)(n):u(n)}function f(r){
+return 46===n?e.check(Tn,t,c)(n):u(n)}function f(r){
 return o&&!i?(e.exit('literalAutolinkEmail'),
-e.exit('literalAutolink'),n(r)):t(r)}},previous:Un},zn={},Mn={text:zn}
+e.exit('literalAutolink'),n(r)):t(r)}},previous:Nn},zn={},Mn={text:zn}
 let Rn=48
-for(;Rn<123;)zn[Rn]=Pn,Rn++,58===Rn?Rn=65:91===Rn&&(Rn=97)
+for(;Rn<123;)zn[Rn]=On,Rn++,58===Rn?Rn=65:91===Rn&&(Rn=97)
 function Bn(e){
 return 33===e||34===e||39===e||41===e||42===e||44===e||46===e||58===e||59===e||60===e||63===e||95===e||126===e
 }function _n(e){return null===e||60===e||J(e)}function jn(e){
-return 43===e||45===e||46===e||95===e||X(e)}function Nn(e){
-return null===e||40===e||42===e||95===e||126===e||J(e)}function Hn(e){
-return null===e||!W(e)}function Un(e){return 47!==e&&Hn(e)}
+return 43===e||45===e||46===e||95===e||Y(e)}function Hn(e){
+return null===e||40===e||42===e||95===e||126===e||J(e)}function Un(e){
+return null===e||!W(e)}function Nn(e){return 47!==e&&Un(e)}
 function Vn(e){let n=e.length,t=!1
 for(;n--;){const r=e[n][1]
 if(('labelLink'===r.type||'labelImage'===r.type)&&!r._balanced){t=!0
@@ -1339,20 +1339,20 @@ t}function qn(e){const n=[]
 let t=-1,r=0,o=0
 for(;++t<e.length;){const i=e.charCodeAt(t)
 let l=''
-if(37===i&&X(e.charCodeAt(t+1))&&X(e.charCodeAt(t+2)))o=2
+if(37===i&&Y(e.charCodeAt(t+1))&&Y(e.charCodeAt(t+2)))o=2
 else if(i<128)/[!#$&-;=?-Z_a-z~]/.test(String.fromCharCode(i))||(l=String.fromCharCode(i))
 else if(i>55295&&i<57344){const n=e.charCodeAt(t+1)
 i<56320&&n>56319&&n<57344?(l=String.fromCharCode(i,n),o=1):l='�'
 }else l=String.fromCharCode(i)
 l&&(n.push(e.slice(r,t),encodeURIComponent(l)),r=t+o+1,l=''),o&&(t+=o,o=0)
 }return n.join('')+e.slice(r)}
-zn[43]=Pn,zn[45]=Pn,zn[46]=Pn,zn[95]=Pn,zn[72]=[Pn,On],
-zn[104]=[Pn,On],zn[87]=[Pn,In],zn[119]=[Pn,In]
+zn[43]=On,zn[45]=On,zn[46]=On,zn[95]=On,zn[72]=[On,In],
+zn[104]=[On,In],zn[87]=[On,Pn],zn[119]=[On,Pn]
 const Wn={tokenize:function(e,n,t){const r=this
 return oe(e,(function(e){const o=r.events[r.events.length-1]
 return o&&'gfmFootnoteDefinitionIndent'===o[1].type&&4===o[2].sliceSerialize(o[1],!0).length?n(e):t(e)
 }),'gfmFootnoteDefinitionIndent',5)},partial:!0}
-function $n(e,n,t){const r=this
+function Qn(e,n,t){const r=this
 let o=r.events.length
 const i=r.parser.gfmFootnotes||(r.parser.gfmFootnotes=[])
 let l
@@ -1361,10 +1361,10 @@ if('labelImage'===e.type){l=e
 break}
 if('gfmFootnoteCall'===e.type||'labelLink'===e.type||'label'===e.type||'image'===e.type||'link'===e.type)break
 }return function(o){if(!l||!l._balanced)return t(o)
-const u=Ie(r.sliceSerialize({start:l.end,end:r.now()}))
+const u=Pe(r.sliceSerialize({start:l.end,end:r.now()}))
 if(94!==u.charCodeAt(0)||!i.includes(u.slice(1)))return t(o)
 return e.enter('gfmFootnoteCallLabelMarker'),e.consume(o),e.exit('gfmFootnoteCallLabelMarker'),
-n(o)}}function Qn(e,n){let t=e.length
+n(o)}}function $n(e,n){let t=e.length
 for(;t--;)if('labelImage'===e[t][1].type&&'enter'===e[t][0]){e[t][1]
 break}
 e[t+1][1].type='data',e[t+3][1].type='gfmFootnoteCallLabelMarker'
@@ -1379,7 +1379,7 @@ end:Object.assign({},e[e.length-1][1].start)},l={type:'chunkString',
 contentType:'string',start:Object.assign({},i.start),
 end:Object.assign({},i.end)
 },u=[e[t+1],e[t+2],['enter',r,n],e[t+3],e[t+4],['enter',o,n],['exit',o,n],['enter',i,n],['enter',l,n],['exit',l,n],['exit',i,n],e[e.length-2],e[e.length-1],['exit',r,n]]
-return e.splice(t,e.length-t+1,...u),e}function Xn(e,n,t){
+return e.splice(t,e.length-t+1,...u),e}function Yn(e,n,t){
 const r=this,o=r.parser.gfmFootnotes||(r.parser.gfmFootnotes=[])
 let i,l=0
 return function(n){
@@ -1391,13 +1391,13 @@ e.exit('gfmFootnoteCallMarker'),
 e.enter('gfmFootnoteCallString'),e.enter('chunkString').contentType='string',
 c)}function c(u){let s
 return null===u||91===u||l++>999?t(u):93===u?i?(e.exit('chunkString'),s=e.exit('gfmFootnoteCallString'),
-o.includes(Ie(r.sliceSerialize(s)))?function(t){
+o.includes(Pe(r.sliceSerialize(s)))?function(t){
 return e.enter('gfmFootnoteCallLabelMarker'),
 e.consume(t),e.exit('gfmFootnoteCallLabelMarker'),
 e.exit('gfmFootnoteCall'),n
 }(u):t(u)):t(u):(e.consume(u),J(u)||(i=!0),92===u?a:c)}function a(n){
 return 91===n||92===n||93===n?(e.consume(n),l++,c):c(n)}}
-function Yn(e,n,t){
+function Kn(e,n,t){
 const r=this,o=r.parser.gfmFootnotes||(r.parser.gfmFootnotes=[])
 let i,l,u=0
 return function(n){
@@ -1410,7 +1410,7 @@ e.exit('gfmFootnoteDefinitionMarker'),
 e.enter('gfmFootnoteDefinitionLabelString'),a):t(n)}function a(n){
 let o
 return null===n||91===n||u>999?t(n):93===n?l?(o=e.exit('gfmFootnoteDefinitionLabelString'),
-i=Ie(r.sliceSerialize(o)),
+i=Pe(r.sliceSerialize(o)),
 e.enter('gfmFootnoteDefinitionLabelMarker'),e.consume(n),
 e.exit('gfmFootnoteDefinitionLabelMarker'),
 e.exit('gfmFootnoteDefinitionLabel'),
@@ -1423,7 +1423,7 @@ return 91===n||92===n||93===n?(e.consume(n),u++,s):s(n)}function p(n){
 return 58===n?(e.enter('definitionMarker'),
 e.consume(n),e.exit('definitionMarker'),
 oe(e,h,'gfmFootnoteDefinitionWhitespace')):t(n)}function h(e){
-return o.includes(i)||o.push(i),n(e)}}function Kn(e,n,t){
+return o.includes(i)||o.push(i),n(e)}}function Xn(e,n,t){
 return e.check(he,n,e.attempt(Wn,n,t))}function Zn(e){
 e.exit('gfmFootnoteDefinition')}function Jn(e={}){let n=e.singleTilde
 const t={tokenize:function(e,t,r){const o=this.previous,i=this.events
@@ -1500,20 +1500,20 @@ l&&u===o.length?null===n?x(n):e.check(et,x,e.attempt({tokenize:D,
 partial:!0},oe(e,b,'linePrefix',4),x))(n):t(n)}function x(t){
 return e.exit('table'),n(t)}function b(n){
 return e.enter('tableBody'),v(n)}function v(n){
-return e.enter('tableRow'),124===n?w(n):(e.enter('temporaryTableCellContent'),
-A(n))}function w(n){
+return e.enter('tableRow'),124===n?C(n):(e.enter('temporaryTableCellContent'),
+F(n))}function C(n){
 return e.enter('tableCellDivider'),e.consume(n),e.exit('tableCellDivider'),
-C}function C(n){return null===n||G(n)?function(n){
+S}function S(n){return null===n||G(n)?function(n){
 if(e.exit('tableRow'),null===n)return E(n)
 return e.check(et,E,e.attempt({tokenize:D,partial:!0
 },oe(e,v,'linePrefix',4),E))(n)
-}(n):ee(n)?(e.enter('whitespace'),e.consume(n),S):124===n?w(n):(e.enter('temporaryTableCellContent'),
-A(n))}function S(n){
-return ee(n)?(e.consume(n),S):(e.exit('whitespace'),C(n))}
-function A(n){
+}(n):ee(n)?(e.enter('whitespace'),e.consume(n),w):124===n?C(n):(e.enter('temporaryTableCellContent'),
+F(n))}function w(n){
+return ee(n)?(e.consume(n),w):(e.exit('whitespace'),S(n))}
+function F(n){
 return null===n||124===n||J(n)?(e.exit('temporaryTableCellContent'),
-C(n)):(e.consume(n),92===n?F:A)}function F(n){
-return 92===n||124===n?(e.consume(n),A):A(n)}function E(n){
+S(n)):(e.consume(n),92===n?A:F)}function A(n){
+return 92===n||124===n?(e.consume(n),F):F(n)}function E(n){
 return e.exit('tableBody'),x(n)}function D(e,n,t){return function(n){
 return e.enter('lineEnding'),
 e.consume(n),e.exit('lineEnding'),oe(e,o,'linePrefix')}
@@ -1668,14 +1668,14 @@ url:'mailto:'+n+'@'+t,children:[{type:'text',value:n+'@'+t}]}}
 function bt(e,n){const t=e.input.charCodeAt(e.index-1)
 return(0===e.index||ne(t)||te(t))&&(!n||47!==t)}function vt(e){
 return e.label||!e.identifier?e.label||'':xn(e.identifier)}
-function wt(e){const n=e||{},t=n.now||{}
+function Ct(e){const n=e||{},t=n.now||{}
 let r=n.lineShift||0,o=t.line||1,i=t.column||1
 return{move:function(e=""){
 const n=e.split(/\r?\n|\r/g),t=n[n.length-1]
 return o+=n.length-1,i=1===n.length?i+t.length:1+t.length+r,e},
 current:function(){return{now:{line:o,column:i},lineShift:r}},
-shift:function(e){r+=e}}}function Ct(e,n,t){
-const r=n.indexStack,o=e.children||[],i=wt(t),l=[]
+shift:function(e){r+=e}}}function St(e,n,t){
+const r=n.indexStack,o=e.children||[],i=Ct(t),l=[]
 let u=-1
 for(r.push(-1);++u<o.length;){const t=o[u]
 r[r.length-1]=u,l.push(i.move(n.handle(t,e,n,{before:'\n',after:'\n',
@@ -1687,12 +1687,12 @@ for(;o--;){const i=n.join[o](t,r,e,n)
 if(!0===i||1===i)break
 if('number'==typeof i)return'\n'.repeat(1+i)
 if(!1===i)return'\n\n\x3c!----\x3e\n\n'}return'\n\n'}}
-const St=/\r?\n|\r/g
-function At(e,n){const t=[]
+const wt=/\r?\n|\r/g
+function Ft(e,n){const t=[]
 let r,o=0,i=0
-for(;r=St.exec(e);)l(e.slice(o,r.index)),t.push(r[0]),o=r.index+r[0].length,i++
+for(;r=wt.exec(e);)l(e.slice(o,r.index)),t.push(r[0]),o=r.index+r[0].length,i++
 return l(e.slice(o)),t.join('')
-function l(e){t.push(n(e,i,!e))}}function Ft(e){if(!e._compiled){
+function l(e){t.push(n(e,i,!e))}}function At(e){if(!e._compiled){
 const n=(e.atBreak?'[\\r\\n][\\t ]*':'')+(e.before?'(?:'+e.before+')':'')
 e._compiled=new RegExp((n?'('+n+')':'')+(/[|\\{}()[\]^$+*?.-]/.test(e.character)?'\\':'')+e.character+(e.after?'(?:'+e.after+')':''),'g')
 }return e._compiled}function Et(e,n){
@@ -1701,56 +1701,56 @@ function Dt(e,n,t){if(!n)return t
 'string'==typeof n&&(n=[n])
 let r=-1
 for(;++r<n.length;)if(e.includes(n[r]))return!0
-return!1}function Lt(e,n,t){
+return!1}function Tt(e,n,t){
 const r=(t.before||'')+(n||'')+(t.after||''),o=[],i=[],l={}
 let u=-1
 for(;++u<e.unsafe.length;){const n=e.unsafe[u]
 if(!Et(e.stack,n))continue
-const t=Ft(n)
+const t=At(n)
 let i
 for(;i=t.exec(r);){
 const e='before'in n||Boolean(n.atBreak),t='after'in n,r=i.index+(e?i[1].length:0)
 o.includes(r)?(l[r].before&&!e&&(l[r].before=!1),l[r].after&&!t&&(l[r].after=!1)):(o.push(r),
-l[r]={before:e,after:t})}}o.sort(Tt)
+l[r]={before:e,after:t})}}o.sort(Lt)
 let c=t.before?t.before.length:0
 const a=r.length-(t.after?t.after.length:0)
 for(u=-1;++u<o.length;){const e=o[u]
-e<c||e>=a||(e+1<a&&o[u+1]===e+1&&l[e].after&&!l[e+1].before&&!l[e+1].after||o[u-1]===e-1&&l[e].before&&!l[e-1].before&&!l[e-1].after||(c!==e&&i.push(It(r.slice(c,e),'\\')),
+e<c||e>=a||(e+1<a&&o[u+1]===e+1&&l[e].after&&!l[e+1].before&&!l[e+1].after||o[u-1]===e-1&&l[e].before&&!l[e-1].before&&!l[e-1].after||(c!==e&&i.push(Pt(r.slice(c,e),'\\')),
 c=e,
 !/[!-/:-@[-`{-~]/.test(r.charAt(e))||t.encode&&t.encode.includes(r.charAt(e))?(i.push('&#x'+r.charCodeAt(e).toString(16).toUpperCase()+';'),
-c++):i.push('\\')))}return i.push(It(r.slice(c,a),t.after)),i.join('')
-}function Tt(e,n){return e-n}function It(e,n){
+c++):i.push('\\')))}return i.push(Pt(r.slice(c,a),t.after)),i.join('')
+}function Lt(e,n){return e-n}function Pt(e,n){
 const t=/\\(?=[!-/:-@[-`{-~])/g,r=[],o=[],i=e+n
 let l,u=-1,c=0
 for(;l=t.exec(i);)r.push(l.index)
 for(;++u<r.length;)c!==r[u]&&o.push(e.slice(c,r[u])),o.push('\\'),c=r[u]
-return o.push(e.slice(c)),o.join('')}function Ot(){
+return o.push(e.slice(c)),o.join('')}function It(){
 return e.peek=function(){return'['},{unsafe:[{character:'[',
 inConstruct:['phrasing','label','reference']}],handlers:{
-footnoteDefinition:function(e,n,t,r){const o=wt(r)
+footnoteDefinition:function(e,n,t,r){const o=Ct(r)
 let i=o.move('[^')
 const l=t.enter('footnoteDefinition'),u=t.enter('label')
-return i+=o.move(Lt(t,vt(e),{...o.current(),before:i,after:']'
+return i+=o.move(Tt(t,vt(e),{...o.current(),before:i,after:']'
 })),u(),i+=o.move(']:'+(e.children&&e.children.length>0?' ':'')),
-o.shift(4),i+=o.move(At(Ct(e,t,o.current()),(function(e,n,t){
+o.shift(4),i+=o.move(Ft(St(e,t,o.current()),(function(e,n,t){
 if(n)return(t?'':'    ')+e
 return e}))),l(),i},footnoteReference:e}}
-function e(e,n,t,r){const o=wt(r)
+function e(e,n,t,r){const o=Ct(r)
 let i=o.move('[^')
 const l=t.enter('footnoteReference'),u=t.enter('reference')
-return i+=o.move(Lt(t,vt(e),{...o.current(),before:i,after:']'
-})),u(),l(),i+=o.move(']'),i}}function Pt(e,n,t){
+return i+=o.move(Tt(t,vt(e),{...o.current(),before:i,after:']'
+})),u(),l(),i+=o.move(']'),i}}function Ot(e,n,t){
 const r=n.indexStack,o=e.children||[],i=[]
 let l=-1,u=t.before
 r.push(-1)
-let c=wt(t)
+let c=Ct(t)
 for(;++l<o.length;){const a=o[l]
 let s
 if(r[r.length-1]=l,l+1<o.length){let t=n.handle.handlers[o[l+1].type]
 t&&t.peek&&(t=t.peek),s=t?t(o[l+1],e,n,{before:'',after:'',
 ...c.current()}).charAt(0):''}else s=t.after
 i.length>0&&('\r'===u||'\n'===u)&&'html'===a.type&&(i[i.length-1]=i[i.length-1].replace(/(\r?\n|\r)$/,' '),
-u=' ',c=wt(t),c.move(i.join(''))),i.push(c.move(n.handle(a,e,n,{
+u=' ',c=Ct(t),c.move(i.join(''))),i.push(c.move(n.handle(a,e,n,{
 ...c.current(),before:u,after:s}))),u=i[i.length-1].slice(-1)}
 return r.pop(),i.join('')}const zt={canContainEols:['delete'],enter:{
 strikethrough:function(e){this.enter({type:'delete',children:[]},e)}},
@@ -1758,14 +1758,14 @@ exit:{strikethrough:function(e){this.exit(e)}}},Mt={unsafe:[{
 character:'~',inConstruct:'phrasing',
 notInConstruct:['autolink','destinationLiteral','destinationRaw','reference','titleQuote','titleApostrophe']
 }],handlers:{delete:Rt}}
-function Rt(e,n,t,r){const o=wt(r),i=t.enter('emphasis')
+function Rt(e,n,t,r){const o=Ct(r),i=t.enter('emphasis')
 let l=o.move('~~')
-return l+=Pt(e,t,{...o.current(),before:l,after:'~'
+return l+=Ot(e,t,{...o.current(),before:l,after:'~'
 }),l+=o.move('~~'),i(),l}function Bt(e,n,t){
 let r=e.value||'',o='`',i=-1
 for(;new RegExp('(^|[^`])'+o+'([^`]|$)').test(r);)o+='`'
 for(/[^ \r\n]/.test(r)&&(/^[ \r\n]/.test(r)&&/[ \r\n]$/.test(r)||/^`|`$/.test(r))&&(r=' '+r+' ');++i<t.unsafe.length;){
-const e=t.unsafe[i],n=Ft(e)
+const e=t.unsafe[i],n=At(e)
 let o
 if(e.atBreak)for(;o=n.exec(r);){let e=o.index
 10===r.charCodeAt(e)&&13===r.charCodeAt(e-1)&&e--,r=r.slice(0,e)+' '+r.slice(o.index+1)
@@ -1773,16 +1773,16 @@ if(e.atBreak)for(;o=n.exec(r);){let e=o.index
 const n='string'==typeof e?e.codePointAt(0):0
 return 67===n||99===n?99:76===n||108===n?108:82===n||114===n?114:0}
 Rt.peek=function(){return'~'},Bt.peek=function(){return'`'}
-const Nt={enter:{table:function(e){const n=e._align
+const Ht={enter:{table:function(e){const n=e._align
 this.enter({type:'table',align:n.map((e=>'none'===e?null:e)),
-children:[]},e),this.setData('inTable',!0)},tableData:Ut,
-tableHeader:Ut,tableRow:function(e){this.enter({type:'tableRow',
+children:[]},e),this.setData('inTable',!0)},tableData:Nt,
+tableHeader:Nt,tableRow:function(e){this.enter({type:'tableRow',
 children:[]},e)}},exit:{codeText:function(e){let n=this.resume()
 this.getData('inTable')&&(n=n.replace(/\\([\\|])/g,Vt))
 this.stack[this.stack.length-1].value=n,this.exit(e)},
-table:function(e){this.exit(e),this.setData('inTable')},tableData:Ht,
-tableHeader:Ht,tableRow:Ht}}
-function Ht(e){this.exit(e)}function Ut(e){this.enter({
+table:function(e){this.exit(e),this.setData('inTable')},tableData:Ut,
+tableHeader:Ut,tableRow:Ut}}
+function Ut(e){this.exit(e)}function Nt(e){this.enter({
 type:'tableCell',children:[]},e)}function Vt(e,n){return'|'===n?n:e}
 function qt(e){
 const n=e||{},t=n.tableCellPadding,r=n.tablePipeAlign,o=n.stringLength,i=t?' ':'|'
@@ -1802,7 +1802,7 @@ inlineCode:function(e,n,t){let r=Bt(e,0,t)
 t.stack.includes('tableCell')&&(r=r.replace(/\|/g,'\\$&'))
 return r}}}
 function l(e,n,t,r){
-const o=t.enter('tableCell'),l=t.enter('phrasing'),u=Pt(e,t,{...r,
+const o=t.enter('tableCell'),l=t.enter('phrasing'),u=Ot(e,t,{...r,
 before:i,after:i})
 return l(),o(),u}function u(e,n){return function(e,n={}){
 const t=(n.align||[]).concat(),r=n.stringLength||_t,o=[],i=[],l=[],u=[]
@@ -1855,13 +1855,13 @@ return n}(t)
 n&&'list'===n.type&&n.ordered&&(i=('number'==typeof n.start&&n.start>-1?n.start:1)+(!1===t.options.incrementListMarker?0:n.children.indexOf(e))+i)
 let l=i.length+1
 ;('tab'===o||'mixed'===o&&(n&&'list'===n.type&&n.spread||e.spread))&&(l=4*Math.ceil(l/4))
-const u=wt(r)
+const u=Ct(r)
 u.move(i+' '.repeat(l-i.length)),u.shift(l)
-const c=t.enter('listItem'),a=At(Ct(e,t,u.current()),(function(e,n,t){
+const c=t.enter('listItem'),a=Ft(St(e,t,u.current()),(function(e,n,t){
 if(n)return(t?'':' '.repeat(l))+e
 return(t?i:i+' '.repeat(l-i.length))+e}))
-return c(),a}const $t={exit:{taskListCheckValueChecked:Xt,
-taskListCheckValueUnchecked:Xt,paragraph:function(e){
+return c(),a}const Qt={exit:{taskListCheckValueChecked:Yt,
+taskListCheckValueUnchecked:Yt,paragraph:function(e){
 const n=this.stack[this.stack.length-2],t=this.stack[this.stack.length-1],r=n.children,o=t.children[0]
 let i,l=-1
 if(n&&'listItem'===n.type&&'boolean'==typeof n.checked&&o&&'text'===o.type){
@@ -1871,26 +1871,26 @@ break}}
 i===t&&(o.value=o.value.slice(1),0===o.value.length?t.children.shift():t.position&&o.position&&'number'==typeof o.position.start.offset&&(o.position.start.column++,
 o.position.start.offset++,
 t.position.start=Object.assign({},o.position.start)))}this.exit(e)}}
-},Qt={unsafe:[{atBreak:!0,character:'-',after:'[:|-]'}],handlers:{
+},$t={unsafe:[{atBreak:!0,character:'-',after:'[:|-]'}],handlers:{
 listItem:function(e,n,t,r){
-const o=e.children[0],i='boolean'==typeof e.checked&&o&&'paragraph'===o.type,l='['+(e.checked?'x':' ')+'] ',u=wt(r)
+const o=e.children[0],i='boolean'==typeof e.checked&&o&&'paragraph'===o.type,l='['+(e.checked?'x':' ')+'] ',u=Ct(r)
 i&&u.move(l)
 let c=Wt(e,n,t,{...r,...u.current()})
 i&&(c=c.replace(/^(?:[*+-]|\d+\.)([\r\n]| {1,3})/,(function(e){
 return e+l})))
 return c}}}
-function Xt(e){
+function Yt(e){
 this.stack[this.stack.length-2].checked='taskListCheckValueChecked'===e.type
-}var Yt=function(e,n,t){var r={type:String(e)}
+}var Kt=function(e,n,t){var r={type:String(e)}
 return null!=t||'string'!=typeof n&&!Array.isArray(n)?Object.assign(r,n):t=n,Array.isArray(t)?r.children=t:null!=t&&(r.value=String(t)),
 r}
-const Kt={}.hasOwnProperty
+const Xt={}.hasOwnProperty
 function Zt(e,n){const t=n.data||{}
-return'value'in n&&!(Kt.call(t,'hName')||Kt.call(t,'hProperties')||Kt.call(t,'hChildren'))?e.augment(n,Yt('text',n.value)):e(n,'div',er(e,n))
+return'value'in n&&!(Xt.call(t,'hName')||Xt.call(t,'hProperties')||Xt.call(t,'hChildren'))?e.augment(n,Kt('text',n.value)):e(n,'div',er(e,n))
 }function Jt(e,n,t){const r=n&&n.type
 let o
 if(!r)throw new Error('Expected node, got `'+n+'`')
-return o=Kt.call(e.handlers,r)?e.handlers[r]:e.passThrough&&e.passThrough.includes(r)?Gt:e.unknownHandler,
+return o=Xt.call(e.handlers,r)?e.handlers[r]:e.passThrough&&e.passThrough.includes(r)?Gt:e.unknownHandler,
 ('function'==typeof o?o:Zt)(e,n,t)}function Gt(e,n){
 return'children'in n?{...n,children:er(e,n)}:n}function er(e,n){
 const t=[]
@@ -1914,8 +1914,8 @@ offset:t.offset>-1?t.offset:null}}}const ir={}.hasOwnProperty
 function lr(e){return String(e||'').toUpperCase()}function ur(e,n){
 const t=[]
 let r=-1
-for(n&&t.push(Yt('text','\n'));++r<e.length;)r&&t.push(Yt('text','\n')),t.push(e[r])
-return n&&e.length>0&&t.push(Yt('text','\n')),t}function cr(e,n){
+for(n&&t.push(Kt('text','\n'));++r<e.length;)r&&t.push(Kt('text','\n')),t.push(e[r])
+return n&&e.length>0&&t.push(Kt('text','\n')),t}function cr(e,n){
 const t=String(n.identifier),r=qn(t.toLowerCase()),o=e.footnoteOrder.indexOf(t)
 let i
 ;-1===o?(e.footnoteOrder.push(t),e.footnoteCounts[t]=1,i=e.footnoteOrder.length):(e.footnoteCounts[t]++,
@@ -1923,14 +1923,14 @@ i=o+1)
 const l=e.footnoteCounts[t]
 return e(n,'sup',[e(n.position,'a',{href:'#'+e.clobberPrefix+'fn-'+r,
 id:e.clobberPrefix+'fnref-'+r+(l>1?'-'+l:''),dataFootnoteRef:!0,
-ariaDescribedBy:'footnote-label'},[Yt('text',String(i))])])}
+ariaDescribedBy:'footnote-label'},[Kt('text',String(i))])])}
 function ar(e,n){const t=n.referenceType
 let r=']'
-if('collapsed'===t?r+='[]':'full'===t&&(r+='['+(n.label||n.identifier)+']'),'imageReference'===n.type)return Yt('text','!['+n.alt+r)
+if('collapsed'===t?r+='[]':'full'===t&&(r+='['+(n.label||n.identifier)+']'),'imageReference'===n.type)return Kt('text','!['+n.alt+r)
 const o=er(e,n),i=o[0]
-i&&'text'===i.type?i.value='['+i.value:o.unshift(Yt('text','['))
+i&&'text'===i.type?i.value='['+i.value:o.unshift(Kt('text','['))
 const l=o[o.length-1]
-return l&&'text'===l.type?l.value+=r:o.push(Yt('text',r)),o}
+return l&&'text'===l.type?l.value+=r:o.push(Kt('text',r)),o}
 function sr(e){const n=e.spread
 return null==n?e.children.length>1:n}function fr(e,n,t){
 let r=0,o=e.length
@@ -1940,10 +1940,10 @@ let n=e.codePointAt(o-1)
 for(;9===n||32===n;)o--,n=e.codePointAt(o-1)}
 return o>r?e.slice(r,o):''}const pr={blockquote:function(e,n){
 return e(n,'blockquote',ur(er(e,n),!0))},break:function(e,n){
-return[e(n,'br'),Yt('text','\n')]},code:function(e,n){
+return[e(n,'br'),Kt('text','\n')]},code:function(e,n){
 const t=n.value?n.value+'\n':'',r=n.lang&&n.lang.match(/^[^ \t]+(?=[ \t]|$)/),o={}
 r&&(o.className=['language-'+r])
-const i=e(n,'code',o,[Yt('text',t)])
+const i=e(n,'code',o,[Kt('text',t)])
 return n.meta&&(i.data={meta:n.meta}),e(n.position,'pre',[i])},
 delete:function(e,n){return e(n,'del',er(e,n))},
 emphasis:function(e,n){return e(n,'em',er(e,n))},footnoteReference:cr,
@@ -1956,7 +1956,7 @@ type:'paragraph',children:n.children}],position:n.position},cr(e,{
 type:'footnoteReference',identifier:o,position:n.position})},
 heading:function(e,n){return e(n,'h'+n.depth,er(e,n))},
 html:function(e,n){
-return e.dangerous?e.augment(n,Yt('raw',n.value)):null},
+return e.dangerous?e.augment(n,Kt('raw',n.value)):null},
 imageReference:function(e,n){const t=e.definition(n.identifier)
 if(!t)return ar(e,n)
 const r={src:qn(t.url||''),alt:n.alt}
@@ -1964,7 +1964,7 @@ return null!==t.title&&void 0!==t.title&&(r.title=t.title),e(n,'img',r)
 },image:function(e,n){const t={src:qn(n.url),alt:n.alt}
 return null!==n.title&&void 0!==n.title&&(t.title=n.title),e(n,'img',t)
 },inlineCode:function(e,n){
-return e(n,'code',[Yt('text',n.value.replace(/\r?\n|\r/g,' '))])},
+return e(n,'code',[Kt('text',n.value.replace(/\r?\n|\r/g,' '))])},
 linkReference:function(e,n){const t=e.definition(n.identifier)
 if(!t)return ar(e,n)
 const r={href:qn(t.url||'')}
@@ -1979,14 +1979,14 @@ for(;!n&&++r<t.length;)n=sr(t[r])
 return Boolean(n)}(t):sr(n),i={},l=[]
 if('boolean'==typeof n.checked){let t
 r[0]&&'element'===r[0].type&&'p'===r[0].tagName?t=r[0]:(t=e(null,'p',[]),r.unshift(t)),
-t.children.length>0&&t.children.unshift(Yt('text',' ')),
+t.children.length>0&&t.children.unshift(Kt('text',' ')),
 t.children.unshift(e(null,'input',{type:'checkbox',checked:n.checked,
 disabled:!0})),i.className=['task-list-item']}let u=-1
 for(;++u<r.length;){const e=r[u]
-;(o||0!==u||'element'!==e.type||'p'!==e.tagName)&&l.push(Yt('text','\n')),
+;(o||0!==u||'element'!==e.type||'p'!==e.tagName)&&l.push(Kt('text','\n')),
 'element'!==e.type||'p'!==e.tagName||o?l.push(e):l.push(...e.children)
 }const c=r[r.length-1]
-return!c||!o&&'tagName'in c&&'p'===c.tagName||l.push(Yt('text','\n')),e(n,'li',i,l)
+return!c||!o&&'tagName'in c&&'p'===c.tagName||l.push(Kt('text','\n')),e(n,'li',i,l)
 },list:function(e,n){const t={},r=n.ordered?'ol':'ul',o=er(e,n)
 let i=-1
 for('number'==typeof n.start&&1!==n.start&&(t.start=n.start);++i<o.length;){
@@ -1995,7 +1995,7 @@ if('element'===e.type&&'li'===e.tagName&&e.properties&&Array.isArray(e.propertie
 t.className=['contains-task-list']
 break}}return e(n,r,t,ur(o,!0))},paragraph:function(e,n){
 return e(n,'p',er(e,n))},root:function(e,n){
-return e.augment(n,Yt('root',ur(er(e,n))))},strong:function(e,n){
+return e.augment(n,Kt('root',ur(er(e,n))))},strong:function(e,n){
 return e(n,'strong',er(e,n))},table:function(e,n){const t=n.children
 let r=-1
 const o=n.align||[],i=[]
@@ -2007,7 +2007,7 @@ c.push(e(n,u,{align:o[a]},n?er(e,n):[]))}i[r]=e(t[r],'tr',ur(c,!0))}
 return e(n,'table',ur([e(i[0].position,'thead',ur([i[0]],!0))].concat(i[1]?e({
 start:tr(i[1]),end:rr(i[i.length-1])
 },'tbody',ur(i.slice(1),!0)):[]),!0))},text:function(e,n){
-return e.augment(n,Yt('text',function(e){
+return e.augment(n,Kt('text',function(e){
 const n=String(e),t=/\r?\n|\r/g
 let r=t.exec(n),o=0
 const i=[]
@@ -2071,10 +2071,10 @@ return 0===t.length?null:{type:'element',tagName:'section',
 properties:{dataFootnotes:!0,className:['footnotes']},children:[{
 type:'element',tagName:e.footnoteLabelTagName,properties:{
 ...JSON.parse(JSON.stringify(e.footnoteLabelProperties)),
-id:'footnote-label'},children:[Yt('text',e.footnoteLabel)]},{
+id:'footnote-label'},children:[Kt('text',e.footnoteLabel)]},{
 type:'text',value:'\n'},{type:'element',tagName:'ol',properties:{},
 children:ur(t,!0)},{type:'text',value:'\n'}]}}(t)
-return o&&r.children.push(Yt('text','\n'),o),Array.isArray(r)?{
+return o&&r.children.push(Kt('text','\n'),o),Array.isArray(r)?{
 type:'root',children:r}:r}var yr=function(e,n){
 return e&&'run'in e?function(e,n){return(t,r,o)=>{
 e.run(mr(t,n),r,(e=>{o(e)}))}}(e,n):function(e){return n=>mr(n,e)
@@ -2094,22 +2094,22 @@ vr.prototype.number=!1,
 vr.prototype.commaSeparated=!1,vr.prototype.spaceSeparated=!1,
 vr.prototype.commaOrSpaceSeparated=!1,
 vr.prototype.mustUseProperty=!1,vr.prototype.defined=!1
-let wr=0
-const Cr=Tr(),Sr=Tr(),Ar=Tr(),Fr=Tr(),Er=Tr(),Dr=Tr(),Lr=Tr()
-function Tr(){return 2**++wr}var Ir=Object.freeze({__proto__:null,
-boolean:Cr,booleanish:Sr,overloadedBoolean:Ar,number:Fr,
-spaceSeparated:Er,commaSeparated:Dr,commaOrSpaceSeparated:Lr})
-const Or=Object.keys(Ir)
-class Pr extends vr{constructor(e,n,t,r){let o=-1
-if(super(e,n),zr(this,'space',r),'number'==typeof t)for(;++o<Or.length;){
-const e=Or[o]
-zr(this,Or[o],(t&Ir[e])===Ir[e])}}}function zr(e,n,t){t&&(e[n]=t)}
-Pr.prototype.defined=!0
+let Cr=0
+const Sr=Lr(),wr=Lr(),Fr=Lr(),Ar=Lr(),Er=Lr(),Dr=Lr(),Tr=Lr()
+function Lr(){return 2**++Cr}var Pr=Object.freeze({__proto__:null,
+boolean:Sr,booleanish:wr,overloadedBoolean:Fr,number:Ar,
+spaceSeparated:Er,commaSeparated:Dr,commaOrSpaceSeparated:Tr})
+const Ir=Object.keys(Pr)
+class Or extends vr{constructor(e,n,t,r){let o=-1
+if(super(e,n),zr(this,'space',r),'number'==typeof t)for(;++o<Ir.length;){
+const e=Ir[o]
+zr(this,Ir[o],(t&Pr[e])===Pr[e])}}}function zr(e,n,t){t&&(e[n]=t)}
+Or.prototype.defined=!0
 const Mr={}.hasOwnProperty
 function Rr(e){const n={},t={}
 let r
 for(r in e.properties)if(Mr.call(e.properties,r)){
-const o=e.properties[r],i=new Pr(r,e.transform(e.attributes||{},r),o,e.space)
+const o=e.properties[r],i=new Or(r,e.transform(e.attributes||{},r),o,e.space)
 e.mustUseProperty&&e.mustUseProperty.includes(r)&&(i.mustUseProperty=!0),n[r]=i,
 t[br(r)]=r,t[br(i.attribute)]=r}return new kr(n,t,e.space)}
 const Br=Rr({space:'xlink',
@@ -2118,45 +2118,45 @@ xLinkActuate:null,xLinkArcRole:null,xLinkHref:null,xLinkRole:null,
 xLinkShow:null,xLinkTitle:null,xLinkType:null}}),_r=Rr({space:'xml',
 transform:(e,n)=>'xml:'+n.slice(3).toLowerCase(),properties:{
 xmlLang:null,xmlBase:null,xmlSpace:null}})
-function jr(e,n){return n in e?e[n]:n}function Nr(e,n){
-return jr(e,n.toLowerCase())}const Hr=Rr({space:'xmlns',attributes:{
-xmlnsxlink:'xmlns:xlink'},transform:Nr,properties:{xmlns:null,
-xmlnsXLink:null}}),Ur=Rr({
+function jr(e,n){return n in e?e[n]:n}function Hr(e,n){
+return jr(e,n.toLowerCase())}const Ur=Rr({space:'xmlns',attributes:{
+xmlnsxlink:'xmlns:xlink'},transform:Hr,properties:{xmlns:null,
+xmlnsXLink:null}}),Nr=Rr({
 transform:(e,n)=>'role'===n?n:'aria-'+n.slice(4).toLowerCase(),
-properties:{ariaActiveDescendant:null,ariaAtomic:Sr,
-ariaAutoComplete:null,ariaBusy:Sr,ariaChecked:Sr,ariaColCount:Fr,
-ariaColIndex:Fr,ariaColSpan:Fr,ariaControls:Er,ariaCurrent:null,
-ariaDescribedBy:Er,ariaDetails:null,ariaDisabled:Sr,ariaDropEffect:Er,
-ariaErrorMessage:null,ariaExpanded:Sr,ariaFlowTo:Er,ariaGrabbed:Sr,
-ariaHasPopup:null,ariaHidden:Sr,ariaInvalid:null,
-ariaKeyShortcuts:null,ariaLabel:null,ariaLabelledBy:Er,ariaLevel:Fr,
-ariaLive:null,ariaModal:Sr,ariaMultiLine:Sr,ariaMultiSelectable:Sr,
-ariaOrientation:null,ariaOwns:Er,ariaPlaceholder:null,ariaPosInSet:Fr,
-ariaPressed:Sr,ariaReadOnly:Sr,ariaRelevant:null,ariaRequired:Sr,
-ariaRoleDescription:Er,ariaRowCount:Fr,ariaRowIndex:Fr,ariaRowSpan:Fr,
-ariaSelected:Sr,ariaSetSize:Fr,ariaSort:null,ariaValueMax:Fr,
-ariaValueMin:Fr,ariaValueNow:Fr,ariaValueText:null,role:null}
+properties:{ariaActiveDescendant:null,ariaAtomic:wr,
+ariaAutoComplete:null,ariaBusy:wr,ariaChecked:wr,ariaColCount:Ar,
+ariaColIndex:Ar,ariaColSpan:Ar,ariaControls:Er,ariaCurrent:null,
+ariaDescribedBy:Er,ariaDetails:null,ariaDisabled:wr,ariaDropEffect:Er,
+ariaErrorMessage:null,ariaExpanded:wr,ariaFlowTo:Er,ariaGrabbed:wr,
+ariaHasPopup:null,ariaHidden:wr,ariaInvalid:null,
+ariaKeyShortcuts:null,ariaLabel:null,ariaLabelledBy:Er,ariaLevel:Ar,
+ariaLive:null,ariaModal:wr,ariaMultiLine:wr,ariaMultiSelectable:wr,
+ariaOrientation:null,ariaOwns:Er,ariaPlaceholder:null,ariaPosInSet:Ar,
+ariaPressed:wr,ariaReadOnly:wr,ariaRelevant:null,ariaRequired:wr,
+ariaRoleDescription:Er,ariaRowCount:Ar,ariaRowIndex:Ar,ariaRowSpan:Ar,
+ariaSelected:wr,ariaSetSize:Ar,ariaSort:null,ariaValueMax:Ar,
+ariaValueMin:Ar,ariaValueNow:Ar,ariaValueText:null,role:null}
 }),Vr=Rr({space:'html',attributes:{acceptcharset:'accept-charset',
-classname:'class',htmlfor:'for',httpequiv:'http-equiv'},transform:Nr,
+classname:'class',htmlfor:'for',httpequiv:'http-equiv'},transform:Hr,
 mustUseProperty:['checked','multiple','muted','selected'],properties:{
 abbr:null,accept:Dr,acceptCharset:Er,accessKey:Er,action:null,
-allow:null,allowFullScreen:Cr,allowPaymentRequest:Cr,
-allowUserMedia:Cr,alt:null,as:null,async:Cr,autoCapitalize:null,
-autoComplete:Er,autoFocus:Cr,autoPlay:Cr,capture:Cr,charSet:null,
-checked:Cr,cite:null,className:Er,cols:Fr,colSpan:null,content:null,
-contentEditable:Sr,controls:Cr,controlsList:Er,coords:Fr|Dr,
-crossOrigin:null,data:null,dateTime:null,decoding:null,default:Cr,
-defer:Cr,dir:null,dirName:null,disabled:Cr,download:Ar,draggable:Sr,
+allow:null,allowFullScreen:Sr,allowPaymentRequest:Sr,
+allowUserMedia:Sr,alt:null,as:null,async:Sr,autoCapitalize:null,
+autoComplete:Er,autoFocus:Sr,autoPlay:Sr,capture:Sr,charSet:null,
+checked:Sr,cite:null,className:Er,cols:Ar,colSpan:null,content:null,
+contentEditable:wr,controls:Sr,controlsList:Er,coords:Ar|Dr,
+crossOrigin:null,data:null,dateTime:null,decoding:null,default:Sr,
+defer:Sr,dir:null,dirName:null,disabled:Sr,download:Fr,draggable:wr,
 encType:null,enterKeyHint:null,form:null,formAction:null,
-formEncType:null,formMethod:null,formNoValidate:Cr,formTarget:null,
-headers:Er,height:Fr,hidden:Cr,high:Fr,href:null,hrefLang:null,
+formEncType:null,formMethod:null,formNoValidate:Sr,formTarget:null,
+headers:Er,height:Ar,hidden:Sr,high:Ar,href:null,hrefLang:null,
 htmlFor:Er,httpEquiv:Er,id:null,imageSizes:null,imageSrcSet:null,
-inputMode:null,integrity:null,is:null,isMap:Cr,itemId:null,
-itemProp:Er,itemRef:Er,itemScope:Cr,itemType:Er,kind:null,label:null,
-lang:null,language:null,list:null,loading:null,loop:Cr,low:Fr,
-manifest:null,max:null,maxLength:Fr,media:null,method:null,min:null,
-minLength:Fr,multiple:Cr,muted:Cr,name:null,nonce:null,noModule:Cr,
-noValidate:Cr,onAbort:null,onAfterPrint:null,onAuxClick:null,
+inputMode:null,integrity:null,is:null,isMap:Sr,itemId:null,
+itemProp:Er,itemRef:Er,itemScope:Sr,itemType:Er,kind:null,label:null,
+lang:null,language:null,list:null,loading:null,loop:Sr,low:Ar,
+manifest:null,max:null,maxLength:Ar,media:null,method:null,min:null,
+minLength:Ar,multiple:Sr,muted:Sr,name:null,nonce:null,noModule:Sr,
+noValidate:Sr,onAbort:null,onAfterPrint:null,onAuxClick:null,
 onBeforeMatch:null,onBeforePrint:null,onBeforeUnload:null,onBlur:null,
 onCancel:null,onCanPlay:null,onCanPlayThrough:null,onChange:null,
 onClick:null,onClose:null,onContextLost:null,onContextMenu:null,
@@ -2178,27 +2178,27 @@ onScrollEnd:null,onSecurityPolicyViolation:null,onSeeked:null,
 onSeeking:null,onSelect:null,onSlotChange:null,onStalled:null,
 onStorage:null,onSubmit:null,onSuspend:null,onTimeUpdate:null,
 onToggle:null,onUnhandledRejection:null,onUnload:null,
-onVolumeChange:null,onWaiting:null,onWheel:null,open:Cr,optimum:Fr,
-pattern:null,ping:Er,placeholder:null,playsInline:Cr,poster:null,
-preload:null,readOnly:Cr,referrerPolicy:null,rel:Er,required:Cr,
-reversed:Cr,rows:Fr,rowSpan:Fr,sandbox:Er,scope:null,scoped:Cr,
-seamless:Cr,selected:Cr,shape:null,size:Fr,sizes:null,slot:null,
-span:Fr,spellCheck:Sr,src:null,srcDoc:null,srcLang:null,srcSet:null,
-start:Fr,step:null,style:null,tabIndex:Fr,target:null,title:null,
-translate:null,type:null,typeMustMatch:Cr,useMap:null,value:Sr,
-width:Fr,wrap:null,align:null,aLink:null,archive:Er,axis:null,
-background:null,bgColor:null,border:Fr,borderColor:null,
-bottomMargin:Fr,cellPadding:null,cellSpacing:null,char:null,
+onVolumeChange:null,onWaiting:null,onWheel:null,open:Sr,optimum:Ar,
+pattern:null,ping:Er,placeholder:null,playsInline:Sr,poster:null,
+preload:null,readOnly:Sr,referrerPolicy:null,rel:Er,required:Sr,
+reversed:Sr,rows:Ar,rowSpan:Ar,sandbox:Er,scope:null,scoped:Sr,
+seamless:Sr,selected:Sr,shape:null,size:Ar,sizes:null,slot:null,
+span:Ar,spellCheck:wr,src:null,srcDoc:null,srcLang:null,srcSet:null,
+start:Ar,step:null,style:null,tabIndex:Ar,target:null,title:null,
+translate:null,type:null,typeMustMatch:Sr,useMap:null,value:wr,
+width:Ar,wrap:null,align:null,aLink:null,archive:Er,axis:null,
+background:null,bgColor:null,border:Ar,borderColor:null,
+bottomMargin:Ar,cellPadding:null,cellSpacing:null,char:null,
 charOff:null,classId:null,clear:null,code:null,codeBase:null,
-codeType:null,color:null,compact:Cr,declare:Cr,event:null,face:null,
-frame:null,frameBorder:null,hSpace:Fr,leftMargin:Fr,link:null,
-longDesc:null,lowSrc:null,marginHeight:Fr,marginWidth:Fr,noResize:Cr,
-noHref:Cr,noShade:Cr,noWrap:Cr,object:null,profile:null,prompt:null,
-rev:null,rightMargin:Fr,rules:null,scheme:null,scrolling:Sr,
-standby:null,summary:null,text:null,topMargin:Fr,valueType:null,
-version:null,vAlign:null,vLink:null,vSpace:Fr,allowTransparency:null,
-autoCorrect:null,autoSave:null,disablePictureInPicture:Cr,
-disableRemotePlayback:Cr,prefix:null,property:null,results:Fr,
+codeType:null,color:null,compact:Sr,declare:Sr,event:null,face:null,
+frame:null,frameBorder:null,hSpace:Ar,leftMargin:Ar,link:null,
+longDesc:null,lowSrc:null,marginHeight:Ar,marginWidth:Ar,noResize:Sr,
+noHref:Sr,noShade:Sr,noWrap:Sr,object:null,profile:null,prompt:null,
+rev:null,rightMargin:Ar,rules:null,scheme:null,scrolling:wr,
+standby:null,summary:null,text:null,topMargin:Ar,valueType:null,
+version:null,vAlign:null,vLink:null,vSpace:Ar,allowTransparency:null,
+autoCorrect:null,autoSave:null,disablePictureInPicture:Sr,
+disableRemotePlayback:Sr,prefix:null,property:null,results:Ar,
 security:null,unselectable:null}}),qr=Rr({space:'svg',attributes:{
 accentHeight:'accent-height',alignmentBaseline:'alignment-baseline',
 arabicForm:'arabic-form',baselineShift:'baseline-shift',
@@ -2279,40 +2279,40 @@ vectorEffect:'vector-effect',vertAdvY:'vert-adv-y',
 vertOriginX:'vert-origin-x',vertOriginY:'vert-origin-y',
 wordSpacing:'word-spacing',writingMode:'writing-mode',
 xHeight:'x-height',playbackOrder:'playbackorder',
-timelineBegin:'timelinebegin'},transform:jr,properties:{about:Lr,
-accentHeight:Fr,accumulate:null,additive:null,alignmentBaseline:null,
-alphabetic:Fr,amplitude:Fr,arabicForm:null,ascent:Fr,
-attributeName:null,attributeType:null,azimuth:Fr,bandwidth:null,
+timelineBegin:'timelinebegin'},transform:jr,properties:{about:Tr,
+accentHeight:Ar,accumulate:null,additive:null,alignmentBaseline:null,
+alphabetic:Ar,amplitude:Ar,arabicForm:null,ascent:Ar,
+attributeName:null,attributeType:null,azimuth:Ar,bandwidth:null,
 baselineShift:null,baseFrequency:null,baseProfile:null,bbox:null,
-begin:null,bias:Fr,by:null,calcMode:null,capHeight:Fr,className:Er,
+begin:null,bias:Ar,by:null,calcMode:null,capHeight:Ar,className:Er,
 clip:null,clipPath:null,clipPathUnits:null,clipRule:null,color:null,
 colorInterpolation:null,colorInterpolationFilters:null,
 colorProfile:null,colorRendering:null,content:null,
 contentScriptType:null,contentStyleType:null,crossOrigin:null,
 cursor:null,cx:null,cy:null,d:null,dataType:null,defaultAction:null,
-descent:Fr,diffuseConstant:Fr,direction:null,display:null,dur:null,
-divisor:Fr,dominantBaseline:null,download:Cr,dx:null,dy:null,
-edgeMode:null,editable:null,elevation:Fr,enableBackground:null,
-end:null,event:null,exponent:Fr,externalResourcesRequired:null,
-fill:null,fillOpacity:Fr,fillRule:null,filter:null,filterRes:null,
+descent:Ar,diffuseConstant:Ar,direction:null,display:null,dur:null,
+divisor:Ar,dominantBaseline:null,download:Sr,dx:null,dy:null,
+edgeMode:null,editable:null,elevation:Ar,enableBackground:null,
+end:null,event:null,exponent:Ar,externalResourcesRequired:null,
+fill:null,fillOpacity:Ar,fillRule:null,filter:null,filterRes:null,
 filterUnits:null,floodColor:null,floodOpacity:null,focusable:null,
 focusHighlight:null,fontFamily:null,fontSize:null,fontSizeAdjust:null,
 fontStretch:null,fontStyle:null,fontVariant:null,fontWeight:null,
 format:null,fr:null,from:null,fx:null,fy:null,g1:Dr,g2:Dr,
 glyphName:Dr,glyphOrientationHorizontal:null,
 glyphOrientationVertical:null,glyphRef:null,gradientTransform:null,
-gradientUnits:null,handler:null,hanging:Fr,hatchContentUnits:null,
-hatchUnits:null,height:null,href:null,hrefLang:null,horizAdvX:Fr,
-horizOriginX:Fr,horizOriginY:Fr,id:null,ideographic:Fr,
+gradientUnits:null,handler:null,hanging:Ar,hatchContentUnits:null,
+hatchUnits:null,height:null,href:null,hrefLang:null,horizAdvX:Ar,
+horizOriginX:Ar,horizOriginY:Ar,id:null,ideographic:Ar,
 imageRendering:null,initialVisibility:null,in:null,in2:null,
-intercept:Fr,k:Fr,k1:Fr,k2:Fr,k3:Fr,k4:Fr,kernelMatrix:Lr,
+intercept:Ar,k:Ar,k1:Ar,k2:Ar,k3:Ar,k4:Ar,kernelMatrix:Tr,
 kernelUnitLength:null,keyPoints:null,keySplines:null,keyTimes:null,
 kerning:null,lang:null,lengthAdjust:null,letterSpacing:null,
-lightingColor:null,limitingConeAngle:Fr,local:null,markerEnd:null,
+lightingColor:null,limitingConeAngle:Ar,local:null,markerEnd:null,
 markerMid:null,markerStart:null,markerHeight:null,markerUnits:null,
 markerWidth:null,mask:null,maskContentUnits:null,maskUnits:null,
 mathematical:null,max:null,media:null,mediaCharacterEncoding:null,
-mediaContentEncodings:null,mediaSize:Fr,mediaTime:null,method:null,
+mediaContentEncodings:null,mediaSize:Ar,mediaTime:null,method:null,
 min:null,mode:null,name:null,navDown:null,navDownLeft:null,
 navDownRight:null,navLeft:null,navNext:null,navPrev:null,
 navRight:null,navUp:null,navUpLeft:null,navUpRight:null,
@@ -2337,191 +2337,65 @@ onSelect:null,onShow:null,onStalled:null,onStorage:null,onSubmit:null,
 onSuspend:null,onTimeUpdate:null,onToggle:null,onUnload:null,
 onVolumeChange:null,onWaiting:null,onZoom:null,opacity:null,
 operator:null,order:null,orient:null,orientation:null,origin:null,
-overflow:null,overlay:null,overlinePosition:Fr,overlineThickness:Fr,
-paintOrder:null,panose1:null,path:null,pathLength:Fr,
+overflow:null,overlay:null,overlinePosition:Ar,overlineThickness:Ar,
+paintOrder:null,panose1:null,path:null,pathLength:Ar,
 patternContentUnits:null,patternTransform:null,patternUnits:null,
 phase:null,ping:Er,pitch:null,playbackOrder:null,pointerEvents:null,
-points:null,pointsAtX:Fr,pointsAtY:Fr,pointsAtZ:Fr,preserveAlpha:null,
+points:null,pointsAtX:Ar,pointsAtY:Ar,pointsAtZ:Ar,preserveAlpha:null,
 preserveAspectRatio:null,primitiveUnits:null,propagate:null,
-property:Lr,r:null,radius:null,referrerPolicy:null,refX:null,
-refY:null,rel:Lr,rev:Lr,renderingIntent:null,repeatCount:null,
-repeatDur:null,requiredExtensions:Lr,requiredFeatures:Lr,
-requiredFonts:Lr,requiredFormats:Lr,resource:null,restart:null,
+property:Tr,r:null,radius:null,referrerPolicy:null,refX:null,
+refY:null,rel:Tr,rev:Tr,renderingIntent:null,repeatCount:null,
+repeatDur:null,requiredExtensions:Tr,requiredFeatures:Tr,
+requiredFonts:Tr,requiredFormats:Tr,resource:null,restart:null,
 result:null,rotate:null,rx:null,ry:null,scale:null,seed:null,
 shapeRendering:null,side:null,slope:null,snapshotTime:null,
-specularConstant:Fr,specularExponent:Fr,spreadMethod:null,
+specularConstant:Ar,specularExponent:Ar,spreadMethod:null,
 spacing:null,startOffset:null,stdDeviation:null,stemh:null,stemv:null,
 stitchTiles:null,stopColor:null,stopOpacity:null,
-strikethroughPosition:Fr,strikethroughThickness:Fr,string:null,
-stroke:null,strokeDashArray:Lr,strokeDashOffset:null,
-strokeLineCap:null,strokeLineJoin:null,strokeMiterLimit:Fr,
-strokeOpacity:Fr,strokeWidth:null,style:null,surfaceScale:Fr,
+strikethroughPosition:Ar,strikethroughThickness:Ar,string:null,
+stroke:null,strokeDashArray:Tr,strokeDashOffset:null,
+strokeLineCap:null,strokeLineJoin:null,strokeMiterLimit:Ar,
+strokeOpacity:Ar,strokeWidth:null,style:null,surfaceScale:Ar,
 syncBehavior:null,syncBehaviorDefault:null,syncMaster:null,
-syncTolerance:null,syncToleranceDefault:null,systemLanguage:Lr,
-tabIndex:Fr,tableValues:null,target:null,targetX:Fr,targetY:Fr,
+syncTolerance:null,syncToleranceDefault:null,systemLanguage:Tr,
+tabIndex:Ar,tableValues:null,target:null,targetX:Ar,targetY:Ar,
 textAnchor:null,textDecoration:null,textRendering:null,
 textLength:null,timelineBegin:null,title:null,transformBehavior:null,
-type:null,typeOf:Lr,to:null,transform:null,u1:null,u2:null,
-underlinePosition:Fr,underlineThickness:Fr,unicode:null,
-unicodeBidi:null,unicodeRange:null,unitsPerEm:Fr,values:null,
-vAlphabetic:Fr,vMathematical:Fr,vectorEffect:null,vHanging:Fr,
-vIdeographic:Fr,version:null,vertAdvY:Fr,vertOriginX:Fr,
-vertOriginY:Fr,viewBox:null,viewTarget:null,visibility:null,
+type:null,typeOf:Tr,to:null,transform:null,u1:null,u2:null,
+underlinePosition:Ar,underlineThickness:Ar,unicode:null,
+unicodeBidi:null,unicodeRange:null,unitsPerEm:Ar,values:null,
+vAlphabetic:Ar,vMathematical:Ar,vectorEffect:null,vHanging:Ar,
+vIdeographic:Ar,version:null,vertAdvY:Ar,vertOriginX:Ar,
+vertOriginY:Ar,viewBox:null,viewTarget:null,visibility:null,
 width:null,widths:null,wordSpacing:null,writingMode:null,x:null,
-x1:null,x2:null,xChannelSelector:null,xHeight:Fr,y:null,y1:null,
+x1:null,x2:null,xChannelSelector:null,xHeight:Ar,y:null,y1:null,
 y2:null,yChannelSelector:null,z:null,zoomAndPan:null}
-}),Wr=/^data[-\w.:]+$/i,$r=/-[a-z]/g,Qr=/[A-Z]/g
-function Xr(e,n){const t=br(n)
+}),Wr=/^data[-\w.:]+$/i,Qr=/-[a-z]/g,$r=/[A-Z]/g
+function Yr(e,n){const t=br(n)
 let r=n,o=vr
 if(t in e.normal)return e.property[e.normal[t]]
 if(t.length>4&&'data'===t.slice(0,4)&&Wr.test(n)){
-if('-'===n.charAt(4)){const e=n.slice(5).replace($r,Kr)
+if('-'===n.charAt(4)){const e=n.slice(5).replace(Qr,Xr)
 r='data'+e.charAt(0).toUpperCase()+e.slice(1)}else{const e=n.slice(4)
-if(!$r.test(e)){let t=e.replace(Qr,Yr)
-'-'!==t.charAt(0)&&(t='-'+t),n='data'+t}}o=Pr}return new o(r,n)}
-function Yr(e){return'-'+e.toLowerCase()}function Kr(e){
-return e.charAt(1).toUpperCase()}
-const Zr=xr([_r,Br,Hr,Ur,Vr],'html'),Jr=xr([_r,Br,Hr,Ur,qr],'svg')
-var Gr=/\/\*[^*]*\*+([^/*][^*]*\*+)*\//g,eo=/\n/g,no=/^\s*/,to=/^(\*?[-#/*\\\w]+(\[[0-9a-z_-]+\])?)\s*/,ro=/^:\s*/,oo=/^((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^)]*?\)|[^};])+)/,io=/^[;\s]*/,lo=/^\s+|\s+$/g,uo=''
-function co(e){return e?e.replace(lo,uo):uo}var ao=function(e,n){
-if('string'!=typeof e)throw new TypeError('First argument must be a string')
-if(!e)return[]
-n=n||{}
-var t=1,r=1
-function o(e){var n=e.match(eo)
-n&&(t+=n.length)
-var o=e.lastIndexOf("\n")
-r=~o?e.length-o:r+e.length}function i(){var e={line:t,column:r}
-return function(n){return n.position=new l(e),a(),n}}function l(e){
-this.start=e,this.end={line:t,column:r},this.source=n.source}
-function u(o){var i=new Error(n.source+':'+t+':'+r+': '+o)
-if(i.reason=o,i.filename=n.source,i.line=t,i.column=r,i.source=e,!n.silent)throw i
-}function c(n){var t=n.exec(e)
-if(t){var r=t[0]
-return o(r),e=e.slice(r.length),t}}function a(){c(no)}function s(e){
-var n
-for(e=e||[];n=f();)!1!==n&&e.push(n)
-return e}function f(){var n=i()
-if("/"==e.charAt(0)&&"*"==e.charAt(1)){
-for(var t=2;uo!=e.charAt(t)&&("*"!=e.charAt(t)||"/"!=e.charAt(t+1));)++t
-if(t+=2,uo===e.charAt(t-1))return u('End of comment missing')
-var l=e.slice(2,t-2)
-return r+=2,o(l),e=e.slice(t),r+=2,n({type:"comment",comment:l})}}
-function p(){var e=i(),n=c(to)
-if(n){if(f(),!c(ro))return u("property missing ':'")
-var t=c(oo),r=e({type:"declaration",property:co(n[0].replace(Gr,uo)),
-value:t?co(t[0].replace(Gr,uo)):uo})
-return c(io),r}}return l.prototype.content=e,a(),function(){var e,n=[]
-for(s(n);e=p();)!1!==e&&(n.push(e),s(n))
-return n}()}
-var so=function(e,n){var t,r=null
-if(!e||'string'!=typeof e)return r
-for(var o,i,l=ao(e),u='function'==typeof n,c=0,a=l.length;c<a;c++)o=(t=l[c]).property,
-i=t.value,u?n(o,i,t):i&&(r||(r={}),r[o]=i)
-return r}
-const fo={html:'http://www.w3.org/1999/xhtml',
-mathml:'http://www.w3.org/1998/Math/MathML',
-svg:'http://www.w3.org/2000/svg',xlink:'http://www.w3.org/1999/xlink',
-xml:'http://www.w3.org/XML/1998/namespace',
-xmlns:'http://www.w3.org/2000/xmlns/'},po=fo,ho={classId:'classID',
-dataType:'datatype',itemId:'itemID',strokeDashArray:'strokeDasharray',
-strokeDashOffset:'strokeDashoffset',strokeLineCap:'strokeLinecap',
-strokeLineJoin:'strokeLinejoin',strokeMiterLimit:'strokeMiterlimit',
-typeOf:'typeof',xLinkActuate:'xlinkActuate',
-xLinkArcRole:'xlinkArcrole',xLinkHref:'xlinkHref',
-xLinkRole:'xlinkRole',xLinkShow:'xlinkShow',xLinkTitle:'xlinkTitle',
-xLinkType:'xlinkType',xmlnsXLink:'xmlnsXlink'
-},go={}.hasOwnProperty,mo=it('root'),yo=it('element'),ko=it('text')
-function xo(e,n,t){
-if('function'!=typeof e)throw new TypeError('h is not a function')
-const r=function(e){const n=e('div',{})
-return Boolean(n&&('_owner'in n||'_store'in n)&&(void 0===n.key||null===n.key))
-}(e),o=function(e){const n=e('div',{})
-return Boolean(n&&n.context&&n.context._isVue)}(e),i=function(e){
-const n=e('div',{})
-return'VirtualNode'===n.type}(e)
-let l,u
-if('string'==typeof t||'boolean'==typeof t?(l=t,t={}):(t||(t={}),l=t.prefix),mo(n))u=1===n.children.length&&yo(n.children[0])?n.children[0]:{
-type:'element',tagName:'div',properties:{},children:n.children}
-else{
-if(!yo(n))throw new Error('Expected root or element, not `'+(n&&n.type||n)+'`')
-u=n}return bo(e,u,{schema:'svg'===t.space?Jr:Zr,
-prefix:null==l?r||o||i?'h-':null:'string'==typeof l?l:l?'h-':null,
-key:0,react:r,vue:o,vdom:i,hyperscript:wo(e)})}function bo(e,n,t){
-const r=t.schema
-let o=r,i=n.tagName
-const l={},u=[]
-let c,a=-1
-for(c in'html'===r.space&&'svg'===i.toLowerCase()&&(o=Jr,t.schema=o),n.properties)n.properties&&go.call(n.properties,c)&&vo(l,c,n.properties[c],t,i)
-if(t.vdom&&('html'===o.space?i=i.toUpperCase():o.space&&(l.namespace=po[o.space])),
-t.prefix&&(t.key++,
-l.key=t.prefix+t.key),n.children)for(;++a<n.children.length;){
-const r=n.children[a]
-yo(r)?u.push(bo(e,r,t)):ko(r)&&u.push(r.value)}
-return t.schema=r,u.length>0?e.call(n,i,l,u):e.call(n,i,l)}
-function vo(e,n,t,r,o){const i=Xr(r.schema,n)
-let l
-null==t||'number'==typeof t&&Number.isNaN(t)||!1===t&&(r.vue||r.vdom||r.hyperscript)||!t&&i.boolean&&(r.vue||r.vdom||r.hyperscript)||(Array.isArray(t)&&(t=i.commaSeparated?function(e,n){
+if(!Qr.test(e)){let t=e.replace($r,Kr)
+'-'!==t.charAt(0)&&(t='-'+t),n='data'+t}}o=Or}return new o(r,n)}
+function Kr(e){return'-'+e.toLowerCase()}function Xr(e){
+return e.charAt(1).toUpperCase()}const Zr=xr([_r,Br,Ur,Nr,Vr],'html')
+xr([_r,Br,Ur,Nr,qr],'svg')
+const Jr=['area','base','basefont','bgsound','br','col','command','embed','frame','hr','image','img','input','isindex','keygen','link','menuitem','meta','nextid','param','source','track','wbr']
+function Gr(e){return e.join(' ').trim()}function eo(e,n){
 const t=n||{}
 return(''===e[e.length-1]?[...e,'']:e).join((t.padRight?' ':'')+','+(!1===t.padLeft?'':' ')).trim()
-}(t):t.join(' ').trim()),
-i.boolean&&r.hyperscript&&(t=''),'style'===i.property&&'string'==typeof t&&(r.react||r.vue||r.vdom)&&(t=function(e,n){
-const t={}
-try{so(e,((e,n)=>{
-'-ms-'===e.slice(0,4)&&(e='ms-'+e.slice(4)),t[e.replace(/-([a-z])/g,((e,n)=>n.toUpperCase()))]=n
-}))}catch(e){
-throw e.message=n+'[style]'+e.message.slice('undefined'.length),e}
-return t
-}(t,o)),r.vue?'style'!==i.property&&(l='attrs'):i.mustUseProperty||(r.vdom?'style'!==i.property&&(l='attributes'):r.hyperscript&&(l='attrs')),
-l?e[l]=Object.assign(e[l]||{},{[i.attribute]:t
-}):i.space&&r.react?e[ho[i.property]||i.property]=t:e[i.attribute]=t)}
-function wo(e){return'context'in e&&'cleanup'in e}
-const Co={}.hasOwnProperty
-var So={}.hasOwnProperty,Ao=function(e,n){const t=n||{}
-function r(n,...t){let o=r.invalid
-const i=r.handlers
-if(n&&Co.call(n,e)){const t=String(n[e])
-o=Co.call(i,t)?i[t]:r.unknown}if(o)return o.call(this,n,...t)}
-return r.handlers=t.handlers||{},
-r.invalid=t.invalid,r.unknown=t.unknown,r}('type',{handlers:{
-root:function(e,n){var t={nodeName:'#document',
-mode:(e.data||{}).quirksMode?'quirks':'no-quirks',childNodes:[]}
-return t.childNodes=Eo(e.children,t,n),Do(e,t)},element:function(e,n){
-var t=n.space
-return xo((function(t,r){var o,i,l,u,c,a=[]
-for(l in r)So.call(r,l)&&!1!==r[l]&&((o=Xr(n,l)).boolean&&!r[l]||(i={
-name:l,value:!0===r[l]?'':String(r[l])
-},o.space&&'html'!==o.space&&'svg'!==o.space&&((u=l.indexOf(':'))<0?i.prefix='':(i.name=l.slice(u+1),
-i.prefix=l.slice(0,u)),i.namespace=fo[o.space]),a.push(i)))
-'html'===n.space&&'svg'===e.tagName&&(n=Jr);(c=Do(e,{nodeName:t,
-tagName:t,attrs:a,namespaceURI:fo[n.space],childNodes:[],
-parentNode:void 0
-})).childNodes=Eo(e.children,c,n),'template'===t&&(c.content=function(e,n){
-var t={nodeName:'#document-fragment',childNodes:[]}
-return t.childNodes=Eo(e.children,t,n),Do(e,t)}(e.content,n))
-return c}),Object.assign({},e,{children:[]}),{space:t})},
-text:function(e){return Do(e,{nodeName:'#text',value:e.value,
-parentNode:void 0})},comment:function(e){return Do(e,{
-nodeName:'#comment',data:e.value,parentNode:void 0})},
-doctype:function(e){return Do(e,{nodeName:'#documentType',name:'html',
-publicId:'',systemId:'',parentNode:void 0})}}})
-function Fo(e,n){return Ao(e,'svg'===n?Jr:Zr)}function Eo(e,n,t){
-var r,o=-1,i=[]
-if(e)for(;++o<e.length;)(r=Ao(e[o],t)).parentNode=n,i.push(r)
-return i}function Do(e,n){var t=e.position
-return t&&t.start&&t.end&&(n.sourceCodeLocation={
-startLine:t.start.line,startCol:t.start.column,
-startOffset:t.start.offset,endLine:t.end.line,endCol:t.end.column,
-endOffset:t.end.offset}),n}const Lo={parse:function(e){
-Object.assign(this,{Parser:n=>{const t=this.data('settings')
-return wn(n,Object.assign({},t,e,{
+}const no={parse:function(e){Object.assign(this,{Parser:n=>{
+const t=this.data('settings')
+return Cn(n,Object.assign({},t,e,{
 extensions:this.data('micromarkExtensions')||[],
 mdastExtensions:this.data('fromMarkdownExtensions')||[]}))}})},
 gfm:function(e={}){const n=this.data()
 function t(e,t){(n[e]?n[e]:n[e]=[]).push(t)}
-t('micromarkExtensions',function(e){return U([Mn,{document:{91:{
-tokenize:Yn,continuation:{tokenize:Kn},exit:Zn}},text:{91:{tokenize:Xn
-},93:{add:'after',tokenize:$n,resolveTo:Qn}}},Jn(e),Gn,tt])
+t('micromarkExtensions',function(e){return N([Mn,{document:{91:{
+tokenize:Kn,continuation:{tokenize:Xn},exit:Zn}},text:{91:{tokenize:Yn
+},93:{add:'after',tokenize:Qn,resolveTo:$n}}},Jn(e),Gn,tt])
 }(e)),t('fromMarkdownExtensions',[gt,{enter:{
 gfmFootnoteDefinition:function(e){this.enter({
 type:'footnoteDefinition',identifier:'',label:'',children:[]},e)},
@@ -2531,11 +2405,11 @@ identifier:'',label:''},e)},gfmFootnoteCallString:function(){
 this.buffer()}},exit:{gfmFootnoteDefinition:function(e){this.exit(e)},
 gfmFootnoteDefinitionLabelString:function(e){
 const n=this.resume(),t=this.stack[this.stack.length-1]
-t.label=n,t.identifier=Ie(this.sliceSerialize(e)).toLowerCase()},
+t.label=n,t.identifier=Pe(this.sliceSerialize(e)).toLowerCase()},
 gfmFootnoteCall:function(e){this.exit(e)},
 gfmFootnoteCallString:function(e){
 const n=this.resume(),t=this.stack[this.stack.length-1]
-t.label=n,t.identifier=Ie(this.sliceSerialize(e)).toLowerCase()}}
-},zt,Nt,$t]),t('toMarkdownExtensions',function(e){return{
-extensions:[mt,Ot(),Mt,qt(e),Qt]}}(e))},rehype:yr}
-export{Lo as Remark,D as Unified,Fo as toParse5,nr as unistVisit}
+t.label=n,t.identifier=Pe(this.sliceSerialize(e)).toLowerCase()}}
+},zt,Ht,Qt]),t('toMarkdownExtensions',function(e){return{
+extensions:[mt,It(),Mt,qt(e),$t]}}(e))},rehype:yr}
+export{no as Remark,D as Unified,Yr as attributeInfo,eo as comma,Zr as htmlAttributes,Jr as htmlVoidElements,Gr as space,nr as unistVisit}
