@@ -1,16 +1,12 @@
-export {unified as Unified} from 'unified'
-
-import parse from 'remark-parse'
-import gfm from 'remark-gfm'
-import rehype from 'remark-rehype'
-export const Remark = {parse, gfm, rehype}
+export {fromMarkdown} from 'mdast-util-from-markdown'
+export {gfm} from 'micromark-extension-gfm'
+export {gfmFromMarkdown} from 'mdast-util-gfm'
+export {toHast} from 'mdast-util-to-hast'
 
 //import {defaultSchema} from 'rehype-sanitize'
 //import externalLinks from 'rehype-external-links'
 //import stringify from 'rehype-stringify'
 //export const Rehype = {defaultSchema}
-
-export {visit as unistVisit} from 'unist-util-visit'
 
 export {html as htmlAttributes, find as attributeInfo} from 'property-information'
 // these dependencies are silly, but they're not really worse than my own implementation would be, so, might as well use them

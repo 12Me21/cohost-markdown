@@ -1,17 +1,15 @@
-import {Unified, Remark} from './libs.js'
-
-//globalThis.Rehype = Rehype
+import {fromMarkdown, gfm, gfmFromMarkdown, toHast} from './libs.js'
+import hastRaw from './hast-raw.js'
 
 import cohostImageTitles from './cohost-image-titles.js'
 import cohostFootnotes from './cohost-footnotes.js'
 //import cohostFilterCss from './cohost-filter-css.js'
 // todo: these will have render funcs too
-import CohostMentions from './cohost-mentions.js'
-import CohostEmbeds from './cohost-embeds.js'
-import CohostEmotes from './cohost-emotes.js'
+//import CohostMentions from './cohost-mentions.js'
+//import CohostEmbeds from './cohost-embeds.js'
+//import CohostEmotes from './cohost-emotes.js'
 
 import deepmerge from './deepmerge.js'
-import hastRaw from './hast-raw.js'
 
 
 
@@ -22,7 +20,12 @@ import hastRaw from './hast-raw.js'
 	},
 })*/
 
-function start({
+const MD_EXT = {
+	extensions: [ gfm({singleTilde: false}) ],
+	mdastExtensions: [ gfmFromMarkdown() ],
+}
+
+function start(text, {
 	date = Infinity,
 	hasCohostPlus = false,
 	externalLinksInNewTab = true,
@@ -32,28 +35,23 @@ function start({
 }) {
 	const links = externalLinksInNewTab ? 
 		{target:'_blank', rel:['nofollow', 'noopener', 'noreferrer']} :
-		{target:'_self', rel:['nofollow']}
+	{target:'_self', rel:['nofollow']}
 	
-	return Unified()
-	// MDAST
-		.use(Remark.parse)
-		.use(disableGfm ? null : Remark.gfm, {singleTilde: false})
-	// HAST
-		.use(Remark.rehype, {allowDangerousHtml: !disableHtml})
-	// idea: we can eliminate the need for unist-util-visit
-	// if we do these (imageTitles and footnotes)
-	// both durint the hast -> dom conversion
-		.use(cohostImageTitles)
-		.use(cohostFootnotes)
-	// DOM
-		.use(hastRaw, {allowRaw: !disableHtml})
-		//.use(Rehype.sanitize, HTML_ALLOW)
-		//.use(cohostFilterCss, {date})
-		//.use(Rehype.externalLinks, links)
-		//.use(CohostMentions)
-		//.use(disableEmbeds ? null : CohostEmbeds)
-		//.use(CohostEmotes, {hasCohostPlus})
+	let res1 = fromMarkdown(text, disableGfm ? {} : MD_EXT)
+	let res2 = toHast(res1, {allowDangerousHtml: !disableHtml})
+	let res3 = hastRaw(res2, {allowRaw: !disableHtml}, [
+		cohostImageTitles,
+		cohostFootnotes,
+	])
+	return res3
 }
+
+//.use(Rehype.sanitize, HTML_ALLOW)
+//.use(cohostFilterCss, {date})
+//.use(Rehype.externalLinks, links)
+//.use(CohostMentions)
+//.use(disableEmbeds ? null : CohostEmbeds)
+//.use(CohostEmotes, {hasCohostPlus})
 
 const DISABLE_GFM_LINES = 256
 
@@ -82,8 +80,6 @@ export default function process(input, settings) {
 		__proto__: settings,
 		disableGfm,
 	}
-	let p = start(settings)
-		//.use(Rehype.stringify)
 	
-	return p.processSync(text).result
+	return start(text, settings)
 }

@@ -12,6 +12,7 @@ textarea-container, textarea-container > textarea {
 	display: block;
 	box-sizing: content-box;
 	min-height: 5em;
+	max-height: 50vh;
 	height: 0;
 	font: 1em monospace;
 }
