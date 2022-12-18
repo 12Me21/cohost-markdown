@@ -1,13 +1,13 @@
 import {fromMarkdown, gfm, gfmFromMarkdown, toHast} from './libs.js'
 import hastRaw from './hast-raw.js'
 
-import cohostImageTitles from './cohost-image-titles.js'
-import cohostFootnotes from './cohost-footnotes.js'
+import imageTitles from './cohost-image-titles.js'
+import footnoteHack from './cohost-footnotes.js'
 //import cohostFilterCss from './cohost-filter-css.js'
 // todo: these will have render funcs too
-import cohostMentions from './cohost-mentions.js'
-//import CohostEmbeds from './cohost-embeds.js'
-import cohostEmotes from './cohost-emotes.js'
+import mentions from './cohost-mentions.js'
+//import embeds from './cohost-embeds.js'
+import emotes from './cohost-emotes.js'
 
 import deepmerge from './deepmerge.js'
 
@@ -40,11 +40,9 @@ function start(text, {
 	let res1 = fromMarkdown(text, disableGfm ? {} : MD_EXT)
 	let res2 = toHast(res1, {allowDangerousHtml: !disableHtml})
 	let res3 = hastRaw(res2, {allowRaw: !disableHtml}, [
-		cohostImageTitles,
-		cohostFootnotes,
+		imageTitles, footnoteHack,
 	], [
-		cohostMentions,
-		cohostEmotes,
+		mentions, emotes,
 	])
 	return res3
 }
