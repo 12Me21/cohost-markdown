@@ -5,9 +5,9 @@ import cohostImageTitles from './cohost-image-titles.js'
 import cohostFootnotes from './cohost-footnotes.js'
 //import cohostFilterCss from './cohost-filter-css.js'
 // todo: these will have render funcs too
-//import CohostMentions from './cohost-mentions.js'
+import cohostMentions from './cohost-mentions.js'
 //import CohostEmbeds from './cohost-embeds.js'
-//import CohostEmotes from './cohost-emotes.js'
+import cohostEmotes from './cohost-emotes.js'
 
 import deepmerge from './deepmerge.js'
 
@@ -42,6 +42,9 @@ function start(text, {
 	let res3 = hastRaw(res2, {allowRaw: !disableHtml}, [
 		cohostImageTitles,
 		cohostFootnotes,
+	], [
+		cohostMentions,
+		cohostEmotes,
 	])
 	return res3
 }

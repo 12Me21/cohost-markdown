@@ -6,20 +6,27 @@ const escape_text = text=>{
 	return text.replace(/&/g, "&amp;").replace(/</g, "&lt;")
 }
 
-export default function(tree, {allowRaw}, before) {
+export default function(tree, settings, before, doText) {
+	let {allowRaw} = settings
 	let output = ""
+	let disabled = new Set() // disabled processors to prevent infinite loops
 	
 	const all = (list)=>{
 		if (list) nodes:for (let n of list) switch (n.type) {
+			
 			case 'element':
 			if (before)
 				for (let b of before) {
-					let res = b(n)
+					if (disabled.has(b))
+						continue
+					let res = b(n, settings)
 					if (res=='skip')
-						continue nodes;
+						continue nodes
 					if (res=='children') {
+						disabled.add(b)
 						all(n.children)
-						continue nodes;
+						disabled.delete(b)
+						continue nodes
 					}
 					if (res)
 						n = res
@@ -32,17 +39,34 @@ export default function(tree, {allowRaw}, before) {
 			if (!htmlVoidElements.includes(tagName))
 				output += `</${tagName}>`
 			break
+			
 			case 'text':
-			output += escape_text(n.value)
+			let text = n.value
+			if (doText)
+				for (let b of doText) {
+					if (disabled.has(b))
+						continue
+					let res = b(text, settings)
+					if (Array.isArray(res)) {
+						disabled.add(b)
+						all(res)
+						disabled.delete(b)
+						continue nodes
+					}
+				}
+			output += escape_text(text)
 			break
+			
 			case 'comment':
 			// do we check for allowraw here? TODO
 			output += "<!-- -->"
 			break
+			
 			case 'raw':
 			if (allowRaw)
 				output += n.value
 			break;
+			
 			default:
 			throw new Error(`Cannot compile ‘${n.type}’ node`)
 		}

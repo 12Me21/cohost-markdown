@@ -1,5 +1,3 @@
-import {unistVisit} from './libs.js'
-
 const EMOTES = {
 	'chunks':      {url:'chunks',cohost_plus:false},
 	'eggbug':      {url:'eggbug',cohost_plus:false},
@@ -19,52 +17,42 @@ const EMOTES = {
 	'host-stare':  {url:'host-stare',cohost_plus:true},
 }
 
-// oh i bet this is a library ?
-const custom = function(pattern, func) {
-	return tree=>{
-		unistVisit(tree, 'text', (node, index, parent)=>{
-			const match = node.value.match(pattern)
-			if (match) {
-				const split = node.value.split(pattern)
-				if (split.length != match.length+1)
-					return
-				return func(match, split, node, index, parent)
-			}
-		})
-	}
-}
+const EMOTE_REGEX = /:([\w-]+):/g
 
-const EMOTE_REGEX = /:[\w-]+:/g
-
-export default function emote({hasCohostPlus}){
-	return custom(EMOTE_REGEX, (match, split, node, index, parent)=>{
-		const nodes = []
-		split.forEach((textbefore, index)=>{
-			nodes.push({type:'text', value:textbefore})
-			if (index >= match.length)
-				return
+export default function emote(text, {hasCohostPlus}){
+	const list = []
+	
+	void text.replace(EMOTE_REGEX, (match, name, offset)=>{
+		const start = offset
+		const end = offset + match.length
+		let emote = EMOTES[name]
+		if (emote && !(emote.cohost_plus && !hasCohostPlus)) {
 			
-			const name = match[index].slice(1, -1)
-			let emote = EMOTES[name]
-			
-			if (emote && !(emote.cohost_plus && !hasCohostPlus))
-				nodes.push({
-					type: 'element',
-					//tagName: 'CustomEmoji',
-					tagName: 'img',
-					properties: {
-						name,
-						class: 'emote',
-						//url: `emotes/${emote.url}.webp`,
-						src: `emotes/${emote.url}.webp`,
-					},
-				})
-			else {
-				// note: this results in text nodes being fragmented even if the emote is invalid
-				nodes.push({type: 'text', value: match[index]})
-			}
-		})
-		parent.children.splice(index, 1, ...nodes)
-		return ['skip', index+nodes.length]
+			list.push({emote, start, end})
+		}
+		return match
 	})
-}
+	
+	if (list.length) {
+		const nodes = []
+		let last = 0
+		list.forEach(({start, end, emote}, i, list)=>{
+			nodes.push({type:'text', value:text.slice(last, start)})
+			nodes.push({
+				type: 'element',
+				//tagName: 'CustomEmoji',
+				tagName: 'img',
+				properties: {
+					name,
+					class: 'emote',
+					//url: `emotes/${emote.url}.webp`,
+					src: `emotes/${emote.url}.webp`,
+				},
+			})
+			last = end
+			if (i == list.length-1)
+				nodes.push({type:'text', value: text.slice(last)})
+		})
+		return nodes
+	}
+}	
