@@ -35,14 +35,31 @@ function start(text, {
 	disableEmbeds = false,
 	disableGfm = false,
 }) {
+	// IDEA: what if we used the markdown->html mode in micromark
+	// and then just parse that, since we need to anyway?
+	// just worried that results wont be identical
+	
 	let res1 = fromMarkdown(text, disableGfm ? {} : MD_EXT)
-	let res2 = toHast(res1, {allowDangerousHtml: !disableHtml})
-	let res3 = hastRaw(res2, {allowRaw: !disableHtml, externalLinksInNewTab}, [
+	let res2 = toHast(res1, {
+		allowDangerousHtml: !disableHtml,
+		/*footnoteLabelTagName: 'hr',
+		footnoteLabel: [],
+		footnoteLabelProperties: {
+			'aria-label': "Footnotes",
+			'style': "margin-bottom: -0.5rem;",
+		},*/
+	})
+	let res3 = hastRaw(res2, {
+		allowRaw: !disableHtml,
+		externalLinksInNewTab
+	}, [
 		imageTitles, footnoteHack, // element pre-filters
 	], [
-		mentions, emotes, // text filters
+		mentions, emotes, // text pre-filters - these should be post-filters
 	], [
-		externalLinks, // element post-filters
+		//sanitize,
+		//filterCss,
+		//externalLinks, // element post-filters (TODO - these should run before the text filters also, uhh)
 	])
 	return res3
 }
