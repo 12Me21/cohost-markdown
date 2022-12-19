@@ -1,7 +1,4 @@
-import {fromMarkdown, gfm, gfmFromMarkdown, toHast} from './libs.js'
-import hastRaw from './hast-raw.js'
-
-import imageTitles from './cohost-image-titles.js'
+/*import imageTitles from './cohost-image-titles.js'
 import footnoteHack from './cohost-footnotes.js'
 //import cohostFilterCss from './cohost-filter-css.js'
 // todo: these will have render funcs too
@@ -11,7 +8,7 @@ import emotes from './cohost-emotes.js'
 
 import deepmerge from './deepmerge.js'
 
-import externalLinks from './external-links.js'
+import externalLinks from './external-links.js'*/
 
 
 
@@ -22,10 +19,13 @@ import externalLinks from './external-links.js'
 	},
 })*/
 
-const MD_EXT = {
-	extensions: [ gfm({singleTilde: false}) ],
-	mdastExtensions: [ gfmFromMarkdown() ],
-}
+import {micromark, gfm, gfmHtml} from './libs.js'
+import sanitize from './sanitize2.js'
+
+// disable gfm-tagfilter
+let gh = gfmHtml()
+delete gh.exit.htmlFlowData
+delete gh.exit.htmlTextData
 
 function start(text, {
 	date = Infinity,
@@ -35,33 +35,26 @@ function start(text, {
 	disableEmbeds = false,
 	disableGfm = false,
 }) {
-	// IDEA: what if we used the markdown->html mode in micromark
-	// and then just parse that, since we need to anyway?
-	// just worried that results wont be identical
-	
-	let res1 = fromMarkdown(text, disableGfm ? {} : MD_EXT)
-	let res2 = toHast(res1, {
+	let html = micromark(text, {
+		extensions: disableGfm ? null : [gfm({singleTilde:false})], // what does gfm() return/do? should we save the output and reuse?
+		htmlExtensions: disableGfm ? null : [gh],
+		
 		allowDangerousHtml: !disableHtml,
-		/*footnoteLabelTagName: 'hr',
+		
+		footnoteLabelTagName: 'hr',
 		footnoteLabel: [],
 		footnoteLabelProperties: {
 			'aria-label': "Footnotes",
 			'style': "margin-bottom: -0.5rem;",
-		},*/
+		},
 	})
-	let res3 = hastRaw(res2, {
-		allowRaw: !disableHtml,
-		externalLinksInNewTab
-	}, [
-		imageTitles, footnoteHack, // element pre-filters
-	], [
-		mentions, emotes, // text pre-filters - these should be post-filters
-	], [
-		//sanitize,
-		//filterCss,
-		//externalLinks, // element post-filters (TODO - these should run before the text filters also, uhh)
-	])
-	return res3
+	
+	let div = document.createElement('div')
+	div.innerHTML = html
+	
+	sanitize(div)
+	
+	return div
 }
 
 //.use(Rehype.sanitize, HTML_ALLOW)

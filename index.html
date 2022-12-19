@@ -15,6 +15,7 @@
 	
 	window.run = ()=>{
 		$out.replaceChildren(process($in.value))
+		$out2.textContent = $out.firstChild.innerHTML
 	}
 	
 	$go.onclick = run
@@ -30,6 +31,10 @@
 	.post {
 		border: solid;
 	}
+	#\$out2 {
+		white-space: pre-wrap;
+		word-break: break-word;
+	}
 </style>
 
 <textarea-container class='limit'>
@@ -41,7 +46,7 @@
 <hr>
 <div class='post' id=$host></div>
 <div id=$out></div>
-<div id=$out2></div>
+<div id=$out2><br></div>
 <script>
 	setup_textarea($in, ()=>{
 		if ($auto.checked && window.run)
