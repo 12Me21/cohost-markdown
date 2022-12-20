@@ -19,6 +19,13 @@ import externalLinks from './external-links.js'*/
 	},
 })*/
 
+window.debug = function(token, text) {
+	let value = this.sliceSerialize(token)
+	//console.log(text?'TEXT':'FLOW', token)
+	//console.log(value)
+	this.raw(value)//this.encode(value))
+}
+
 import {micromark, gfm, gfmHtml} from './libs.js'
 import sanitize from './sanitize2.js'
 
@@ -50,6 +57,7 @@ function start(text, {
 	})
 	
 	let div = document.createElement('div')
+	console.log(html)
 	div.innerHTML = html
 	
 	sanitize(div)

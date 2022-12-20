@@ -19,6 +19,7 @@ export default function walk(root, callback) {
 	const walker = root.ownerDocument.createTreeWalker(
 		root, NodeFilter.SHOW_ALL,
 		(node)=>{
+			console.log(node)
 			let res = callback(node)
 			if (res==='prune') {
 				// this will NOT iterate over the removed children
@@ -32,6 +33,9 @@ export default function walk(root, callback) {
 				// this will NOT iterate over the newly added children
 				ops.push([res, node])
 				return NodeFilter.FILTER_REJECT
+			} else if (res==='reparse') {
+				ops.push([res, node])
+				return NodeFilter.FILTER_ACCEPT
 			}
 			return NodeFilter.FILTER_ACCEPT
 		}
@@ -45,6 +49,8 @@ export default function walk(root, callback) {
 				node.replaceWith(...node.childNodes)
 			else if (Array.isArray(op))
 				node.replaceWith(...op)
+			else if (op==='reparse')
+				node.outerHTML = node.textContent
 		}
 		ops = []
 		if (!node)

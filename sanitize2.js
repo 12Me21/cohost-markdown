@@ -90,6 +90,8 @@ let attributes = {
 let tags = {
 	__proto__: null,
 	SCRIPT: false,
+	XMP: 0,
+	
 	H1: true,
 	H2: true,
 	H3: true,
@@ -173,6 +175,8 @@ function process_node(node) {
 		let def = tags[name]
 		if (def===false)
 			return 'prune'
+		if (def===0)
+			return 'reparse'
 		if (!def)
 			return 'flatten'
 		for (let {name, value} of node.attributes) {
