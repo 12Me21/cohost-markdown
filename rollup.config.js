@@ -22,8 +22,14 @@ export default {
 		terser({
 			ecma: 0X7e3,
 			parse: {},
-			compress: {},
-			mangle: {},
+			compress: {
+				//passes: 2,
+				sequences: false,
+				//unsafe_arrows: true,
+			},
+			mangle: {
+				//properties: true,//nth_identifier
+			},
 			format: {
 				semicolons: false,
 				comments: false,

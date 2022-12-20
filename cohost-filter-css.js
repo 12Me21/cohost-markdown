@@ -11,7 +11,7 @@ export default function filterCss({date}) {
 				return
 			try {
 				let found = false
-				const style = StyleToObject(elem.properties.style)
+				const style = styleToObject(elem.properties.style)
 				if (!style)
 					return
 				for (const prop in style) {
