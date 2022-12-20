@@ -24,8 +24,8 @@ import sanitize from './sanitize2.js'
 
 // disable gfm-tagfilter
 let gh = gfmHtml()
-delete gh.exit.htmlFlowData
-delete gh.exit.htmlTextData
+//delete gh.exit.htmlFlowData
+//delete gh.exit.htmlTextData
 
 function start(text, {
 	date = Infinity,
@@ -33,7 +33,7 @@ function start(text, {
 	externalLinksInNewTab = true,
 	disableHtml = false,
 	disableEmbeds = false,
-	disableGfm = false,
+	disableGfm = !false,
 }) {
 	let html = micromark(text, {
 		extensions: disableGfm ? null : [gfm({singleTilde:false})], // what does gfm() return/do? should we save the output and reuse?

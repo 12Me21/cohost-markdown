@@ -14,12 +14,15 @@
 	import process from './parse.js'
 	
 	window.run = ()=>{
-		$out.replaceChildren(process($in.value))
-		$out2.textContent = $out.firstChild.innerHTML
+		let out = process($in.value)
+		$out.replaceWith(out)
+		$out = out
 	}
 	
 	$go.onclick = run
 	run()
+	
+	document.body.hidden=false
 </script>
 
 <style>
@@ -36,6 +39,8 @@
 		word-break: break-word;
 	}
 </style>
+
+<body hidden>
 
 <textarea-container class='limit'>
 	<textarea id=$in></textarea>

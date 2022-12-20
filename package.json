@@ -4,7 +4,6 @@
 	"description": 12,
 	"dependencies": {
 		"micromark": "^3.1.0",
-		"micromark-extension-gfm": "^2.0.1",
-		"remark-gfm": "^3.0.1"
+		"micromark-extension-gfm": "^2.0.1"
 	}
 }
