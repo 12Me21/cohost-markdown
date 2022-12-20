@@ -23,7 +23,7 @@ export default {
 			parse: {
 			},
 			compress: {
-				sequences: false,
+				//sequences: false,
 			},
 			mangle: {
 				//nth_identifier

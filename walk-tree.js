@@ -19,7 +19,7 @@ export default function walk(root, callback) {
 	const walker = root.ownerDocument.createTreeWalker(
 		root, NodeFilter.SHOW_ALL,
 		(node)=>{
-			console.log(node)
+//			console.log(node)
 			let res = callback(node)
 			if (res==='prune') {
 				// this will NOT iterate over the removed children

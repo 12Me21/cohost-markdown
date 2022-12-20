@@ -12,33 +12,47 @@ import externalLinks from './external-links.js'*/
 
 
 
-/*const HTML_ALLOW = deepmerge(Rehype.defaultSchema, {
-	tagNames: ['video', 'audio', 'aside'],
-	attributes: {
-		'*': ['style'],
-	},
-})*/
-
-const reFlow =
-  /^<(\/?)(iframe|noembed|noframes|plaintext|script|style|title|textarea|xmp)(?=[\t\n\f\r />])/i
-
-const reText = reFlow//new RegExp('^' + reFlow.source, 'i')
-
-window.debug = function(token, text) {
-	let value = this.sliceSerialize(token)
-	//console.log(text?'TEXT':'FLOW', token)
-	value = value.replace(text ? reText : reFlow, '<$1span')
-	console.log(value)
-	this.raw(value)
-}
 
 import {micromark, gfm, gfmHtml} from './libs.js'
 import sanitize from './sanitize2.js'
 
-// disable gfm-tagfilter
+// override gfm-tagfilter
+const reFlow = /^<(\/?)(iframe|noembed|noframes|plaintext|title|textarea)(?=[\t\n\f\r />])/i
+const reText = reFlow//new RegExp('^' + reFlow.source, 'i')
+const debug = function(token, text) {
+	let value = this.sliceSerialize(token)
+	//console.log(text?'TEXT':'FLOW', token)
+	value = value.replace(text ? reText : reFlow, '<$1no-way') //i had this set to `span` before, idk.. i still cant believe this actually works and i don't want to find out anymore.
+	
+	// a<textarea> <b>owo eeeeeeeeeeeee</div>owo
+	// this shouldnt be bold. not sure how that works
+	// perhaps we should like, turn <textarea> into <textarea-2> and then during sanitization run textContent=textContent. yeah that seems correct maybe.
+	
+	// <style><b>owo <hr>eeeeeeeeeeeee</style>owo
+	// result: "<b>owo <hr>eeeeeeeeeeeeeowo" - plaintext (all of these are)
+	// a<style><b>owo <hr>eeeeeeeeeeeee</style>owo
+	// result: "a<b>owo eeeeeeeeeeeeeowo"
+	// yeah i dont fucking know.
+	
+	// <xmp> <b>owo <hr>eeeeeeeeeeeeeowo<div style=color:red></xmp>aaaa
+	// result: " owo eeeeeeeeeeeeeowoaaaa"
+	// <xmp><b>owo <hr>eeeeeeeeeeeeeowo<div style=color:red></xmp>aaaa
+	// result: "<b>owo eeeeeeeeeeeeeowoaaaa"
+	// so... maybe it strips following tags?
+	
+	
+	//console.log(value)
+	this.raw(value)
+}
 let gh = gfmHtml()
-//delete gh.exit.htmlFlowData
-//delete gh.exit.htmlTextData
+gh.exit = {
+	htmlFlowData(token) {
+		debug.call(this, token)
+	},
+	htmlTextData(token) {
+		debug.call(this, token, true)
+	},
+}
 
 function start(text, {
 	date = Infinity,
@@ -63,7 +77,7 @@ function start(text, {
 	})
 	
 	let div = document.createElement('div')
-	console.log(html)
+	//console.log(html)
 	div.innerHTML = html
 	
 	sanitize(div)
