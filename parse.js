@@ -40,6 +40,7 @@ const debug = function(token, text) {
 	// result: "<b>owo eeeeeeeeeeeeeowoaaaa"
 	// so... maybe it strips following tags?
 	
+	// we need to look into mdast-util-from-markdown/lib/index.js etc. html functions
 	
 	//console.log(value)
 	this.raw(value)
