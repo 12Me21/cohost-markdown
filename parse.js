@@ -19,11 +19,17 @@ import externalLinks from './external-links.js'*/
 	},
 })*/
 
+const reFlow =
+  /^<(\/?)(iframe|noembed|noframes|plaintext|script|style|title|textarea|xmp)(?=[\t\n\f\r />])/i
+
+const reText = reFlow//new RegExp('^' + reFlow.source, 'i')
+
 window.debug = function(token, text) {
 	let value = this.sliceSerialize(token)
 	//console.log(text?'TEXT':'FLOW', token)
-	//console.log(value)
-	this.raw(value)//this.encode(value))
+	value = value.replace(text ? reText : reFlow, '<$1span')
+	console.log(value)
+	this.raw(value)
 }
 
 import {micromark, gfm, gfmHtml} from './libs.js'
