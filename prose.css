@@ -335,6 +335,10 @@ code::before, code::after {
 }
 
 table {
+	text-indent:0;
+	border-color:inherit;
+	border-collapse:collapse;
+	
 	width: 100%;
 	table-layout: auto;
 	text-align: left;
@@ -342,31 +346,35 @@ table {
 	font-size: 0.875em;
 	line-height: 1.71;
 }
-/* table head, or body row */
-thead, tbody tr:not(:last-child) {
-	border-bottom-width: 1px;
-}
 /* table head */
 thead {
+	border-bottom-width: 1px;
 	border-bottom-color: var(--tw-prose-th-borders);
-}
-/* row in table */
-tbody tr {
-	border-bottom-color: var(--tw-prose-td-borders);
-}
-thead th, tbody td {
-	padding: 0.57em;
 }
 /* header cell in table head */
 thead th {
 	color: var(--tw-prose-headings);
 	font-weight: 600;
 	vertical-align: bottom;
-	padding-top: 0;
+	padding: 0 0.571em 0.571em;
 }
-/* normal cell inside table body */
+/* row in table */
+tbody tr {
+	border-bottom-width: 1px;
+	border-bottom-color: var(--tw-prose-td-borders);
+}
+tbody tr:last-child {
+	border-bottom-width: 0;
+}
 tbody td {
-	vertical-align: baseline;
+	vertical-align:baseline;
+	padding: 0.571em;
+}
+thead th:first-child, tbody td:first-child {
+	padding-left: 0;
+}
+thead th:last-child, tbody td:last-child {
+	padding-right: 0;
 }
 /* media */
 img, video, figure {
@@ -407,14 +415,6 @@ p {
 :where(hr, h2, h3, h4) + *,
 :host > div > *:first-child {
 	margin-top: 0 !important;
-}
-/* 🟥 */
-*:first-child:where(thead th, tbody td) {
-	padding-left: 0 !important;
-}
-/* 🟥 */
-*:last-child:where(thead th, tbody td) {
-	padding-right: 0 !important;
 }
 /* 🟥 */
 :host > div > *:last-child {
