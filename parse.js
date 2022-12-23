@@ -11,7 +11,7 @@ import externalLinks from './external-links.js'*/
 
 
 import {Micromark, Gfm, GfmHtml} from './libs.js'
-import sanitize from './sanitize2.js'
+import sanitize from './sanitize.js'
 import walk from './walk-tree.js'
 
 const gfm = Gfm({singleTilde:false})
@@ -46,7 +46,7 @@ function start(text, {
 	div.innerHTML = html
 	
 	walk(div, [
-		sanitize
+		sanitize,
 	])
 	
 	return div
