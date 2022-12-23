@@ -1,4 +1,4 @@
-export const ATTRIBUTES = {
+export const attributes = {
 	__proto__:null,
 	abbr:1,accept:1,'accept-charset':1,accesskey:1,action:1,align:1,
 	alt:1,'aria-describedby':1,'aria-hidden':1,'aria-label':1,
@@ -13,7 +13,7 @@ export const ATTRIBUTES = {
 	valign:1,value:1,vspace:1,width:1,itemprop:1,style:1,
 }
 
-export const ALIASES = {
+export const aliases = {
 	__proto__: null,
 	acceptcharset: 'accept-charset',
 	ariadescribedby: 'aria-describedby',
@@ -22,7 +22,7 @@ export const ALIASES = {
 	arialabelledby: 'aria-labelledby',
 }
 
-export const ELEMENTS = {
+export const elements = {
 	__proto__: null,
 	SCRIPT: false,
 	

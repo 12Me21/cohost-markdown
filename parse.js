@@ -11,14 +11,19 @@ import externalLinks from './external-links.js'*/
 
 
 import {Micromark, Gfm, GfmHtml} from './libs.js'
-import sanitize from './sanitize.js'
-import walk from './walk-tree.js'
 
 const gfm = Gfm({singleTilde:false})
 
 const gh = GfmHtml()
 delete gh.exit.htmlFlowData
 delete gh.exit.htmlTextData
+
+import walk from './walk-tree.js'
+
+import sanitize from './sanitize.js'
+import * as ALLOW from './schema.js'
+
+import filterCss from './cohost-filter-css.js'
 
 function start(text, {
 	date = Infinity,
@@ -46,7 +51,8 @@ function start(text, {
 	div.innerHTML = html
 	
 	walk(div, [
-		sanitize,
+		sanitize({schema:ALLOW}),
+		filterCss({date}),
 	])
 	
 	return div
