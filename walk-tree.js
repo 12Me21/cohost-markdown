@@ -13,29 +13,31 @@
 // next callback: the node after the removed node
 // hm this is equivalent to passing an empty array..
 
-export default function walk(root, callback) {
+export default function walk(root, callbacks) {
 	let ops = []
 	
 	const walker = root.ownerDocument.createTreeWalker(
 		root, NodeFilter.SHOW_ALL,
 		(node)=>{
-//			console.log(node)
-			let res = callback(node)
-			if (res==='prune') {
-				// this will NOT iterate over the removed children
-				ops.push([res, node])
-				return NodeFilter.FILTER_REJECT
-			} else if (res==='flatten') {
-				// this WILL iterate over the children
-				ops.push([res, node])
-				return NodeFilter.SKIP
-			} else if (Array.isArray(res)) {
-				// this will NOT iterate over the newly added children
-				ops.push([res, node])
-				return NodeFilter.FILTER_REJECT
-			} else if (res==='reparse') {
-				ops.push([res, node])
-				return NodeFilter.FILTER_ACCEPT
+			for (let cb of callbacks) {
+				let res = cb(node)
+				if (res==undefined) {
+					continue
+				} else if (res==='prune') {
+					// this will NOT iterate over the removed children
+					ops.push([res, node])
+					return NodeFilter.FILTER_REJECT
+				} else if (res==='flatten') {
+					// this WILL iterate over the children
+					ops.push([res, node])
+					return NodeFilter.SKIP
+				} else if (Array.isArray(res)) {
+					// this will NOT iterate over the newly added children
+					ops.push([res, node])
+					return NodeFilter.FILTER_REJECT
+				} else {
+					throw new TypeError('tree processor returned invalid value: '+res)
+				}
 			}
 			return NodeFilter.FILTER_ACCEPT
 		}
@@ -49,8 +51,6 @@ export default function walk(root, callback) {
 				node.replaceWith(...node.childNodes)
 			else if (Array.isArray(op))
 				node.replaceWith(...op)
-			else if (op==='reparse')
-				node.outerHTML = node.textContent
 		}
 		ops = []
 		if (!node)
