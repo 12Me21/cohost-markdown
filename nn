@@ -1,56 +1,0 @@
-<noembed> <b>owo</b> *noembed* </noembed>
-becomes:
-<p><noembed> owo</noembed> <em>noembed</em> </p>
-
-seems like it gets closed by whatever the next closing tag is.
-e.g. if i remove the bold then it becomes
-<noembed owo noembed</noembed> or something
-
-<noframes> <b>owo</b> *noframes* </noframes>
-becomes:
-<noframes> <b>owo</b> *noframes* </noframes> - contents are parsed. and rendered since the noframes is removed
-
-<textarea> <b>owo</b> *textarea* </textarea>
-becomes:
-<textarea> <b>owo</b> *textarea* </textarea> - contents are TEXT, not parsed
-
-<plaintext> <b>owo</b> *plaintext* </plaintext>
-becomes:
-<plaintext> <b>owo</b> <em>plaintext</em> </plaintext> - similar to noframes except the markdown is parsed this time.
-
-<xmp> <b>owo</b> *xmp* </xmp>
-becomes:
-<xmp> owo</xmp> <em>xmp</em> 
-again this seems to act like noembed...
-
-
-
-so:
-noembed or xmp: ignore it and all tags until next ANY closing tag
-
-textarea: leave
-noframes or plaintext: must remove open and closing tag BEFORE html parser BUT still causes a textnode split. so maybe we replace these with something else? like a comment? or maybe another node type idkkk
-
-title or textarea or style or iframe or script: leave this for the sanitizer
-
-<script> <!-- </script> --> </script> owo
-ok so this uhhh
-yeah that works on itsown ok
-
-
-so it seems like their html parser has 2 main bugs?
-
-1: noembed and xmp are closed by ANY tag instead of just their own
-2: noframes and plaintext are parsed as normal elements
-WAIT
-
-
-a<script> &amp; <b>owo</b>*test* </script>aa
-vs
-<script> &amp; <b>owo</b>*test* </script>aa
-
-first generates htmlTextData for each tag. and in this case we skip nodes until the next closing tag. i.e. the script is closed by the next closing tag.
-
-second generates htmlFlowData for the entire line. in this case everything between the script tags is skipped. (i.e. script works normally)
-
-ok this is just too complex..
