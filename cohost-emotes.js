@@ -1,4 +1,5 @@
 const EMOTES = {
+	__proto__:null,
 	'chunks':      {url:'chunks',cohost_plus:false},
 	'eggbug':      {url:'eggbug',cohost_plus:false},
 	'sixty':       {url:'sixty',cohost_plus:false},
@@ -17,42 +18,31 @@ const EMOTES = {
 	'host-stare':  {url:'host-stare',cohost_plus:true},
 }
 
-const EMOTE_REGEX = /:([\w-]+):/g
+const EMOTE_REGEX = /:(chunks|eggbug|sixty|unyeah|yeah):/g
 
-export default function emote(text, {hasCohostPlus}){
-	const list = []
-	
-	void text.replace(EMOTE_REGEX, (match, name, offset)=>{
-		const start = offset
-		const end = offset + match.length
-		let emote = EMOTES[name]
-		if (emote && !(emote.cohost_plus && !hasCohostPlus)) {
-			
-			list.push({emote, start, end})
+const PLUS_REGEX = /:(chunks|eggbug|sixty|unyeah|yeah|host-(?:aww|cry|evil|frown|joy|love|nervous|plead|shock|stare)):/g
+
+export default function emote({hasCohostPlus}){
+	return node=>{
+		if (node.nodeType!=Node.TEXT_NODE)
+			return
+		
+		let parts = node.data.split(hasCohostPlus ? PLUS_REGEX : EMOTE_REGEX)
+		if (parts.length<=1)
+			return
+		let list = []
+		for (let i=0; i<=parts.length-2; i+=2) {
+			let text = parts[i]
+			let name = parts[i+1]
+			let emote = EMOTES[name]
+			let img = document.createElement('img')
+			img.className = 'emote'
+			img.src = `emotes/${emote.url}.webp`
+			img.alt = `:${name}:`
+			list.push(text, img)
 		}
-		return match
-	})
-	
-	if (list.length) {
-		const nodes = []
-		let last = 0
-		list.forEach(({start, end, emote}, i, list)=>{
-			nodes.push({type:'text', value:text.slice(last, start)})
-			nodes.push({
-				type: 'element',
-				//tagName: 'CustomEmoji',
-				tagName: 'img',
-				properties: {
-					name,
-					class: 'emote',
-					//url: `emotes/${emote.url}.webp`,
-					src: `emotes/${emote.url}.webp`,
-				},
-			})
-			last = end
-			if (i == list.length-1)
-				nodes.push({type:'text', value: text.slice(last)})
-		})
-		return nodes
+		list.push(parts[parts.length-1])
+		return list
+		
 	}
 }	

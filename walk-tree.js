@@ -20,7 +20,7 @@ export default function walk(root, callbacks) {
 		root, NodeFilter.SHOW_ALL,
 		(node)=>{
 			for (let cb of callbacks) {
-				let res = cb(node)
+				let res = cb && cb(node)
 				if (res==undefined) {
 					continue
 				} else if (res==='prune') {

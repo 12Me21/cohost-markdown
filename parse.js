@@ -23,7 +23,13 @@ import walk from './walk-tree.js'
 import sanitize from './sanitize.js'
 import * as ALLOW from './schema.js'
 
+import externalLinks from './external-links.js'
+
 import filterCss from './cohost-filter-css.js'
+
+import mentions from './cohost-mentions.js'
+
+import emotes from './cohost-emotes.js'
 
 function start(text, {
 	date = Infinity,
@@ -52,7 +58,11 @@ function start(text, {
 	
 	walk(div, [
 		sanitize({schema:ALLOW}),
+		externalLinks({externalLinksInNewTab}),
 		filterCss({date}),
+		mentions(),
+		//disableEmbeds ? null : embeds(),
+		emotes({hasCohostPlus}),
 	])
 	
 	return div

@@ -2,25 +2,24 @@
 
 const protocols = ['http', 'https']
 
-export default function externalLinks(node, {externalLinksInNewTab}) {
-	if (node.tagName=='a' && node.properties && 'string'==typeof node.properties.href) {
-		const url = node.properties.href
-		
-		if (url.startsWith("//"))
-			node.properties.href = url = "https:"+url
-		
-		let absolute = /^([a-zA-Z](?!:\\)[a-zA-Z0-9+\-.]*?):/.match(url)
-		if (absolute && protocols.includes(absolute[1])) {
-			let target, rel
-			if (externalLinksInNewTab) {
-				target = '_blank'
-				rel = ['nofollow', 'noopener', 'noreferrer']
-			} else {
-				target = '_self'
-				rel = ['nofollow']
+export default function externalLinks({externalLinksInNewTab}) {
+	return node=>{
+		if (node.nodeType==Node.ELEMENT_NODE && node.tagName=='A') {
+			let url = node.getAttribute('href') // need to use this, .href is different.
+			if (url.startsWith("//"))
+				node.setAttribute('href', url = "https:"+url)
+			
+			let absolute = /^([a-zA-Z](?!:\\)[a-zA-Z0-9+\-.]*?):/.match(url)
+			
+			if (absolute && protocols.includes(absolute[1])) {
+				if (externalLinksInNewTab) {
+					node.target = '_blank'
+					node.rel = 'nofollow noopener noreferrer'
+				} else {
+					node.target = '_self'
+					node.rel = 'nofollow'
+				}
 			}
-			node.properties.target = target
-			node.properties.rel = rel
 		}
 	}
 }
