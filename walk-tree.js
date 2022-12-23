@@ -21,54 +21,27 @@ export default function walk(root, callbacks) {
 		(node)=>{
 			for (let cb of callbacks) {
 				let res = cb && cb(node)
-				if (res==undefined) {
-					continue
-				} else if (res==='prune') {
-					// this will NOT iterate over the removed children
+				if (res) {
 					ops.push([res, node])
-					return NodeFilter.FILTER_REJECT
-				} else if (res==='flatten') {
-					// this WILL iterate over the children
-					ops.push([res, node])
-					return NodeFilter.SKIP
-				} else if (Array.isArray(res)) {
-					// this will NOT iterate over the newly added children
-					ops.push([res, node])
-					return NodeFilter.FILTER_REJECT
-				} else {
-					throw new TypeError('tree processor returned invalid value: '+res)
+					return res=='flatten' ? NodeFilter.FILTER_SKIP : NodeFilter.FILTER_REJECT
 				}
 			}
 			return NodeFilter.FILTER_ACCEPT
 		}
 	)
-	while (1) {
-		let node = walker.nextNode()
+	let node
+	do {
+		node = walker.nextNode()
 		for (let [op, node] of ops) {
-			if (op==='prune')
+			if (op==='prune') // this will NOT iterate over the removed children
 				node.remove()
-			else if (op==='flatten')
+			else if (op==='flatten') // this WILL iterate over the children
 				node.replaceWith(...node.childNodes)
-			else if (Array.isArray(op))
+			else if (Array.isArray(op)) // this will NOT iterate over the newly added children
 				node.replaceWith(...op)
+			else
+				throw new TypeError('tree processor returned invalid value: '+res)
 		}
 		ops = []
-		if (!node)
-			break
-	}
+	} while (node)
 }
-
-/*function test(node) {
-	console.log(node.tagName)
-	if (node.tagName=='INPUT') {
-		console.log('input parent:', node.parentNode)
-		return
-	}
-	if (node.tagName=='LABEL')
-		return 'flatten' // replace the node with its children
-	if (node.previousElementSibling instanceof HTMLDivElement)
-		return 'prune' // remove the node and its children
-}
-
-walk(document.body, test)
-*/
