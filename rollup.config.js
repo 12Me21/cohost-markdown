@@ -24,11 +24,22 @@ export default {
 			},
 			compress: {
 				//sequences: false,
+				hoist_funs: true,
+				hoist_vars: true,
+				unsafe_arrows: true,
+				unsafe_methods: true,
+				passes: 2,
+				unsafe: true,
 			},
 			mangle: {
 				//nth_identifier
+				properties: {
+					builtins: true,
+					regex: /^(consume|events|parser|sliceSerialize|containerState|offset|attempt|interrupt|constructs|previous|partial|getData|lineEndingIfNeeded|line|contentType|setData|_bufferIndex|null|_index)$/,
+				},
 			},
 			format: {
+				wrap_func_args: false,
 				semicolons: false,
 				comments: false,
 				max_line_len: 70,

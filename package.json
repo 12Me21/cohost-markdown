@@ -3,14 +3,7 @@
 	"name": "cohost-markdown",
 	"description": 12,
 	"dependencies": {
-		"hast-util-sanitize": "^4.0.0",
 		"micromark": "^3.1.0",
-		"micromark-extension-gfm": "^2.0.1",
-		"rehype-raw": "^6.1.1",
-		"rehype-stringify": "^9.0.3",
-		"remark-gfm": "^3.0.1",
-		"remark-parse": "^10.0.1",
-		"remark-rehype": "^10.1.0",
-		"unist-util-inspect": "^7.0.1"
+		"micromark-extension-gfm": "^2.0.1"
 	}
 }
