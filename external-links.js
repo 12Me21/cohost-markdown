@@ -9,7 +9,7 @@ export default function externalLinks({externalLinksInNewTab}) {
 			if (url.startsWith("//"))
 				node.setAttribute('href', url = "https:"+url)
 			
-			let absolute = /^([a-zA-Z](?!:\\)[a-zA-Z0-9+\-.]*?):/.match(url)
+			let absolute = /^([a-zA-Z](?!:\\)[a-zA-Z0-9+\-.]*?):/.exec(url)
 			
 			if (absolute && protocols.includes(absolute[1])) {
 				if (externalLinksInNewTab) {
