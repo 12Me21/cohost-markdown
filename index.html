@@ -10,20 +10,7 @@
 
 <link rel=stylesheet href=prose.css disabled id=$style>
 
-<script type=module>
-	import process from './parse.js'
-	
-	window.run = ()=>{
-		let out = process($in.value)
-		$out.replaceWith(out)
-		$out = out
-	}
-	
-	$go.onclick = run
-	run()
-	
-	document.body.hidden=false
-</script>
+<script src=./parse2.js></script>
 
 <style>
 	textarea {
@@ -40,7 +27,7 @@
 	}
 </style>
 
-<body hidden>
+<body>
 
 <textarea-container class='limit'>
 	<textarea id=$in></textarea>
@@ -52,14 +39,27 @@
 <div class='post' id=$host></div>
 <div id=$out></div>
 <div id=$out2><br></div>
+
 <script>
-	setup_textarea($in, ()=>{
-		if ($auto.checked && window.run)
-			run()
-	})
+	let process = Markdown
+	
+	window.run = ()=>{
+		let out = process($in.value)
+		$out.replaceWith(out)
+		$out = out
+	}
+	
 	window.$out = $out
 	let sh = $host.attachShadow({mode:'open'})
 	let st = $style.cloneNode(true)
 	st.disabled = false
 	sh.append(st, $out)
+	
+	setup_textarea($in, ()=>{
+		if ($auto.checked && window.run)
+			run()
+	})
+	
+	$go.onclick = run
+	run()
 </script>

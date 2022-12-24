@@ -10,7 +10,7 @@ import externalLinks from './external-links.js'*/
 
 
 
-import {Micromark, Gfm, GfmHtml} from './libs.js'
+import {Micromark, Gfm, GfmHtml} from './import-libs.js'
 
 const gfm = Gfm({singleTilde:false})
 

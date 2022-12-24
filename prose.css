@@ -98,7 +98,7 @@ img, video {
 }
 
 code, kbd, samp, pre {
-	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, liberation mono, courier new, monospace;
+	font-family: Cascadia Code, Fira Code, SFMono-Regular, Menlo, Monaco, Consolas, liberation mono, courier new, monospace;
 }
 
 /* <input> gets converted to <input type=checkbox disabled> */
@@ -326,12 +326,13 @@ pre {
 
 code {
 	color: var(--tw-prose-code);
-	font-weight: 600;
+	font-weight: 600; /* changed */
 	font-size: 0.875em;
 }
 /* quotes around code */
 code::before, code::after {
-	content: "`";
+	content: "`"; /* hate this */
+	opacity: 0.5;
 }
 
 table {

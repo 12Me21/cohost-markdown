@@ -7,9 +7,14 @@ global.__defineGetter__('__filename', ()=>fileURLToPath(import.meta.url))
 import terser from '@rollup/plugin-terser'
 
 export default {
-	input: 'import-libs.js',
+	input: 'parse.js',
 	output: {
-		file: 'libs.js',
+		file: 'parse2.js',
+		
+		format: 'iife',
+		name: 'Markdown',
+		extend: true,
+		
 		plugins: [
 		],
 	},
@@ -41,10 +46,14 @@ export default {
 			format: {
 				wrap_func_args: false,
 				semicolons: false,
-				comments: false,
+				comments: false, /*function(a,b){
+					console.log("===================\n",a,b)
+				},*/
 				max_line_len: 70,
 				quote_style: 3,
-				preamble: "12",
+				
+				preamble: `"use strict"
+12 ||+typeof await/1//2; export default {this:3}.`,
 			},
 		}),
 	],
