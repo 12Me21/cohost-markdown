@@ -1,20 +1,8 @@
-/*import imageTitles from './cohost-image-titles.js'
-import footnoteHack from './cohost-footnotes.js'
-//import cohostFilterCss from './cohost-filter-css.js'
-// todo: these will have render funcs too
-import mentions from './cohost-mentions.js'
-//import embeds from './cohost-embeds.js'
-import emotes from './cohost-emotes.js'
-
-import externalLinks from './external-links.js'*/
-
-
-
 import {Micromark, Gfm, GfmHtml} from './import-libs.js'
 
 const gfm = Gfm({singleTilde:false})
 
-const gh = GfmHtml()
+const gh = GfmHtml({})
 delete gh.exit.htmlFlowData
 delete gh.exit.htmlTextData
 
@@ -22,6 +10,8 @@ import walk from './walk-tree.js'
 
 import sanitize from './sanitize.js'
 import * as ALLOW from './schema.js'
+
+import footnotes from './cohost-footnotes.js'
 
 import externalLinks from './external-links.js'
 
@@ -44,19 +34,14 @@ function start(text, {
 		htmlExtensions: disableGfm ? null : [gh],
 		
 		allowDangerousHtml: !disableHtml,
-		
-		footnoteLabelTagName: 'hr',
-		footnoteLabel: [],
-		footnoteLabelProperties: {
-			'aria-label': "Footnotes",
-			'style': "margin-bottom: -0.5rem;",
-		},
 	})
 	
+	// TODO: what about things like custom elements, will that run their constructors?
 	let div = document.createElement('div')
 	div.innerHTML = html
 	
 	walk(div, [
+		footnotes(),
 		sanitize({schema:ALLOW}),
 		externalLinks({externalLinksInNewTab}),
 		filterCss({date}),
@@ -67,13 +52,6 @@ function start(text, {
 	
 	return div
 }
-
-//.use(Rehype.sanitize, HTML_ALLOW)
-//.use(cohostFilterCss, {date})
-//.use(Rehype.externalLinks, links)
-//.use(CohostMentions)
-//.use(disableEmbeds ? null : CohostEmbeds)
-//.use(CohostEmotes, {hasCohostPlus})
 
 const DISABLE_GFM_LINES = 256
 

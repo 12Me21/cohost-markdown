@@ -1,15 +1,11 @@
 import {nodeResolve} from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
-
-// temp hack to make terser work
-import {fileURLToPath} from 'url' // cant use URL().pathname on windowsss
-global.__defineGetter__('__filename', ()=>fileURLToPath(import.meta.url))
 import terser from '@rollup/plugin-terser'
+// import commonjs from '@rollup/plugin-commonjs' // (install this if you need to import commonjs packages)
 
 export default {
-	input: 'parse.js',
+	input: 'main.js',
 	output: {
-		file: 'parse2.js',
+		file: '_build.js',
 		
 		format: 'iife',
 		name: 'Markdown',
@@ -22,7 +18,7 @@ export default {
 		nodeResolve({
 			browser: true,
 		}),
-		commonjs(),
+		//commonjs(),
 		terser({
 			ecma: 0X7e3,
 			parse: {

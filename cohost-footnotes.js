@@ -1,19 +1,19 @@
-// for compat, we cant change this
-export default function CohostFootnotes(elem) {
-	if ('a'==elem.tagName && elem.properties?.id?.includes('fnref'))
-		return 'children'
-	// bug: this can be triggered by [test](https://example.com/fnref)
-	// should use dedicated data properties to check this
-	if ('a'==elem.tagName && elem.properties?.href?.includes('fnref'))
-		return 'skip'
-	if ('h2'==elem.tagName && elem.properties?.id?.includes('footnote-label'))
-		return {
-			type: 'element',
-			tagName: 'hr',
-			properties: {
-				'aria-label': 'Footnotes',
-				'style': "margin-bottom: -0.5rem;",
-			},
-			children: [],
+export default function CohostFootnotes() {
+	return node=>{
+		if (node.nodeType==Node.ELEMENT_NODE) {
+			if (node.tagName=='A') {
+				if (node.hasAttribute('data-footnote-ref'))
+					return 'flatten'
+				if (node.hasAttribute('data-footnote-backref'))
+					return 'prune'
+			} else if (node.tagName=='H2') {
+				if (node.id=='footnote-label') {
+					let hr = document.createElement('hr')
+					hr.style.marginBottom = "-0.5rem"
+					hr.setAttribute('aria-label', "Footnotes")
+					return [hr]
+				}
+			}
 		}
+	}
 }

@@ -41,6 +41,54 @@
 	/*border: 0 solid currentColor;*/
 	border: 0px solid var(--color-notGray200); /* NEW */
 }
+
+hr {
+	height: 0;
+	color: inherit;
+	border-top-width: 1px;
+}
+abbr[title] {
+	-webkit-text-decoration: underline dotted;
+	text-decoration: underline dotted;
+}
+h5, h6 {
+	font-size: inherit;
+	font-weight: inherit;
+}
+a {
+	color: inherit;
+	text-decoration: inherit;
+}
+b, strong {
+	font-weight: bolder;
+}
+code, kbd, samp, pre {
+	/*font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,liberation mono,courier new,monospace;*/
+	/* altered because the default sucks */
+	font-family: Cascadia Code, Fira Code, SFMono-Regular, Menlo, Monaco, Consolas, liberation mono, courier new, monospace;
+	font-size: 1em;
+}
+small {
+	font-size: 80%
+}
+sub, sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sub {
+	bottom: -0.25em;
+}
+sup {
+	top: -0.5em;
+}
+table {
+	text-indent: 0;
+	border-color: inherit;
+	border-collapse: collapse;
+}
+
 img, svg, video, canvas, audio, iframe, embed, object {
 	display: block;
 	vertical-align: middle;
@@ -48,13 +96,6 @@ img, svg, video, canvas, audio, iframe, embed, object {
 img, video {
 	max-width: 100%;
 	height: auto;
-}
-code, kbd, samp, pre {
-	/* altered because the default sucks */
-	font-family: Cascadia Code, Fira Code, SFMono-Regular, Menlo, Monaco, Consolas, liberation mono, courier new, monospace;
-}
-a {
-	color: inherit;
 }
 button, input, optgroup, select, textarea {
 	font-family: inherit;
@@ -178,6 +219,9 @@ p > img:not([style]) {
 	border: var(--image-border);
 }
 
+:host {
+	contain: content;
+}
 :host > div {
 	margin: var(--prose-margin, 1rem);
 	margin-left: 0;
@@ -188,7 +232,6 @@ p > img:not([style]) {
 	border-color: transparent;
 	
 	overflow-wrap: break-word;
-	contain: content;
 	max-width: 65ch;
 	box-sizing: content-box;
 	-webkit-text-size-adjust: 100%;
