@@ -1,4 +1,5 @@
-import {Micromark, Gfm, GfmHtml} from './import-libs.js'
+import {default as heck} from './_libs.js'
+const {Micromark, Gfm, GfmHtml} = heck
 
 const gfm = Gfm({singleTilde:false})
 
@@ -21,6 +22,12 @@ import mentions from './cohost-mentions.js'
 
 import emotes from './cohost-emotes.js'
 
+function html2fragment(html) {
+	const host = document.createElement('template')
+	host.innerHTML = html
+	return host.content
+}
+
 function start(text, {
 	date = Infinity,
 	hasCohostPlus = false,
@@ -36,11 +43,9 @@ function start(text, {
 		allowDangerousHtml: !disableHtml,
 	})
 	
-	// TODO: what about things like custom elements, will that run their constructors?
-	let div = document.createElement('div')
-	div.innerHTML = html
+	const fragment = html2fragment(html)
 	
-	walk(div, [
+	walk(fragment, [
 		footnotes(),
 		sanitize({schema:ALLOW}),
 		externalLinks({externalLinksInNewTab}),
@@ -50,7 +55,7 @@ function start(text, {
 		emotes({hasCohostPlus}),
 	])
 	
-	return div
+	return fragment
 }
 
 const DISABLE_GFM_LINES = 256

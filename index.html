@@ -35,18 +35,29 @@
 <hr>
 <button id=$go>render</button>
 <label>auto:<input type=checkbox checked id=$auto></label>
+<div id=$time></div>
 <hr>
 <div class='post' id=$host></div>
-<div id=$out></div>
+<div id=$out class='prose'></div>
 <div id=$out2><br></div>
 
-<script>
-	let process = Markdown
+<script type=module>
+	customElements.define('te-st', class extends HTMLElement {
+		constructor() {
+			super()
+			console.log('ee')
+		}
+	})
+	
+	import process from './main.js'
 	
 	window.run = ()=>{
+		let p = performance.now()
 		let out = process($in.value)
-		$out.replaceWith(out)
-		$out = out
+		$out.replaceChildren(out)
+		let t = performance.now()-p
+		$time.textContent = t
+		//$out = out
 	}
 	
 	window.$out = $out

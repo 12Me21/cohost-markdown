@@ -16,20 +16,23 @@ export default function sanitize({schema:{attributes, aliases, elements}}) {
 			let newname = aliases[name] || name
 			
 			let adef = def.attributes && def.attributes[newname] || attributes[newname]
-			if (!adef) {
+			
+			ok: {
+				if (adef===1 || adef===value)
+					break ok
+				else if (adef===2) {
+					// this is bad, but it's equivalent to the original
+					let scheme = /^[^?#/]*?:/.exec(value)
+					if (!scheme || scheme[0]=="http:" || scheme[0]=="https:")
+						break ok
+				}
 				node.removeAttribute(name)
 				continue
 			}
-			if (adef===1 || adef===value) {
-				if (newname != name) {
-					node.removeAttribute(name)
-					node.setAttribute(newname, value)
-				}
-				continue
-			}
-			node.removeAttribute(name)
-			if ('string'==typeof adef)
+			if (newname != name) {
+				node.removeAttribute(name)
 				node.setAttribute(newname, value)
+			}
 		}
 		let req = def.required
 		if (req)

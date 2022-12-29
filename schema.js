@@ -22,31 +22,37 @@ export const aliases = {
 	arialabelledby: 'aria-labelledby',
 }
 
+const IS_URL = 2
+// this allows relative urls and http:// or https:// absolute urls
+// technically <a> is supposed to allow xmpp:, mailto:, and irc:/ircs: but whatever.
+
+const HAS_CITE = {attributes: {__proto__:null, cite:IS_URL}}
+
 export const elements = {
 	__proto__: null,
 	SCRIPT: false,
 	
 	H1:1, H2:1, H3:1, H4:1, H5:1, H6:1,
 	BR:1, B:1, I:1, STRONG:1, EM:1,
-	A: {attributes: {__proto__:null, href:1}},
+	A: {attributes: {__proto__:null, href:IS_URL}},
 	PRE:1, CODE:1,
-	IMG: {attributes: {__proto__:null, src:1, longdesc:1}},
+	IMG: {attributes: {__proto__:null, src:IS_URL, longdesc:IS_URL}},
 	TT:1,
 	DIV: {attributes: {__proto__:null, itemscope:1, itemtype:1}},
-	INS: {attributes: {__proto__:null, cite:1}},
-	DEL: {attributes: {__proto__:null, cite:1}},
+	INS: HAS_CITE,
+	DEL: HAS_CITE,
 	SUP:1, SUB:1,
 	P:1,
 	OL:1, UL:1,
 	TABLE:1, THEAD:1, TBODY:1, TFOOT:1, 
-	BLOCKQUOTE: {attributes: {__proto__:null, cite:1}},
+	BLOCKQUOTE: HAS_CITE,
 	DL:1, DT:1, DD:1,
 	KBD:1,
-	Q: {attributes: {__proto__:null, cite:1}},
+	Q: HAS_CITE,
 	SAMP:1, VAR:1,
 	HR:1,
 	RUBY:1, RT:1, RP:1,
-	LI: {attributes: {__proto__:null, class: 'task-list-item'}},
+	LI:1,
 	TR:1, TD:1, TH:1,
 	S:1, STRIKE:1,
 	SUMMARY:1, DETAILS:1, CAPTION:1, FIGURE:1, FIGCAPTION:1,

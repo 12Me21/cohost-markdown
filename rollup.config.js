@@ -3,9 +3,9 @@ import terser from '@rollup/plugin-terser'
 // import commonjs from '@rollup/plugin-commonjs' // (install this if you need to import commonjs packages)
 
 export default {
-	input: 'main.js',
+	input: 'import-libs.js',
 	output: {
-		file: '_build.js',
+		file: '_libs.js',
 		
 		format: 'iife',
 		name: 'Markdown',
@@ -49,7 +49,7 @@ export default {
 				quote_style: 3,
 				
 				preamble: `"use strict"
-12 ||+typeof await/1//2; export default {this:3}.`,
+12 ||+typeof await/1//2; export default {this:{}}.`,
 			},
 		}),
 	],

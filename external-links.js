@@ -6,6 +6,8 @@ export default function externalLinks({externalLinksInNewTab}) {
 	return node=>{
 		if (node.nodeType==Node.ELEMENT_NODE && node.tagName=='A') {
 			let url = node.getAttribute('href') // need to use this, .href is different.
+			if (url==null)
+				return
 			if (url.startsWith("//"))
 				node.setAttribute('href', url = "https:"+url)
 			
