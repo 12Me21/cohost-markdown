@@ -1,0 +1,37 @@
+@font-face {
+	font-family: 'Source Code Pro';
+	src: local(Source Code Pro), local(SourceCodePro-Regular), url(SourceCodePro-Regular.woff2) format('woff2');
+}
+
+@font-face {
+	font-family: 'atkinson hyperlegible';
+	src: local(Atkinson Hyperlegible Regular), local(AtkinsonHyperlegible-Regular), url(AtkinsonHyperlegible-Regular.woff2) format('woff2');
+}
+@font-face {
+	font-family: 'atkinson hyperlegible';
+	font-weight: bold;
+	src: local(Atkinson Hyperlegible Bold), local(AtkinsonHyperlegible-Bold), url(AtkinsonHyperlegible-Bold.woff2) format('woff2');
+}
+@font-face {
+	font-family: 'atkinson hyperlegible';
+	font-style: italic;
+	src: local(Atkinson Hyperlegible Italic), local(AtkinsonHyperlegible-Italic), url(AtkinsonHyperlegible-Italic.woff2) format('woff2');
+}
+@font-face {
+	font-family: 'atkinson hyperlegible';
+	font-weight: bold;
+	font-style: italic;
+	src: local(Atkinson Hyperlegible Bold Italic), local(AtkinsonHyperlegible-BoldItalic), url(AtkinsonHyperlegible-BoldItalic.woff2) format('woff2');
+}
+
+@font-face {
+	font-family: 'league mono';
+	font-weight: 100 900;
+	font-stretch: 50% 200%;
+	src: url(League-Mono.woff2) format('woff2'); /* not sure what to do for local() here */
+}
+
+@font-face {
+	font-family: 'papyrus';
+	src: local(Papyrus), url(Papyrus.woff2) format('woff2');
+}

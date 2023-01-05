@@ -8,6 +8,8 @@ import sanitize from './sanitize.js'
 
 import footnotes from './cohost-footnotes.js'
 
+import imageTitles from './cohost-image-titles.js'
+
 import externalLinks from './external-links.js'
 
 import filterCss from './cohost-filter-css.js'
@@ -35,8 +37,9 @@ function start(text, {
 	const fragment = html2fragment(html)
 	
 	walk(fragment, [
-		sanitize(),
+		imageTitles(),
 		footnotes(),
+		sanitize(),
 		filterCss({date}),
 		mentions(),
 		//disableEmbeds ? null : embeds(),

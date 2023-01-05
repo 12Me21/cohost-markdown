@@ -1,6 +1,11 @@
-export default function CohostImageTitles(elem) {
-	if (elem.tagName=='img') {
-		if (elem.properties?.alt)
-			elem.properties.title = elem.properties.alt
+// this is bad but it replicates what cohost does
+export default function CohostImageTitles() {
+	return node=>{
+		if (node.nodeType==Node.ELEMENT_NODE) {
+			if (node.tagName=='IMG' && node.hasAttribute('data--markdownlink')) {
+				if (node.alt)
+					node.title = node.alt
+			}
+		}
 	}
 }

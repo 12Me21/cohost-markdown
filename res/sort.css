@@ -514,6 +514,12 @@ input:checked:focus {
 
 
 
+/*
+the default image sizes/spacing are WAYYY too big,
+but we can't mess with it too much, otherwise it could break things.
+so, we just target unstyled images, at the top level or directly inside
+a paragraph
+*/
 .prose p > img:not([style]) {
 	max-height: var(--embed-height);
 	--media-margin: 1em;
@@ -523,6 +529,7 @@ input:checked:focus {
 
 /* prop3 */
 
+/* ??? */
 [id][id][id$=footnote-label] { /* ANY */
 	position: absolute;
 	width: 1px;
@@ -534,3 +541,11 @@ input:checked:focus {
 	border-width: 0;
 	margin: -1px;
 }
+
+
+
+[type=text],[type=email],[type=url],[type=password],[type=number],[type=date],[type=datetime-local],[type=month],[type=search],[type=tel],[type=time],[type=week],[multiple][type=button],[type=reset],[type=submit],[type=radio],[type=checkbox]:not(input) {
+	border: 2px dashed red !important;
+	background: yellow !important;
+}
+

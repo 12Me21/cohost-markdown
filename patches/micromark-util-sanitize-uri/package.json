@@ -1,0 +1,14 @@
+{
+  "name": "micromark-util-sanitize-uri",
+  "version": "1.1.0",
+  "description": "micromark utility to sanitize urls",
+  "sideEffects": false,
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "exports": {
+    "default": "./index.js"
+  }
+}
