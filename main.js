@@ -1,16 +1,10 @@
-import {default as heck} from './_libs.js'
-const {Micromark, Gfm, GfmHtml} = heck
+//💟
 
-const gfm = Gfm({singleTilde:false})
-
-const gh = GfmHtml({})
-delete gh.exit.htmlFlowData
-delete gh.exit.htmlTextData
+import markdown2html from './_libs.js'
 
 import walk from './walk-tree.js'
 
 import sanitize from './sanitize.js'
-import * as ALLOW from './schema.js'
 
 import footnotes from './cohost-footnotes.js'
 
@@ -36,22 +30,18 @@ function start(text, {
 	disableEmbeds = false,
 	disableGfm = !false,
 }) {
-	let html = Micromark(text, {
-		extensions: disableGfm ? null : [gfm],
-		htmlExtensions: disableGfm ? null : [gh],
-		
-		allowDangerousHtml: !disableHtml,
-	})
-	
+	const html = markdown2html(text, {disableHtml, disableGfm})
+	//⁌ ⁍
 	const fragment = html2fragment(html)
 	
 	walk(fragment, [
+		sanitize(),
 		footnotes(),
-		sanitize({schema:ALLOW}),
-		externalLinks({externalLinksInNewTab}),
 		filterCss({date}),
 		mentions(),
 		//disableEmbeds ? null : embeds(),
+	])
+	walk(fragment, [
 		emotes({hasCohostPlus}),
 	])
 	

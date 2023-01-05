@@ -1,15 +1,13 @@
-// derived from rehype-external-links
+// based on `rehype-external-links`
 
 const protocols = ['http', 'https']
 
 export default function externalLinks({externalLinksInNewTab}) {
 	return node=>{
-		if (node.nodeType==Node.ELEMENT_NODE && node.tagName=='A') {
+		if (node.nodeType==Node.ELEMENT_NODE && node.nodeName=='A') {
 			let url = node.getAttribute('href') // need to use this, .href is different.
 			if (url==null)
 				return
-			if (url.startsWith("//"))
-				node.setAttribute('href', url = "https:"+url)
 			
 			let absolute = /^([a-zA-Z](?!:\\)[a-zA-Z0-9+\-.]*?):/.exec(url)
 			

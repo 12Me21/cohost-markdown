@@ -8,20 +8,14 @@
 
 <script src=textarea.js></script>
 
-<link rel=stylesheet href=prose.css disabled id=$style>
-
-<script src=./_build.js></script>
+<link rel=stylesheet href=res/fonts.css>
+<link rel=preload as=style href=res/sort.css>
 
 <style>
-	textarea {
-		box-sizing: border-box;
-		width: 100%;
-		resize: vertical;
-	}
 	.post {
 		border: solid;
 	}
-	#\$out2 {
+	pre {
 		white-space: pre-wrap;
 		word-break: break-word;
 	}
@@ -35,36 +29,32 @@
 <hr>
 <button id=$go>render</button>
 <label>auto:<input type=checkbox checked id=$auto></label>
-<div id=$time></div>
+<time id=$time></time>
 <hr>
 <div class='post' id=$host></div>
-<div id=$out class='prose'></div>
-<div id=$out2><br></div>
+<pre id=$out2></pre>
 
 <script type=module>
-	customElements.define('te-st', class extends HTMLElement {
-		constructor() {
-			super()
-			console.log('ee')
-		}
-	})
-	
 	import process from './main.js'
+	
+	let style = document.createElement('link')
+	style.rel = 'stylesheet'
+	style.href = 'res/sort.css'
+	
+	let prose = document.createElement('div')
+	prose.className = 'prose'
+	
+	let sh = $host.attachShadow({mode:'open'})
+	sh.append(style, prose)
 	
 	window.run = ()=>{
 		let p = performance.now()
 		let out = process($in.value)
-		$out.replaceChildren(out)
+		prose.replaceChildren(out)
 		let t = performance.now()-p
-		$time.textContent = t
-		//$out = out
+		$time.textContent = t.toFixed(1)+" ms"
+		$out2.textContent = prose.innerHTML.replace(/\n/g, '⤶\n')
 	}
-	
-	window.$out = $out
-	let sh = $host.attachShadow({mode:'open'})
-	let st = $style.cloneNode(true)
-	st.disabled = false
-	sh.append(st, $out)
 	
 	setup_textarea($in, ()=>{
 		if ($auto.checked && window.run)

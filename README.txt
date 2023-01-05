@@ -1,10 +1,10 @@
-# FOREWORD
+## FOREWORD
 
-i hate parsing markdown, and i hate writing it even more.
+I hate parsing markdown, and I hate writing it even more.
 
-# INSTRUCTIONS
+## INSTRUCTIONS
 
-## BUILDING:
+### BUILDING:
 
 (requires nodejs + npm)
 
@@ -15,7 +15,7 @@ i hate parsing markdown, and i hate writing it even more.
  
 >[note] this is just necessary to merge everything into a single file that can be easily loaded on a webpage. technically it could run as-is, in node (but the code uses browser APIs so this wouldn't actually work)
 
-## LOADING:
+### LOADING:
 
 _build.js can be loaded in multiple ways:
 
@@ -43,3 +43,8 @@ document.body.append(Markdown("*hello!*"))
 
 ## NOTES
 
+I've specifically disabled micromark-extension-gfm-tagfilter because it's really bad and breaks things
+
+## SECURITY
+
+This package is **not safe for work**.

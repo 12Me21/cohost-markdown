@@ -4,11 +4,15 @@
 	"description": 12,
 	"dependencies": {
 		"micromark": "^3.1.0",
-		"micromark-extension-gfm": "^2.0.1"
+		"micromark-extension-gfm": "^2.0.1",
+		"micromark-extension-gfm-tagfilter": "file:./patches/micromark-extension-gfm-tagfilter",
+		"micromark-util-sanitize-uri": "file:./patches/micromark-util-sanitize-uri",
+		"rehype-external-links": "^2.0.1"
 	},
 	"devDependencies": {
 		"@rollup/plugin-node-resolve": "^15.0.1",
 		"@rollup/plugin-terser": "^0.2.1",
-		"rollup": "^3.8.1"
+		"rollup": "^3.8.1",
+		"rollup-plugin-analyzer": "^4.0.0"
 	}
 }
