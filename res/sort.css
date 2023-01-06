@@ -449,7 +449,7 @@ ol[type=A], ol[type=As] { list-style-type:upper-alpha; }
 ol[type=a], ol[type=as] { list-style-type:lower-alpha; }
 ol[type=I], ol[type=Is] { list-style-type:upper-roman; }
 ol[type=i], ol[type=is] { list-style-type:lower-roman; }
-ol[type=1] { list-style-type:decimal; }
+ol[type="1"] { list-style-type:decimal; }
 
 abbr[title] { /* <abbr> */
 	-webkit-text-decoration: underline dotted;
