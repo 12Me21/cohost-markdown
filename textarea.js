@@ -12,15 +12,19 @@ textarea-container, textarea-container > textarea {
 	display: block;
 	box-sizing: content-box;
 	min-height: 5em;
-	max-height: 50vh;
+	max-height: calc(50vh - 0.75rem * 2);
 	height: 0;
-	font: 1em monospace;
+	font: inherit;
 }
 
 textarea-container {
-	padding: 2px;
-	border: 2px solid #00C8B4;
-	border-radius: 2px;
+	padding: 0.75rem;
+}
+
+textarea:focus {
+/*	box-shadow:
+		inset 4px 0 0 -2px rgb(37,99,235),
+		inset -4px 0 0 -2px rgb(37,99,235);*/
 }
 
 textarea-container > textarea {
@@ -33,7 +37,6 @@ textarea-container > textarea {
 	height: 100%;
 	
 	appearance: none;
-	outline-offset: 2px;
 }
 `
 	document.head.append(style)

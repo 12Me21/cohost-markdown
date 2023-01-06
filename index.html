@@ -12,26 +12,227 @@
 <link rel=preload as=style href=res/sort.css>
 
 <style>
-	.post {
-		border: solid;
+	:root {
+		overflow-wrap: break-word;
 	}
+	
+	input, textarea { 
+		outline-color: rgb(130,127,124);
+		outline-style: dotted;
+		outline-width: 1px;
+		outline-offset: 0.25rem;
+	}
+	input:focus, textarea:focus {
+		outline-style: solid;
+		outline-width: 2px;
+		outline-color: rgb(131, 37, 79);
+	}
+	
+	a {
+		color: unset;
+		text-decoration: unset;
+		cursor: pointer;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	
+	.outer {
+		background: white;
+		box-shadow:
+			0 4px 5px rgba(25,25,25,0.14),
+			0 1px 10px rgba(25,25,25,0.12),
+			0 2px 4px rgba(0,0,0,0.2);
+		border-radius: 0.5rem;
+		overflow: hidden;
+		display: flex;
+		flex-flow: column;
+		font-family: 'atkinson hyperlegible';
+	}
+	.outer > *:first-child, .outer > *:last-child {
+		background: rgb(255,249,242);
+		padding: .75rem;
+		height: 32px;
+		display: flex;
+		flex-flow: wrap;
+		line-height: 1;
+		gap: 0.5rem;
+		align-items: center;
+	}
+	.outer > *:last-child {
+		height: 24px;
+	}
+	.controls {
+		margin-left: auto;
+		display: flex;
+		gap: 0.75rem;
+	}
+	.controls > button {
+		appearance: none;
+		border: none;
+		background: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+	}
+	.outer hr {
+		height: 1px;
+		border: none;
+		background: rgb(191,186,181);
+		margin: 0 0.75rem;
+		flex: none;
+	}
+	.row > hr {
+		height: unset;
+		width: 1px;
+		margin: 0.5rem 0;
+		flex: none;
+	}
+	.avatar {
+		width: 2rem;
+		height: 2rem;
+		background: gray;
+		clip-path: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><clipPath id="clip-squircle" clipPathUnits="objectBoundingBox"><path d="M .5 0 C .9 0 1 .1 1 .5 S .9 1 .5 1 0 .9 0 .5 .1 0 .5 0 z"/></clipPath></svg>#clip-squircle');
+	}
+	.name {
+		color: rgb(25,25,25);
+		font-weight: bold;
+	}
+	.handle {
+		color: rgb(104,102,100);
+	}
+	.time {
+		color: rgb(130,127,124);
+		font-variant-numeric: tabular-nums;
+		font-size: 0.75rem;
+		line-height: 1rem;
+	}
+	.comment-link {
+		color: rgb(160,156,152);
+		font-size: .875rem;
+	}
+	.icon {
+		width: 24px;
+		height: 24px;
+	}
+	button {
+		color: rgb(25,25,25);
+	}
+	button:not([data-on]) > :last-child, button[data-on] > :first-child {
+		display: none;
+	}
+	
+	.split {
+		display: flex;
+		flex-flow: row;
+	}
+	.split > * {
+		flex: 1;
+	}
+	
+	.headline {
+		padding: 0.75rem;
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+		color: black;
+		font-weight: bold;
+	}
+	.headline > input {
+		appearance: none;
+		border: none;
+		background: none;
+		font: inherit;
+		width: 100%;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	
+	.tags:not(:empty) {
+		line-height: 1;
+		padding: .75rem;
+	}
+	.tags > * {
+		font-size: .875rem;
+		line-height: 1.25rem;
+		display: inline-block;
+		color: rgb(160,156,152);
+		margin-right: .5rem;
+	}
+	
+	.post {
+		background: white;
+		max-height: 50vh;
+		overflow-y: auto;
+	}
+	
 	pre {
 		white-space: pre-wrap;
-		word-break: break-word;
+	}
+	body, html {
+		background: rgb(255,249,242);
 	}
 </style>
 
 <body>
 
-<textarea-container class='limit'>
-	<textarea id=$in></textarea>
-</textarea-container>
+<svg style='display:none'>
+	<symbol id=share0 viewBox='-12,-12 24,24'>
+		<path fill=none stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 d="M -8 -8 v 5 h 0.582 m 15.356 2 A 8.001 8.001 0 00 -7.418 -3 H -3 m 11 11 v -5 h -0.581 a 8.003 8.003 0 01 -15.357 -2 m 15.357 2 H 3"/>
+	</symbol>
+	<symbol id=share1 viewBox="-12,-12 24,24" color="rgb(49,157,53)">
+		<path fill=currentColor stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 d="M -8 -8 v 5 h 5 z M 8 8 v -5 h -5 z"/>
+		<path fill=none stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=3 d="M 7.5 -1.5 A 8.25 7.75, -30 0 0, -7 -4 M -7.5 1.5 A 8.25 7.75, -30 0 0, 7 4"/>
+	</symbol>
+	<symbol id=like0 viewBox='-12,-12 24,24'>
+		<path fill=none stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 d="m 0 -4.364 -1.318 -1.318 a 4.5 4.5 0 00 -6.364 6.364 l 7.682 7.682 7.682 -7.682 a 4.5 4.5 0 00 -6.364 -6.364 z"/>
+	</symbol>
+	<symbol id=like1 viewBox="-12,-12 24,24" color="rgb(131,37,79)">
+		<path fill=currentColor stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 d="m 0 -4.364 -1.318 -1.318 a 4.5 4.5 0 00 -6.364 6.364 l 7.682 7.682 7.682 -7.682 a 4.5 4.5 0 00 -6.364 -6.364 z"/>
+	</symbol>
+</svg>
+
 <hr>
 <button id=$go>render</button>
 <label>auto:<input type=checkbox checked id=$auto></label>
 <time id=$time></time>
 <hr>
-<div class='post' id=$host></div>
+<div class='outer'>
+	<div>
+		<div class='avatar'></div>
+		<a class='name'>name</a>
+		<a class='handle'>@handle</a>
+		<a class='time'>3 hr. ago</a>
+	</div>
+	<hr>
+	<div class='headline'>
+		<input placeholder="Headline">
+	</div>
+	<hr>
+	<div class='split row'>
+		<textarea-container class='limit'>
+			<textarea id=$in placeholder="Post body (accepts markdown 🥴)"></textarea>
+		</textarea-container>
+		<hr>
+		<div class='post' id=$host></div>
+	</div>
+	<hr>
+	<div class='tags'><a>#heck</a></div>
+	<hr>
+	<div>
+		<a class='comment-link'>0 comments</a>
+		
+		<div class='controls'>
+			<button type=button onclick="toggleAttribute('data-on')">
+				<svg class='icon'><use href="#share0"/></svg>
+				<svg class='icon'><use href="#share1"/></svg>
+			</button>
+			<button type=button onclick="toggleAttribute('data-on')">
+				<svg class='icon'><use href="#like0"/></svg>
+				<svg class='icon'><use href="#like1"/></svg>
+			</button>
+		</div>
+	</div>
+</div>
 <pre id=$out2></pre>
 
 <script type=module>
