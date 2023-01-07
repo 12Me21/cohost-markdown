@@ -14,6 +14,7 @@
 <style>
 	:root {
 		overflow-wrap: break-word;
+		/*font-size: 14.8945px;*/
 	}
 	
 	input, textarea { 
@@ -47,7 +48,7 @@
 		overflow: hidden;
 		display: flex;
 		flex-flow: column;
-		font-family: 'atkinson hyperlegible';
+		font-family: Atkinson Hyperlegible,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
 	}
 	.outer > *:first-child, .outer > *:last-child {
 		background: rgb(255,249,242);
@@ -115,6 +116,10 @@
 		width: 24px;
 		height: 24px;
 	}
+	.icon14 {
+		width: 14px;
+		height: 14px;
+	}
 	button {
 		color: rgb(25,25,25);
 	}
@@ -137,26 +142,34 @@
 		color: black;
 		font-weight: bold;
 	}
-	.headline > input {
+	.outer input {
 		appearance: none;
 		border: none;
+		color: inherit;
 		background: none;
 		font: inherit;
 		width: 100%;
 		padding: 0;
 		box-sizing: border-box;
+		flex: 1;
 	}
 	
-	.tags:not(:empty) {
+	.tags {
 		line-height: 1;
 		padding: .75rem;
+		display: flex;
+		flex-flow: wrap;
 	}
-	.tags > * {
-		font-size: .875rem;
-		line-height: 1.25rem;
-		display: inline-block;
+	.tags > div {
 		color: rgb(160,156,152);
 		margin-right: .5rem;
+		background: rgb(131, 37, 79);
+		border-radius: 9999px;
+		padding: 0.25rem 0.5rem;
+		color: rgb(255, 249, 242);
+		gap: 0.25rem;
+		align-items: center;
+		display: inline-flex;
 	}
 	
 	.post {
@@ -189,6 +202,25 @@
 	<symbol id=like1 viewBox="-12,-12 24,24" color="rgb(131,37,79)">
 		<path fill=currentColor stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 d="m 0 -4.364 -1.318 -1.318 a 4.5 4.5 0 00 -6.364 6.364 l 7.682 7.682 7.682 -7.682 a 4.5 4.5 0 00 -6.364 -6.364 z"/>
 	</symbol>
+	<symbol id="hashtag" viewBox="-7 -7 14 14">
+		<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="
+M 0.375 4.5
+l 2 -9
+z
+
+M -0.375 -4.5
+l -2 9
+z
+
+M -3.5 -1.5
+h 8 
+M 3.5 1.5
+h -8
+"/>
+	</symbol>
+	<symbol id="remove" viewBox="-7 -7 14 14">
+		<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M 3.5 3.5 L -3.5 -3.5 M -3.5 3.5 L 3.5 -3.5"/>
+	</symbol>
 </svg>
 
 <hr>
@@ -216,7 +248,7 @@
 		<div class='post' id=$host></div>
 	</div>
 	<hr>
-	<div class='tags'><a>#heck</a></div>
+	<div class='tags'><div><svg class='icon icon14'><use href="#hashtag"/></svg><div>Egg1</div></div></div>
 	<hr>
 	<div>
 		<a class='comment-link'>0 comments</a>

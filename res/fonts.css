@@ -1,3 +1,5 @@
+/* TODO: use cohost's versions of atkinson too. the woff2 ones are ok  i think */
+
 @font-face {
 	font-family: 'atkinson hyperlegible';
 	src: local(Atkinson Hyperlegible Regular), local(AtkinsonHyperlegible-Regular), url(AtkinsonHyperlegible-Regular.woff2) format('woff2');

@@ -2,21 +2,7 @@
 
 import markdown2html from './_libs.js'
 
-import walk from './walk-tree.js'
-
-import sanitize from './sanitize.js'
-
-import footnotes from './cohost-footnotes.js'
-
-import imageTitles from './cohost-image-titles.js'
-
-import externalLinks from './external-links.js'
-
-import filterCss from './cohost-filter-css.js'
-
-import mentions from './cohost-mentions.js'
-
-import emotes from './cohost-emotes.js'
+import filter from './custom.js'
 
 function html2fragment(html) {
 	const host = document.createElement('template')
@@ -36,17 +22,7 @@ function start(text, {
 	//⁌ ⁍
 	const fragment = html2fragment(html)
 	
-	walk(fragment, [
-		imageTitles(),
-		footnotes(),
-		sanitize(),
-		filterCss({date}),
-		mentions(),
-		//disableEmbeds ? null : embeds(),
-	])
-	walk(fragment, [
-		emotes({hasCohostPlus}),
-	])
+	filter(fragment, {date, hasCohostPlus})
 	
 	return fragment
 }
