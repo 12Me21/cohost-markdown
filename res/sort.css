@@ -47,6 +47,7 @@
 
 :host {
 	contain: content !important;
+	isolation: isolate;
 	padding: var(--prose-margin, 1rem 0.75rem);
 	padding-top: 0;
 	padding-bottom: 0;

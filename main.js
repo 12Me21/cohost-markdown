@@ -17,12 +17,13 @@ function start(text, {
 	disableHtml = false,
 	disableEmbeds = false,
 	disableGfm = !false,
+	warn,
 }) {
 	const html = markdown2html(text, {disableHtml, disableGfm})
 	//⁌ ⁍
 	const fragment = html2fragment(html)
 	
-	filter(fragment, {date, hasCohostPlus})
+	filter(fragment, {date, hasCohostPlus, warn})
 	
 	return fragment
 }

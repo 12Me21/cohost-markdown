@@ -12,7 +12,6 @@ textarea-container, textarea-container > textarea {
 	display: block;
 	box-sizing: content-box;
 	min-height: 5em;
-	max-height: calc(50vh - 0.75rem * 2);
 	height: 0;
 	font: inherit;
 }

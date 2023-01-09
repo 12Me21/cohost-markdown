@@ -17,13 +17,21 @@
 		/*font-size: 14.8945px;*/
 	}
 	
-	input, textarea { 
+	textarea-container {
+		font: condensed 14px / 1.25 league mono;
+		line-break: anywhere;
+	}
+	textarea {
+
+	}
+	
+	input:not([type]), textarea { 
 		outline-color: rgb(130,127,124);
-		outline-style: dotted;
+		outline-style: dashed;
 		outline-width: 1px;
 		outline-offset: 0.25rem;
 	}
-	input:focus, textarea:focus {
+	input:not([type]):focus, textarea:focus {
 		outline-style: solid;
 		outline-width: 2px;
 		outline-color: rgb(131, 37, 79);
@@ -133,6 +141,7 @@
 	}
 	.split > * {
 		flex: 1;
+		min-width: 0;
 	}
 	
 	.headline {
@@ -142,7 +151,7 @@
 		color: black;
 		font-weight: bold;
 	}
-	.outer input {
+	.outer input:not([type]) {
 		appearance: none;
 		border: none;
 		color: inherit;
@@ -174,7 +183,6 @@
 	
 	.post {
 		background: white;
-		max-height: 50vh;
 		overflow-y: auto;
 	}
 	
@@ -183,6 +191,9 @@
 	}
 	body, html {
 		background: rgb(255,249,242);
+	}
+	html {
+		overflow-y:scroll;
 	}
 </style>
 
@@ -223,17 +234,14 @@ h -8
 	</symbol>
 </svg>
 
-<hr>
-<button id=$go>render</button>
-<label>auto:<input type=checkbox checked id=$auto></label>
-<time id=$time></time>
-<hr>
 <div class='outer'>
 	<div>
 		<div class='avatar'></div>
 		<a class='name'>name</a>
 		<a class='handle'>@handle</a>
-		<a class='time'>3 hr. ago</a>
+		<button id=$go>render</button>
+		<label>auto:<input type=checkbox checked id=$auto></label>
+		<time class='time' id=$time>time</time>
 	</div>
 	<hr>
 	<div class='headline'>
@@ -265,6 +273,8 @@ h -8
 		</div>
 	</div>
 </div>
+<pre id=$warn></pre>
+
 <pre id=$out2></pre>
 
 <script type=module>
@@ -280,9 +290,16 @@ h -8
 	let sh = $host.attachShadow({mode:'open'})
 	sh.append(style, prose)
 	
+	function warn(msg) {
+		//console.warn(msg)
+		$warn.textContent += msg+"\n"
+	}
+	
 	window.run = ()=>{
+		$warn.textContent = ""
+		//$out2.textContent = ""
 		let p = performance.now()
-		let out = process($in.value)
+		let out = process($in.value, {warn})
 		prose.replaceChildren(out)
 		let t = performance.now()-p
 		$time.textContent = t.toFixed(1)+" ms"
