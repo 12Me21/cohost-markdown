@@ -1,5 +1,6 @@
 <!doctype html><meta charset=utf-8>
 <meta name=viewport content="width=device-width, height=device-height, initial-scale=1" id=$viewport>
+<title>markdown preview</title>
 
 <script>
 	if (CSS.supports('-webkit-touch-callout', 'none')) // iOS safari
@@ -7,6 +8,7 @@
 </script>
 
 <script src=textarea.js></script>
+<link rel=icon sizes=any href='data:image/svg+xml,<svg viewBox="-769 -553, 1538 1106" xmlns="http://www.w3.org/2000/svg"><path fill="rgb(191,186,181)" transform="rotate(-15)" d="M0-523C-431-523-779-349-779-0S-431+523+0+523S779+349+779+0S431-523-0-523z"/></svg>'>
 
 <link rel=stylesheet href=res/fonts.css>
 <link rel=preload as=style href=res/sort.css>
@@ -36,12 +38,12 @@
 	input:not([type]):focus, textarea:focus {
 		outline-style: solid;
 		outline-width: 2px;
-		outline-color: rgb(131, 37, 79);
+		outline-color: var(--color-foreground);
 	}
 	
 	input[type=checkbox] {
 		background-color: rgb(255,249,242);
-		color: rgb(131,37,79);
+		color: var(--color-foreground);
 	}
 	
 	a {
@@ -153,12 +155,13 @@
 		line-break: anywhere;
 	}
 	body, html {
-		background: white;
+		background: rgb(255,249,242);
 	}
 	html {
 		overflow-y:scroll;
 		min-height: 120%;
 	}
+	/* usually i wouldn't use position:fixed headers but */
 	header {
 		height: var(--header-size);
 		z-index: 10;
