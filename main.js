@@ -20,7 +20,7 @@ function start(text, {
 	warn,
 }) {
 	const html = markdown2html(text, {disableHtml, disableGfm})
-	//⁌ ⁍
+	
 	const fragment = html2fragment(html)
 	
 	filter(fragment, {date, hasCohostPlus, warn})

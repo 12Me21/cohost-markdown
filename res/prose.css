@@ -60,8 +60,6 @@
 	font-family:
 		Atkinson Hyperlegible, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, segoe ui, Roboto, helvetica neue, Arial, noto sans, sans-serif,
 		apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji;
-	--color-foreground: rgb(131, 37, 79);
-	--emote-size: 1em;
 	
 	color: rgb(25, 25, 25);
 	max-width: 65ch;
@@ -78,23 +76,6 @@
 	border-style: none solid;
 	border-color: transparent;*/
 	
-	--tw-prose-headings:     rgb(17, 24, 39);
-	--tw-prose-links:        rgb(17, 24, 39);
-	--tw-prose-bold:         rgb(17, 24, 39);
-	--tw-prose-quotes:       rgb(17, 24, 39);
-	--tw-prose-code:         rgb(17, 24, 39);
-	--tw-prose-pre-bg:       rgb(31, 41, 55);
-	--tw-prose-body:         rgb(55, 65, 81);
-	--tw-prose-lead:         rgb(75, 85, 99);
-	--tw-prose-counters:     rgb(107, 114, 128);
-	--tw-prose-captions:     rgb(107, 114, 128);
-	--tw-prose-bullets:      rgb(209, 213, 219);
-	--tw-prose-th-borders:   rgb(209, 213, 219);
-	--tw-prose-hr:           rgb(229, 231, 235);
-	--tw-prose-quote-borders:rgb(229, 231, 235);
-	--tw-prose-pre-code:     rgb(229, 231, 235);
-	--tw-prose-td-borders:   rgb(229, 231, 235);
-	
 	font-size: 1rem;
 	line-height: 1.75;
 	
@@ -102,22 +83,110 @@
 	--embed-height: 20vh;
 }
 
+/* from cohost */
+.prose {
+	--emoji-scale: 1em;
+	/* color components */
+	--color-compose-button-600: 103 26 61;
+	--color-compose-button-400: 174 68 115;
+	--color-compose-button: 131 37 79;
+	--color-sidebar-accent: 131 37 79;
+	--color-sidebar-text: 25 25 25;
+	--color-sidebar-bg: 255 249 242;
+	--color-background: 255 249 242;
+	--color-accent: 255 171 92;
+	--color-secondary: 229 107 111;
+	--color-secondary-700: 123 27 31;
+	--color-secondary-600: 164 42 47;
+	--color-secondary-400: 229 107 111;
+	--color-secondary-300: 238 153 155;
+	--color-secondary-200: 244 187 187;
+	--color-foreground: 131 37 79;
+	--color-foreground-800: 59 9 32;
+	--color-foreground-700: 81 17 46;
+	--color-foreground-600: 103 26 61;
+	--color-foreground-400: 174 68 115;
+	--color-foreground-300: 211 116 155;
+	--color-foreground-200: 238 173 199;
+	--color-bg-text: 25 25 25;
+	--color-text: 255 249 242;
+	--color-longan: 255 216 168;
+	--color-mango: 255 171 92;
+	--color-strawberry: 229 107 111;
+	--color-cherry: 131 37 79;
+	--color-notBlack: 25 25 25;
+	--color-notWhite: 255 249 242;
+	/* font-variant */
+	--tw-font-variant-numeric:;--tw-numeric-fraction:;--tw-numeric-spacing:;--tw-numeric-figure:;--tw-slashed-zero:;--tw-ordinal:;
+	/* backdrop filter */
+	--tw-backdrop-filter:;--tw-backdrop-sepia:;--tw-backdrop-saturate:;--tw-backdrop-opacity:;--tw-backdrop-invert:;--tw-backdrop-hue-rotate:;--tw-backdrop-grayscale:;--tw-backdrop-contrast:;--tw-backdrop-brightness:;--tw-backdrop-blur:;
+	/* filter */
+	--tw-filter:;--tw-drop-shadow:;--tw-sepia:;--tw-saturate:;--tw-invert:;--tw-hue-rotate:;--tw-grayscale:;--tw-contrast:;--tw-brightness:;--tw-blur:;
+	/* shadows */
+	--tw-shadow-colored: 0 0 #0000;
+	--tw-shadow: 0 0 #0000;
+	--tw-ring-shadow: 0 0 #0000;
+	--tw-ring-offset-shadow: 0 0 #0000;
+	--tw-ring-color: rgb(59 130 246 / 0.5);
+	--tw-ring-offset-color: #fff;
+	--tw-ring-offset-width: 0px;
+	--tw-ring-inset: ;
+	--tw-border-opacity: 1;
+	/* transform */
+	--tw-transform: translateX(0) translateY(0) rotate(0) skewX(0) skewY(0) scaleX(1) scaleY(1); --tw-scale-y: 1; --tw-scale-x: 1; --tw-skew-y: 0; --tw-skew-x: 0; --tw-rotate: 0; --tw-translate-y: 0; --tw-translate-x: 0;
+	/* opacity */
+	--tw-text-opacity: 1; --tw-bg-opacity: 1;
+	/* prose invert colors */
+	--tw-prose-invert-td-borders: #374151;
+	--tw-prose-invert-th-borders: #4b5563;
+	--tw-prose-invert-pre-bg: rgb(0 0 0 / 50%);
+	--tw-prose-invert-pre-code: #d1d5db;
+	--tw-prose-invert-code: #fff;
+	--tw-prose-invert-captions: #9ca3af;
+	--tw-prose-invert-quote-borders: #374151;
+	--tw-prose-invert-quotes: #f3f4f6;
+	--tw-prose-invert-hr: #374151;
+	--tw-prose-invert-bullets: #4b5563;
+	--tw-prose-invert-counters: #9ca3af;
+	--tw-prose-invert-bold: #fff;
+	--tw-prose-invert-links: #fff;
+	--tw-prose-invert-lead: #9ca3af;
+	--tw-prose-invert-headings: #fff;
+	--tw-prose-invert-body: #d1d5db;
+	/* prose colors */
+	--tw-prose-td-borders: #e5e7eb;
+	--tw-prose-th-borders: #d1d5db;
+	--tw-prose-pre-bg: #1f2937;
+	--tw-prose-pre-code: #e5e7eb;
+	--tw-prose-code: #111827;
+	--tw-prose-captions: #6b7280;
+	--tw-prose-quote-borders: #e5e7eb;
+	--tw-prose-quotes: #111827;
+	--tw-prose-hr: #e5e7eb;
+	--tw-prose-bullets: #d1d5db;
+	--tw-prose-counters: #6b7280;
+	--tw-prose-bold: #111827;
+	--tw-prose-links: #111827;
+	--tw-prose-lead: #4b5563;
+	--tw-prose-headings: #111827;
+	--tw-prose-body: #374151;
+}
+
 
 
 /* 0 */
-*, ::before, ::after { /* ANY */
+* /*, ::before, ::after */ { /* ANY */
 	box-sizing: border-box;
 	border-width: 0;
 	border-style: solid;
-	border-color:rgb(222,217,211);
+	border-color: rgb(222,217,211);
 	--above: unset;
 	--below: unset;
 }
 
 *:where(:focus, :focus-visible) { /* ANY */
-	outline: solid 4px var(--color-foreground);
+	outline: solid 4px rgb(var(--color-foreground));
 }
-
 
 
 /* tag */
@@ -408,8 +477,8 @@ ol > li, ul > li {
 
 .emote {
 	display: inline-block;
-	width: var(--emote-size);
-	height: var(--emote-size);
+	width: var(--emoji-scale);
+	height: var(--emoji-scale);
 	margin: 0;
 	object-fit: contain;
 	vertical-align: middle;
@@ -433,12 +502,12 @@ ol > li, ul > li {
 }
 .read-more {
 	text-decoration: none;
-	color: var(--color-foreground);
+	color: rgb(var(--color-foreground));
 	font-weight: 700;
 	font-size: .875rem;
 	line-height: 1.25rem;
 	margin-bottom: .75rem;
-	background-color: var(--color-white);
+	background-color: white;
 	cursor: pointer;
 	display: block;
 	box-sizing: border-box;
@@ -479,7 +548,7 @@ input:focus {
 	border-color: rgb(37, 99, 235);
 	box-shadow:
 		0 0 0 2px white,
-		0 0 0 4px var(--color-foreground);
+		0 0 0 4px rgb(var(--color-foreground));
 }
 
 
