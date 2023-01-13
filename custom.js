@@ -49,7 +49,7 @@ function filter_element(settings, element) {
 	const schema = ELEMENTS[name]
 	if (schema===false) {
 		warn(settings, `removed element: <${name}>`)
-		return 'prune'
+		return []
 	}
 	if (!schema) {
 		warn(settings, `removed element: <${name}>`)
@@ -114,7 +114,7 @@ function footnotes(settings, element) {
 		if (element.id.includes('fnref'))
 			return 'flatten'
 		if (element.href.includes('fnref'))
-			return 'prune'
+			return []
 	} else if (element.tagName=='H2') {
 		if (element.id.includes('footnote-label') && element.className=="sr-only") {
 			let hr = document.createElement('hr')
@@ -223,7 +223,8 @@ function emotes({hasCohostPlus}, text){
 		if (emote && (hasCohostPlus || !emote.cohost_plus)) {
 			let img = document.createElement('img')
 			img.className = 'emote'
-			img.src = `emotes/${emote.url}.webp` // yeah yeah we're using webp, oh well. The files were smaller, ok ?
+			//img.src = `emotes/${emote.url}.webp` // yeah yeah we're using webp, oh well. The files were smaller, ok ?
+			img.style.setProperty('--content', `url("emotes/${emote.url}.webp")`)
 			img.alt = `:${name}:`
 			list.push(text, img)
 		} else {

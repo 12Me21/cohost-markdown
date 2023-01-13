@@ -27,6 +27,7 @@ const strip = false
 export const ELEMENTS = {
 	__proto__:null,
 	SCRIPT: strip,
+	'BAD-SCRIPT': strip,
 	A: {attributes: {__proto__:GA, href:URL2}},
 	IMG: {attributes: {__proto__:GA, src:URL, longdesc:URL}},
 	INPUT: {

@@ -483,7 +483,9 @@ ol > li, ul > li {
 	object-fit: contain;
 	vertical-align: middle;
 	--image-border: none;
+	content: var(--content);
 }
+
 /* what if we make <q style=color:red>text</q> generate like <span style=color:red><span>"text"</span></span> */
 .mention {
 	font-weight: bold;
